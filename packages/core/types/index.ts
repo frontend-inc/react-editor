@@ -5,5 +5,6 @@ export * from "./Blocks";
 export * from "./Config";
 export * from "./Data";
 export * from "./Fields";
+export * from "./Globals";
 export * from "./Props";
 export * from "./Utils";

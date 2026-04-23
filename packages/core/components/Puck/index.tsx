@@ -25,6 +25,7 @@ import type {
   UserGenerics,
   Config,
   Data,
+  GlobalData,
   Metadata,
   AsFieldProps,
   DefaultComponentProps,
@@ -51,6 +52,8 @@ import { deepEqual } from "fast-equals";
 import { FieldTransforms } from "../../types/API/FieldTransforms";
 import { populateIds } from "../../lib/data/populate-ids";
 import { resolveFieldDefaults } from "../../lib/resolve-field-defaults";
+import { resolveGlobals } from "../../lib/resolve-globals";
+import { splitGlobalData } from "../../lib/split-global-data";
 import { toComponent } from "../../lib/data/to-component";
 import { Layout } from "./components/Layout";
 import { useSafeId } from "../../lib/use-safe-id";
@@ -62,8 +65,10 @@ type PuckProps<
   children?: ReactNode;
   config: UserConfig;
   data: Partial<G["UserData"] | Data>;
+  globalData?: GlobalData;
   ui?: Partial<UiState>;
   onChange?: (data: G["UserData"]) => void;
+  onGlobalsChange?: (globalData: GlobalData) => void;
   onPublish?: (data: G["UserData"]) => void;
   onAction?: OnAction<G["UserData"]>;
   permissions?: Partial<Permissions>;
@@ -115,8 +120,10 @@ function PuckProvider<
   const {
     config,
     data: initialData,
+    globalData: initialGlobalData,
     ui: initialUi,
     onChange,
+    onGlobalsChange,
     permissions = {},
     plugins,
     overrides,
@@ -167,13 +174,32 @@ function PuckProvider<
       config
     );
 
-    const newAppState = {
-      ...defaultAppState,
-      data: {
+    // Seed globalData with field-default entries for any global-marked type
+    // that doesn't already have one from the consumer.
+    const seededGlobalData: GlobalData = { ...(initialGlobalData ?? {}) };
+    for (const [type, comp] of Object.entries(config.components ?? {})) {
+      if ((comp as any)?.global && !seededGlobalData[type]) {
+        seededGlobalData[type] = {
+          props: resolveFieldDefaults((comp as any)?.fields),
+        };
+      }
+    }
+
+    // Inline global props into the initial data tree so the editor operates
+    // on a resolved composition. Changes flow back out via splitGlobalData.
+    const composedData = resolveGlobals(
+      {
         ...initialData,
         root: { ...initialData?.root, props: root.props },
         content: initialData.content || [],
-      },
+      } as Data,
+      seededGlobalData,
+      config
+    );
+
+    const newAppState = {
+      ...defaultAppState,
+      data: composedData,
       ui: {
         ...initial,
         ...clientUiState,
@@ -313,21 +339,32 @@ function PuckProvider<
   });
 
   const previousData = useRef<Data>(null);
+  const previousGlobalData = useRef<GlobalData>(null);
 
   useEffect(() => {
     return appStore.subscribe(
       (s) => s.state.data,
       (data) => {
-        if (onChange) {
-          if (deepEqual(data, previousData.current)) return;
+        // Split the resolved tree back into page data + global data so
+        // consumers receive the shapes they passed in (pageData stripped of
+        // global props; globalData holds shared state per type).
+        const split = splitGlobalData(data as Data, config);
 
-          onChange(data as G["UserData"]);
+        if (onChange && !deepEqual(split.data, previousData.current)) {
+          onChange(split.data as G["UserData"]);
+          previousData.current = split.data;
+        }
 
-          previousData.current = data;
+        if (
+          onGlobalsChange &&
+          !deepEqual(split.globalData, previousGlobalData.current)
+        ) {
+          onGlobalsChange(split.globalData);
+          previousGlobalData.current = split.globalData;
         }
       }
     );
-  }, [onChange]);
+  }, [onChange, onGlobalsChange, config]);
 
   useRegisterPermissionsSlice(appStore, permissions);
 

@@ -52,6 +52,15 @@ type ComponentConfigInternal<
   fields?: Fields<FieldProps, UserField>;
   permissions?: Partial<Permissions>;
   inline?: boolean;
+  /**
+   * When true, every instance of this component type renders from the shared
+   * `globalData[type].props` instead of its own props. The `children` slot is
+   * always extrinsic (supplied by the instance / parent), matching React
+   * conventions and enabling the "AppShell wraps a page" pattern. Marking a
+   * component global is a developer decision that has data-migration
+   * implications; it is not editable from the UI.
+   */
+  global?: boolean;
   resolveFields?: (
     data: DataShape,
     params: {

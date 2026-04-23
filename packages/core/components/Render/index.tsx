@@ -2,7 +2,7 @@
 
 import { rootZone } from "../../lib/root-droppable-id";
 import { useSlots } from "../../lib/use-slots";
-import { Config, Data, Metadata, UserGenerics } from "../../types";
+import { Config, Data, GlobalData, Metadata, UserGenerics } from "../../types";
 import {
   DropZonePure,
   DropZoneProvider,
@@ -12,6 +12,7 @@ import React, { useMemo } from "react";
 import { SlotRender } from "../SlotRender";
 import { DropZoneContext } from "../DropZone/context";
 import { useRichtextProps } from "../RichTextEditor/lib/use-richtext-props";
+import { resolveGlobals } from "../../lib/resolve-globals";
 
 export const renderContext = React.createContext<{
   config: Config;
@@ -29,17 +30,22 @@ export function Render<
 >({
   config,
   data,
+  globalData,
   metadata = {},
 }: {
   config: UserConfig;
   data: Partial<G["UserData"] | Data>;
+  globalData?: GlobalData;
   metadata?: Metadata;
 }) {
-  const defaultedData = {
-    ...data,
-    root: data.root || {},
-    content: data.content || [],
-  } as G["UserData"];
+  const defaultedData = useMemo(() => {
+    const base = {
+      ...data,
+      root: data.root || {},
+      content: data.content || [],
+    } as G["UserData"];
+    return resolveGlobals(base, globalData, config) as G["UserData"];
+  }, [data, globalData, config]);
 
   // DEPRECATED
   const rootProps =
