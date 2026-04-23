@@ -20,6 +20,7 @@ export * from "../components/Render";
 export { RichTextMenu } from "../components/RichTextMenu/inner";
 
 export * from "../lib/migrate";
+export * from "../lib/page-metadata";
 export * from "../lib/transform-props";
 export { registerOverlayPortal } from "../lib/overlay-portal";
 export * from "../lib/resolve-all-data";
