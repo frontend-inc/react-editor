@@ -128,6 +128,9 @@ export const DraggableComponent = ({
   const overrides = useAppStore((s) => s.overrides);
   const dispatch = useAppStore((s) => s.dispatch);
   const iframe = useAppStore((s) => s.iframe);
+  const isGlobal = useAppStore(
+    (s) => (s.config.components[componentType] as any)?.global === true
+  );
   const lastMeasureRef = useRef(0);
 
   const ctx = useContext(dropZoneContext);
@@ -746,6 +749,7 @@ export const DraggableComponent = ({
               isSelected,
               isDragging: thisIsDragging,
               hover: hover || indicativeHover,
+              isGlobal,
             })}
             style={{ ...style }}
             data-puck-overlay

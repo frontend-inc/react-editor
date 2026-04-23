@@ -144,3 +144,23 @@
   display: flex;
   align-items: center;
 }
+
+/* Global-marked components render with the purple accent everywhere — icon,
+   label, selected state — so users see at a glance that edits propagate. */
+.Layer--isGlobal > .Layer-inner .Layer-icon {
+  color: var(--puck-color-global);
+}
+
+.Layer--isGlobal > .Layer-inner .Layer-name {
+  color: var(--puck-color-global);
+}
+
+.Layer--isGlobal.Layer--isSelected > .Layer-inner {
+  background: var(--puck-color-global-soft);
+  color: var(--puck-color-global-strong);
+}
+
+.Layer--isGlobal.Layer--isSelected > .Layer-inner .Layer-icon,
+.Layer--isGlobal.Layer--isSelected > .Layer-inner .Layer-name {
+  color: var(--puck-color-global-strong);
+}

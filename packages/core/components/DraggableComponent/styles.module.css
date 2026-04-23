@@ -64,6 +64,36 @@
   outline-width: 2px;
 }
 
+/* Global-marked components paint in purple everywhere they normally use
+   accent — outlines (default, hover, selected, focus) and the overlay tint. */
+.DraggableComponent--isGlobal {
+  --overlay-background: color-mix(
+    in srgb,
+    var(--puck-color-global) 14%,
+    transparent
+  );
+}
+
+.DraggableComponent--isGlobal
+  > .DraggableComponent-overlayWrapper
+  > .DraggableComponent-overlay,
+.DraggableComponent--isGlobal.DraggableComponent--hover
+  > .DraggableComponent-overlayWrapper
+  > .DraggableComponent-overlay {
+  outline-color: var(--puck-color-global);
+}
+
+.DraggableComponent--isGlobal.DraggableComponent--isSelected
+  > .DraggableComponent-overlayWrapper
+  > .DraggableComponent-overlay {
+  outline-color: var(--puck-color-global-strong);
+}
+
+.DraggableComponent--isGlobal:focus-visible
+  > .DraggableComponent-overlayWrapper {
+  outline-color: var(--puck-color-global);
+}
+
 /* Won't work in FF */
 .DraggableComponent:has(
     .DraggableComponent--hover > .DraggableComponent-overlayWrapper

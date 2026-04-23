@@ -202,6 +202,9 @@ const Layer = forwardRef(function Layer(
     ZoneStoreContext,
     (s) => s.hoveringComponent === node.itemId
   );
+  const isGlobal = useAppStore(
+    (s) => (s.config.components[node.componentType] as any)?.global === true
+  );
   const containsZone = node.childZones.length > 0;
 
   const setItemSelector = useCallback(
@@ -221,6 +224,7 @@ const Layer = forwardRef(function Layer(
         containsZone,
         isHovering,
         isSelected,
+        isGlobal,
       })}
       data-index={dataIndex}
       data-puck-layer-tree-id={node.itemId}

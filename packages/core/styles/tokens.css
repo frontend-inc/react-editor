@@ -48,6 +48,13 @@
   --puck-accent-strong: var(--puck-color-azure-04);
   --puck-accent-soft: var(--puck-color-azure-11);
 
+  /* Global-component accent (purple). Used to mark components whose props
+     come from globalData — signals that edits propagate across every page
+     where the type appears. Mirrors the accent token structure. */
+  --puck-color-global: #7c3aed;
+  --puck-color-global-strong: #5b21b6;
+  --puck-color-global-soft: #f3e8ff;
+
   /* Neutral primary (shadcn-style): dark in light theme, light in dark theme.
      Use for strong high-contrast surfaces like the action bar and Publish
      button — inverts with theme instead of tracking the blue accent. */
@@ -98,6 +105,10 @@
     --puck-accent: #6f9fe3;
     --puck-accent-strong: #8ab3ee;
     --puck-accent-soft: #192233;
+
+    --puck-color-global: #a78bfa;
+    --puck-color-global-strong: #c4b5fd;
+    --puck-color-global-soft: #2e1065;
 
     --puck-primary: #f4f5f7;
     --puck-primary-hover: #dcdee3;
