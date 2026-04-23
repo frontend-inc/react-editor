@@ -1,5 +1,5 @@
-import { Editor, type Data, type Config } from "@puckeditor/core";
-import styles from "@puckeditor/core/editor.css";
+import { Editor, type Data, type Config } from "@frontend/core";
+import styles from "@frontend/core/editor.css";
 import type {
   ActionFunctionArgs,
   LinksFunction,

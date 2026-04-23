@@ -1,5 +1,5 @@
-import type { Data } from "@puckeditor/core";
-import { Render } from "@puckeditor/core";
+import type { Data } from "@frontend/core";
+import { Render } from "@frontend/core";
 
 import { config } from "../../editor.config";
 

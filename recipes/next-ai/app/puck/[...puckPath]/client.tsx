@@ -1,7 +1,7 @@
 "use client";
 
-import type { Data } from "@puckeditor/core";
-import { Editor } from "@puckeditor/core";
+import type { Data } from "@frontend/core";
+import { Editor } from "@frontend/core";
 import { createAiPlugin } from "@puckeditor/plugin-ai";
 
 import config from "../../../editor.config";

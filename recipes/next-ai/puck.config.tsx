@@ -1,4 +1,4 @@
-import type { Config } from "@puckeditor/core";
+import type { Config } from "@frontend/core";
 import { Heading } from "lucide-react";
 
 type Props = {

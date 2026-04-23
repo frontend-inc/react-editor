@@ -2,7 +2,7 @@ import { ReactElement, useEffect, useState } from "react";
 
 import styles from "./HeadingAnalyzer.module.css";
 
-import { createUseEditor } from "@puckeditor/core";
+import { createUseEditor } from "@frontend/core";
 import { Plugin } from "@/core/types";
 import { OutlineList } from "@/core/components/OutlineList";
 

@@ -1,5 +1,5 @@
 {
-  "name": "@puckeditor/field-shopify",
+  "name": "@frontend/field-shopify",
   "version": "0.21.2",
   "author": "Rami Bitar <rami@frontend.co>",
   "repository": "puckeditor/editor",
@@ -22,7 +22,7 @@
     "dist"
   ],
   "devDependencies": {
-    "@puckeditor/core": "^0.21.2",
+    "@frontend/core": "^0.21.2",
     "@shopify/storefront-api-client": "^1.0.0",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",

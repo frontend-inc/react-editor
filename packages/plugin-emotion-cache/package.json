@@ -1,5 +1,5 @@
 {
-  "name": "@puckeditor/plugin-emotion-cache",
+  "name": "@frontend/plugin-emotion-cache",
   "version": "0.21.2",
   "author": "Chris Villa <chris@puckeditor.com>",
   "repository": "puckeditor/editor",
@@ -24,7 +24,7 @@
   ],
   "devDependencies": {
     "@emotion/react": "^11.13.3",
-    "@puckeditor/core": "^0.21.2",
+    "@frontend/core": "^0.21.2",
     "@types/minimatch": "3.0.5",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.0.2",

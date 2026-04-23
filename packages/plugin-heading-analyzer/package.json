@@ -1,5 +1,5 @@
 {
-  "name": "@puckeditor/plugin-heading-analyzer",
+  "name": "@frontend/plugin-heading-analyzer",
   "version": "0.21.2",
   "author": "Chris Villa <chris@puckeditor.com>",
   "repository": "puckeditor/editor",
@@ -25,7 +25,7 @@
     "dist"
   ],
   "devDependencies": {
-    "@puckeditor/core": "^0.21.2",
+    "@frontend/core": "^0.21.2",
     "@types/minimatch": "3.0.5",
     "@types/react": "^19.0.1",
     "@types/react-dom": "^19.0.2",

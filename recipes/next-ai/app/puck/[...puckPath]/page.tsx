@@ -11,7 +11,7 @@
  * NB this route is public, and you will need to add authentication
  */
 
-import "@puckeditor/core/editor.css";
+import "@frontend/core/editor.css";
 import "@puckeditor/plugin-ai/styles.css";
 import { Client } from "./client";
 import { Metadata } from "next";

@@ -1,5 +1,5 @@
 {
-  "name": "@puckeditor/core",
+  "name": "@frontend/core",
   "version": "0.21.2",
   "description": "The open-source visual editor for React",
   "author": "Chris Villa <chris@puckeditor.com>",

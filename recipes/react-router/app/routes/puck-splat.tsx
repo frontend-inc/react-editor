@@ -1,12 +1,12 @@
 import { useFetcher, useLoaderData } from "react-router";
-import type { Data } from "@puckeditor/core";
-import { Editor, Render } from "@puckeditor/core";
+import type { Data } from "@frontend/core";
+import { Editor, Render } from "@frontend/core";
 
 import type { Route } from "./+types/editor-splat";
 import { config } from "../../editor.config";
 import { resolveEditorPath } from "~/lib/resolve-editor-path.server";
 import { getPage, savePage } from "~/lib/pages.server";
-import editorStyles from "@puckeditor/core/editor.css?url";
+import editorStyles from "@frontend/core/editor.css?url";
 
 export async function loader({ params }: Route.LoaderArgs) {
   const pathname = params["*"] ?? "/";
