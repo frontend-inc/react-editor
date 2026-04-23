@@ -27,6 +27,9 @@ const HeaderInner = <
     renderHeaderActions,
     headerTitle,
     headerPath,
+    routes,
+    currentPath,
+    onRouteChange,
     iframe: _iframe,
   } = usePropsContext();
 
@@ -169,15 +172,34 @@ const HeaderInner = <
             </div>
           </div>
           <div className={getClassName("title")}>
-            <Heading rank="2" size="xs">
-              {headerTitle || rootTitle || "Page"}
-              {headerPath && (
-                <>
-                  {" "}
-                  <code className={getClassName("path")}>{headerPath}</code>
-                </>
-              )}
-            </Heading>
+            {routes && currentPath !== undefined && onRouteChange ? (
+              <select
+                className={getClassName("routeSelect")}
+                value={currentPath}
+                onChange={(e) => {
+                  void onRouteChange(e.target.value);
+                }}
+              >
+                {routes.some((r) => r.path === currentPath) ? null : (
+                  <option value={currentPath}>{currentPath}</option>
+                )}
+                {routes.map((route) => (
+                  <option key={route.path} value={route.path}>
+                    {route.title}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <Heading rank="2" size="xs">
+                {headerTitle || rootTitle || "Page"}
+                {headerPath && (
+                  <>
+                    {" "}
+                    <code className={getClassName("path")}>{headerPath}</code>
+                  </>
+                )}
+              </Heading>
+            )}
           </div>
           <div className={getClassName("tools")}>
             <div className={getClassName("menuButton")}>

@@ -27,6 +27,7 @@ import type {
   Data,
   GlobalData,
   Metadata,
+  Route,
   AsFieldProps,
   DefaultComponentProps,
 } from "../../types";
@@ -86,6 +87,9 @@ type PuckProps<
   }) => ReactElement;
   headerTitle?: string;
   headerPath?: string;
+  routes?: Route[];
+  currentPath?: string;
+  onRouteChange?: (path: string) => void | Promise<void>;
   viewports?: Viewports;
   iframe?: IframeConfig;
   dnd?: {

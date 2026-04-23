@@ -7,4 +7,5 @@ export * from "./Data";
 export * from "./Fields";
 export * from "./Globals";
 export * from "./Props";
+export * from "./Routes";
 export * from "./Utils";
