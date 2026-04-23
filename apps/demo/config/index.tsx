@@ -140,6 +140,23 @@ export const conf: UserConfig = {
       component: "ShopifyProduct",
       props: { product: null },
     },
+    ProductGrid: {
+      label: "Product grid",
+      icon: <ShoppingBag size={16} />,
+      category: "commerce",
+      content: {
+        type: "Grid",
+        props: {
+          numColumns: 3,
+          gap: 24,
+          items: [
+            { type: "ShopifyProduct", props: {} },
+            { type: "ShopifyProduct", props: {} },
+            { type: "ShopifyProduct", props: {} },
+          ],
+        },
+      },
+    },
   },
 };
 
