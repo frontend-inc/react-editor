@@ -5,11 +5,11 @@ Select [entries](https://www.contentful.com/developers/docs/references/content-d
 ## Quick start
 
 ```sh
-npm i @editoreditor/field-contentful
+npm i @frontend/field-contentful
 ```
 
 ```jsx
-import createFieldContentful from "@editoreditor/field-contentful";
+import createFieldContentful from "@frontend/field-contentful";
 
 const config = {
   components: {
@@ -129,4 +129,4 @@ const config: Config<MyProps> = {
 
 ## License
 
-MIT © [The Puck Contributors](https://github.com/editoreditor/editor/graphs/contributors)
+MIT © [The Frontend Contributors](https://github.com/editoreditor/editor/graphs/contributors)

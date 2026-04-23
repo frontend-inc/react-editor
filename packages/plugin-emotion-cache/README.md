@@ -1,23 +1,23 @@
 # plugin-emotion-cache
 
-Inject [emotion cache](https://emotion.sh/docs/@emotion/cache) into the Puck iframe.
+Inject [emotion cache](https://emotion.sh/docs/@emotion/cache) into the Frontend iframe.
 
 ## Quick start
 
 ```sh
-npm i @editoreditor/plugin-emotion-cache
+npm i @frontend/plugin-emotion-cache
 ```
 
 ```jsx
-import { Puck } from "@editoreditor/core";
-import createEmotionCache from "@editoreditor/plugin-emotion-cache";
+import { Editor } from "@frontend/core";
+import createEmotionCache from "@frontend/plugin-emotion-cache";
 
 // Create your emotion cache plugin. This example configures it for Chakra.
 const chakraEmotionCache = createEmotionCache("cha");
 
-// Render Puck
+// Render Frontend
 export function Page() {
-  return <Puck config={config} data={data} plugins={[chakraEmotionCache]} />;
+  return <Editor config={config} data={data} plugins={[chakraEmotionCache]} />;
 }
 ```
 
@@ -35,4 +35,4 @@ Key to pass to Emotion's [`createCache` method](https://emotion.sh/docs/@emotion
 
 ## License
 
-MIT © [The Puck Contributors](https://github.com/editoreditor/editor/graphs/contributors)
+MIT © [The Frontend Contributors](https://github.com/editoreditor/editor/graphs/contributors)

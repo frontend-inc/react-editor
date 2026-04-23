@@ -7,19 +7,19 @@ Visualise your heading outline structure and identify missing heading levels. Re
 ## Quick start
 
 ```sh
-npm i @editoreditor/plugin-heading-analyzer
+npm i @frontend/plugin-heading-analyzer
 ```
 
 ```jsx
-import { Puck } from "@editoreditor/core";
-import headingAnalyzer from "@editoreditor/plugin-heading-analyzer";
-import "@editoreditor/plugin-heading-analyzer/dist/index.css";
+import { Editor } from "@frontend/core";
+import headingAnalyzer from "@frontend/plugin-heading-analyzer";
+import "@frontend/plugin-heading-analyzer/dist/index.css";
 
 ...
 
-// Render Puck
+// Render Frontend
 export function Page() {
-  return <Puck
+  return <Editor
     config={config}
     data={data}
     plugins={[
@@ -31,4 +31,4 @@ export function Page() {
 
 ## License
 
-MIT © [The Puck Contributors](https://github.com/editoreditor/editor/graphs/contributors)
+MIT © [The Frontend Contributors](https://github.com/editoreditor/editor/graphs/contributors)

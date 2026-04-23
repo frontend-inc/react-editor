@@ -18,4 +18,4 @@ yarn create editor-app my-app
 
 ## License
 
-MIT © [The Puck Contributors](https://github.com/editoreditor/editor/graphs/contributors)
+MIT © [The Frontend Contributors](https://github.com/editoreditor/editor/graphs/contributors)

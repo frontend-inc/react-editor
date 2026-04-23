@@ -5,14 +5,14 @@ Select [products](https://shopify.dev/docs/api/storefront/latest/objects/Product
 ## Quick start
 
 ```sh
-npm i @editoreditor/field-shopify @shopify/storefront-api-client
+npm i @frontend/field-shopify @shopify/storefront-api-client
 ```
 
 ```jsx
 import {
   createFieldShopifyProduct,
   createFieldShopifyCollection,
-} from "@editoreditor/field-shopify";
+} from "@frontend/field-shopify";
 
 const config = {
   components: {
@@ -67,7 +67,7 @@ If your store still requires a token, supply `storefrontAccessToken` and it will
 
 ```jsx
 import { createStorefrontApiClient } from "@shopify/storefront-api-client";
-import { createFieldShopifyProduct } from "@editoreditor/field-shopify";
+import { createFieldShopifyProduct } from "@frontend/field-shopify";
 
 const client = createStorefrontApiClient({
   storeDomain: "my-shop.myshopify.com",
@@ -104,7 +104,7 @@ Both helpers return an [External field](https://editoreditor.com/docs/api-refere
 import {
   createFieldShopifyProduct,
   type ShopifyProduct,
-} from "@editoreditor/field-shopify";
+} from "@frontend/field-shopify";
 
 type MyProps = {
   ProductCard: {
@@ -115,4 +115,4 @@ type MyProps = {
 
 ## License
 
-MIT © [The Puck Contributors](https://github.com/editoreditor/editor/graphs/contributors)
+MIT © [The Frontend Contributors](https://github.com/editoreditor/editor/graphs/contributors)
