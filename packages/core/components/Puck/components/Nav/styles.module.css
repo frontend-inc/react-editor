@@ -36,7 +36,7 @@
   justify-content: center;
   margin-inline-start: auto;
   padding: 4px 16px;
-  border-inline-start: 1px solid var(--puck-border-subtle);
+  border-inline-start: 1px solid var(--fe-border-subtle);
 }
 
 @media (min-width: 638px) {
@@ -62,15 +62,15 @@
   text-align: center;
   align-items: center;
   justify-content: center;
-  color: var(--puck-text-secondary);
+  color: var(--fe-text-secondary);
   display: flex;
   text-decoration: none;
   cursor: pointer;
-  border-radius: var(--puck-radius-md);
+  border-radius: var(--fe-radius-md);
   padding: 4px;
   box-sizing: border-box;
-  transition: background-color var(--puck-motion-fast) var(--puck-ease),
-    color var(--puck-motion-fast) var(--puck-ease);
+  transition: background-color var(--fe-motion-fast) var(--fe-ease),
+    color var(--fe-motion-fast) var(--fe-ease);
   border: 0;
   width: 32px;
   height: 32px;
@@ -117,13 +117,13 @@
 }
 
 .NavItem--active > .NavItem-link {
-  background-color: var(--puck-accent-soft);
-  color: var(--puck-text-accent);
+  background-color: var(--fe-accent-soft);
+  color: var(--fe-text-accent);
 }
 
 .NavItem:not(.NavItem--active) > .NavItem-link:hover {
-  background-color: var(--puck-surface-hover);
-  color: var(--puck-text-accent);
+  background-color: var(--fe-surface-hover);
+  color: var(--fe-text-accent);
 }
 
 @media (min-width: 638px) {

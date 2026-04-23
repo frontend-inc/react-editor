@@ -23,8 +23,8 @@
 
 .Card-icon {
   border-radius: 256px;
-  background: var(--puck-color-azure-09);
-  color: var(--puck-color-azure-06);
+  background: var(--fe-color-azure-09);
+  color: var(--fe-color-azure-06);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -44,7 +44,7 @@
 .Card-description {
   font-size: 16px;
   line-height: 1.5;
-  color: var(--puck-color-grey-05);
+  color: var(--fe-color-grey-05);
   text-align: center;
   font-weight: 300;
 }

@@ -5,22 +5,22 @@
 .ArrayField {
   display: flex;
   flex-direction: column;
-  background: var(--puck-surface-sunken);
-  border: 1px solid var(--puck-border-subtle);
-  border-radius: var(--puck-radius-md);
+  background: var(--fe-surface-sunken);
+  border: 1px solid var(--fe-border-subtle);
+  border-radius: var(--fe-radius-md);
   overflow: hidden;
 }
 
 .ArrayField--isDraggingFrom {
-  background-color: var(--puck-accent-soft);
+  background-color: var(--fe-accent-soft);
   overflow: hidden;
 }
 
 .ArrayField-addButton {
-  background-color: var(--puck-surface-panel);
+  background-color: var(--fe-surface-panel);
   border: none;
   display: flex;
-  color: var(--puck-text-accent);
+  color: var(--fe-text-accent);
   justify-content: center;
   cursor: pointer;
   width: 100%;
@@ -28,33 +28,33 @@
   padding: 10px; /* Retain same height as other items */
   text-align: left;
   font-weight: 500;
-  transition: background-color var(--puck-motion-fast) var(--puck-ease),
-    color var(--puck-motion-fast) var(--puck-ease);
+  transition: background-color var(--fe-motion-fast) var(--fe-ease),
+    color var(--fe-motion-fast) var(--fe-ease);
 }
 
 .ArrayField--hasItems > .ArrayField-addButton {
-  border-top: 1px solid var(--puck-border-subtle);
+  border-top: 1px solid var(--fe-border-subtle);
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
 
 .ArrayField-addButton:focus-visible {
   outline: none;
-  box-shadow: var(--puck-ring);
+  box-shadow: var(--fe-ring);
   position: relative;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .ArrayField:not(.ArrayField--isDraggingFrom) > .ArrayField-addButton:hover {
-    background: var(--puck-surface-hover);
-    color: var(--puck-accent-strong);
+    background: var(--fe-surface-hover);
+    color: var(--fe-accent-strong);
     transition: none;
   }
 }
 
 .ArrayField:not(.ArrayField--isDraggingFrom) > .ArrayField-addButton:active {
-  background: var(--puck-accent-soft);
-  color: var(--puck-accent-strong);
+  background: var(--fe-accent-soft);
+  color: var(--fe-accent-strong);
   transition: none;
 }
 
@@ -72,7 +72,7 @@
 }
 
 .ArrayFieldItem {
-  border-top: 1px solid var(--puck-border-subtle);
+  border-top: 1px solid var(--fe-border-subtle);
 }
 
 .ArrayFieldItem--isDragging {
@@ -86,33 +86,33 @@
 .ArrayFieldItem--isExpanded {
   border-bottom: 0;
   outline-offset: 0px !important;
-  outline: 1px solid var(--puck-accent) !important;
+  outline: 1px solid var(--fe-accent) !important;
   z-index: 2;
 }
 
 .ArrayFieldItem--isDragging {
-  outline: 1px var(--puck-accent) solid !important;
+  outline: 1px var(--fe-accent) solid !important;
 }
 
 .ArrayFieldItem--isDragging .ArrayFieldItem-summary:active {
-  background-color: var(--puck-surface-panel);
+  background-color: var(--fe-surface-panel);
 }
 
 .ArrayFieldItem-summary {
-  background: var(--puck-surface-panel);
-  color: var(--puck-text-secondary);
+  background: var(--fe-surface-panel);
+  color: var(--fe-text-secondary);
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 2px;
   justify-content: space-between;
-  font-size: var(--puck-font-size-xxs);
+  font-size: var(--fe-font-size-xxs);
   list-style: none;
   padding: 10px 12px;
   position: relative;
   overflow: hidden;
-  transition: background-color var(--puck-motion-fast) var(--puck-ease),
-    color var(--puck-motion-fast) var(--puck-ease);
+  transition: background-color var(--fe-motion-fast) var(--fe-ease),
+    color var(--fe-motion-fast) var(--fe-ease);
 }
 
 .ArrayFieldItem--noFields > .ArrayFieldItem-summary {
@@ -121,31 +121,31 @@
 
 .ArrayFieldItem-summary:focus-visible {
   outline: none;
-  box-shadow: var(--puck-ring);
+  box-shadow: var(--fe-ring);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .ArrayFieldItem-summary:hover {
-    background-color: var(--puck-surface-hover);
-    color: var(--puck-text-primary);
+    background-color: var(--fe-surface-hover);
+    color: var(--fe-text-primary);
     transition: none;
   }
 }
 
 .ArrayFieldItem-summary:active {
-  background-color: var(--puck-accent-soft);
+  background-color: var(--fe-accent-soft);
   transition: none;
 }
 
 .ArrayFieldItem--isExpanded > .ArrayFieldItem-summary {
-  background: var(--puck-accent-soft);
-  color: var(--puck-text-accent);
+  background: var(--fe-accent-soft);
+  color: var(--fe-text-accent);
   font-weight: 600;
   transition: none;
 }
 
 .ArrayFieldItem-body {
-  background: var(--puck-surface-panel);
+  background: var(--fe-surface-panel);
   display: none;
 }
 
@@ -155,7 +155,7 @@
 
 .ArrayFieldItem-fieldset {
   border: none;
-  border-top: 1px solid var(--puck-border-subtle);
+  border-top: 1px solid var(--fe-border-subtle);
   margin: 0;
   min-width: 0;
   padding: 14px 12px;
@@ -168,11 +168,11 @@
 }
 
 .ArrayFieldItem-actions {
-  color: var(--puck-text-tertiary);
+  color: var(--fe-text-tertiary);
   display: flex;
   gap: 4px;
   opacity: 0;
-  transition: opacity var(--puck-motion-fast) var(--puck-ease);
+  transition: opacity var(--fe-motion-fast) var(--fe-ease);
 }
 
 .ArrayFieldItem-summary:focus-within

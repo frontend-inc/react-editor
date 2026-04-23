@@ -12,7 +12,7 @@
 .ShopifyProduct-image {
   width: 100%;
   aspect-ratio: 1 / 1;
-  background: var(--puck-color-grey-11);
+  background: var(--fe-color-grey-11);
   border-radius: 4px;
   object-fit: cover;
   display: block;
@@ -21,24 +21,24 @@
 .ShopifyProduct-placeholder {
   width: 100%;
   aspect-ratio: 1 / 1;
-  background: var(--puck-color-grey-11);
+  background: var(--fe-color-grey-11);
   border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--puck-color-grey-05);
+  color: var(--fe-color-grey-05);
   font-size: 14px;
 }
 
 .ShopifyProduct-title {
   font-size: 18px;
   font-weight: 600;
-  color: var(--puck-color-grey-02);
+  color: var(--fe-color-grey-02);
 }
 
 .ShopifyProduct-vendor {
   font-size: 13px;
-  color: var(--puck-color-grey-05);
+  color: var(--fe-color-grey-05);
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
@@ -46,12 +46,12 @@
 .ShopifyProduct-price {
   font-size: 16px;
   font-weight: 500;
-  color: var(--puck-color-grey-02);
+  color: var(--fe-color-grey-02);
 }
 
 .ShopifyProduct-description {
   font-size: 14px;
   line-height: 1.5;
-  color: var(--puck-color-grey-04);
+  color: var(--fe-color-grey-04);
   font-weight: 300;
 }

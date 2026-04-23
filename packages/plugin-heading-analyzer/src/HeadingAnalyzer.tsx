@@ -156,7 +156,7 @@ export const HeadingAnalyzer = () => {
       <small
         className={getClassName("cssWarning")}
         style={{
-          color: "var(--puck-color-red-04)",
+          color: "var(--fe-color-red-04)",
           display: "block",
           marginBottom: 16,
         }}
@@ -196,7 +196,7 @@ export const HeadingAnalyzer = () => {
                               scrollIntoView(el);
 
                               el.style.outline =
-                                "4px solid var(--puck-color-rose-06)";
+                                "4px solid var(--fe-color-rose-06)";
                               el.style.outlineOffset = "4px";
 
                               setTimeout(() => {

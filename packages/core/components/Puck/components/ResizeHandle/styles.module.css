@@ -10,7 +10,7 @@
   }
 
   .ResizeHandle:hover {
-    background: var(--puck-accent-soft);
+    background: var(--fe-accent-soft);
   }
 
   .ResizeHandle--left {

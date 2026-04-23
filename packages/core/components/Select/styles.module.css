@@ -7,15 +7,15 @@
   align-items: center;
   background: transparent;
   border: none;
-  border-radius: var(--puck-radius-sm);
+  border-radius: var(--fe-radius-sm);
   display: flex;
   justify-content: center;
   gap: 0px;
   height: 100%;
   padding: 4px;
   padding-right: 2px;
-  transition: background-color var(--puck-motion-fast) var(--puck-ease),
-    color var(--puck-motion-fast) var(--puck-ease);
+  transition: background-color var(--fe-motion-fast) var(--fe-ease),
+    color var(--fe-motion-fast) var(--fe-ease);
 }
 
 .Select--hasOptions .Select-button {
@@ -44,27 +44,27 @@
 
 .Select--hasOptions:not(.Select--disabled) .Select-button:hover,
 .Select--hasValue .Select-button {
-  background: var(--puck-surface-hover);
-  color: var(--puck-text-accent);
+  background: var(--fe-surface-hover);
+  color: var(--fe-text-accent);
 }
 
 .Select--disabled .Select-button {
-  color: var(--puck-text-tertiary);
+  color: var(--fe-text-tertiary);
 }
 
 .Select--actionBar {
   &.Select--hasOptions .Select-button:hover,
   &.Select--hasValue .Select-button {
     background: rgba(255, 255, 255, 0.12);
-    color: var(--puck-text-inverse);
+    color: var(--fe-text-inverse);
   }
 }
 
 .Select-items {
-  background: var(--puck-surface-panel);
-  border: 1px solid var(--puck-border-subtle);
-  border-radius: var(--puck-radius-lg);
-  box-shadow: var(--puck-shadow-lg);
+  background: var(--fe-surface-panel);
+  border: 1px solid var(--fe-border-subtle);
+  border-radius: var(--fe-radius-lg);
+  box-shadow: var(--fe-shadow-lg);
   margin: 10px 8px;
   margin-left: 0;
   padding: 4px;
@@ -74,32 +74,32 @@
 
 .SelectItem {
   background: transparent;
-  border-radius: var(--puck-radius-sm);
+  border-radius: var(--fe-radius-sm);
   border: none;
-  color: var(--puck-text-secondary);
+  color: var(--fe-text-secondary);
   cursor: pointer;
   display: flex;
   gap: 8px;
   align-items: center;
-  font-size: var(--puck-font-size-xxs);
+  font-size: var(--fe-font-size-xxs);
   margin: 0;
   padding: 8px 12px;
   width: 100%;
-  transition: background-color var(--puck-motion-fast) var(--puck-ease),
-    color var(--puck-motion-fast) var(--puck-ease);
+  transition: background-color var(--fe-motion-fast) var(--fe-ease),
+    color var(--fe-motion-fast) var(--fe-ease);
 }
 
 .SelectItem--isSelected {
-  background: var(--puck-accent-soft);
-  color: var(--puck-text-accent);
+  background: var(--fe-accent-soft);
+  color: var(--fe-text-accent);
   font-weight: 500;
 }
 
 .SelectItem--isSelected .SelectItem-icon {
-  color: var(--puck-text-accent);
+  color: var(--fe-text-accent);
 }
 
 .SelectItem:hover {
-  background: var(--puck-surface-hover);
-  color: var(--puck-text-accent);
+  background: var(--fe-surface-hover);
+  color: var(--fe-text-accent);
 }

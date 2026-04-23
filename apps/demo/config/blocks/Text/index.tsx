@@ -56,7 +56,7 @@ const TextInner: ComponentConfig<TextProps> = {
         <span
           style={{
             color:
-              color === "default" ? "inherit" : "var(--puck-color-grey-05)",
+              color === "default" ? "inherit" : "var(--fe-color-grey-05)",
             display: "flex",
             textAlign: align,
             width: "100%",

@@ -17,9 +17,9 @@
  */
 
 .Puck {
-  --puck-space-px: 16px;
-  color: var(--puck-text-primary);
-  font-family: var(--puck-font-family);
+  --fe-space-px: 16px;
+  color: var(--fe-text-primary);
+  font-family: var(--fe-font-family);
   overflow-x: hidden;
 }
 
@@ -39,22 +39,22 @@
 }
 
 .PuckLayout-inner {
-  --puck-frame-width: auto;
-  --puck-side-nav-width: min-content;
-  --puck-side-bar-width: 0px;
-  --puck-left-side-bar-width: var(
-    --puck-user-left-side-bar-width,
-    var(--puck-side-bar-width)
+  --fe-frame-width: auto;
+  --fe-side-nav-width: min-content;
+  --fe-side-bar-width: 0px;
+  --fe-left-side-bar-width: var(
+    --fe-user-left-side-bar-width,
+    var(--fe-side-bar-width)
   );
-  --puck-right-side-bar-width: var(
-    --puck-user-right-side-bar-width,
-    var(--puck-side-bar-width)
+  --fe-right-side-bar-width: var(
+    --fe-user-right-side-bar-width,
+    var(--fe-side-bar-width)
   );
-  background-color: var(--puck-surface-app);
+  background-color: var(--fe-surface-app);
   display: grid;
   grid-template-areas: "header" "editor" "left" "right" "sidenav";
-  grid-template-columns: var(--puck-frame-width);
-  grid-template-rows: min-content auto 0 0 var(--puck-side-nav-width);
+  grid-template-columns: var(--fe-frame-width);
+  grid-template-rows: min-content auto 0 0 var(--fe-side-nav-width);
   height: 100%;
   position: relative;
   transition: grid-template-rows 150ms ease-in;
@@ -64,39 +64,39 @@
 
 @media (min-width: 638px) {
   .PuckLayout-inner {
-    --puck-side-nav-width: 44px;
+    --fe-side-nav-width: 44px;
     grid-template-areas: "header header header header" "sidenav left editor right";
-    grid-template-columns: var(--puck-side-nav-width) 0 var(--puck-frame-width) 0;
+    grid-template-columns: var(--fe-side-nav-width) 0 var(--fe-frame-width) 0;
     grid-template-rows: min-content auto;
   }
 
   .Puck--hidePlugins .PuckLayout-inner {
-    --puck-side-nav-width: 0;
+    --fe-side-nav-width: 0;
   }
 }
 
 .PuckLayout--mounted .PuckLayout-inner {
-  --puck-side-bar-width: 186px;
+  --fe-side-bar-width: 186px;
 }
 
 .PuckLayout--mobilePanelHeightToggle.PuckLayout--leftSideBarVisible
   .PuckLayout-inner {
   /* Setting header to 0 causes jump as it can't be animated. Can't use fixed number as we don't know user's header dimensions. Consider using ref + JS. */
-  grid-template-rows: 0 auto 30% 0 var(--puck-side-nav-width);
+  grid-template-rows: 0 auto 30% 0 var(--fe-side-nav-width);
 }
 
 .PuckLayout--mobilePanelHeightToggle.PuckLayout--leftSideBarVisible.PuckLayout--isExpanded
   .PuckLayout-inner {
   /* Setting header to 0 causes jump as it can't be animated. Can't use fixed number as we don't know user's header dimensions. Consider using ref + JS. */
-  grid-template-rows: 0 auto 55% 0 var(--puck-side-nav-width);
+  grid-template-rows: 0 auto 55% 0 var(--fe-side-nav-width);
 }
 
 @media (min-width: 638px) {
   .PuckLayout--mobilePanelHeightToggle.PuckLayout--leftSideBarVisible
     .PuckLayout-inner {
     grid-template-columns:
-      var(--puck-side-nav-width) var(--puck-left-side-bar-width) var(
-        --puck-frame-width
+      var(--fe-side-nav-width) var(--fe-left-side-bar-width) var(
+        --fe-frame-width
       )
       0;
     grid-template-rows: min-content auto;
@@ -108,7 +108,7 @@
 .PuckLayout--mobilePanelHeightMinContent.PuckLayout--leftSideBarVisible.PuckLayout--isExpanded
   .PuckLayout-inner {
   /* Setting header to 0 causes jump as it can't be animated. Can't use fixed number as we don't know user's header dimensions. Consider using ref + JS. */
-  grid-template-rows: 0 auto min-content 0 var(--puck-side-nav-width);
+  grid-template-rows: 0 auto min-content 0 var(--fe-side-nav-width);
 }
 
 @media (min-width: 638px) {
@@ -121,8 +121,8 @@
   .PuckLayout--mobilePanelHeightMinContent.PuckLayout--leftSideBarVisible.PuckLayout--isExpanded
     .PuckLayout-inner {
     grid-template-columns:
-      var(--puck-side-nav-width) var(--puck-left-side-bar-width) var(
-        --puck-frame-width
+      var(--fe-side-nav-width) var(--fe-left-side-bar-width) var(
+        --fe-frame-width
       )
       0;
     grid-template-rows: min-content auto;
@@ -132,8 +132,8 @@
 @media (min-width: 638px) {
   .PuckLayout--rightSideBarVisible .PuckLayout-inner {
     grid-template-columns:
-      var(--puck-side-nav-width) 0 var(--puck-frame-width)
-      var(--puck-right-side-bar-width);
+      var(--fe-side-nav-width) 0 var(--fe-frame-width)
+      var(--fe-right-side-bar-width);
   }
 }
 
@@ -141,58 +141,58 @@
   .PuckLayout--leftSideBarVisible.PuckLayout--rightSideBarVisible
     .PuckLayout-inner {
     grid-template-columns:
-      var(--puck-side-nav-width) var(--puck-left-side-bar-width) var(
-        --puck-frame-width
+      var(--fe-side-nav-width) var(--fe-left-side-bar-width) var(
+        --fe-frame-width
       )
-      var(--puck-right-side-bar-width);
+      var(--fe-right-side-bar-width);
   }
 }
 
 @media (min-width: 458px) {
   .PuckLayout-mounted .PuckLayout-inner {
-    --puck-frame-width: minmax(266px, auto);
+    --fe-frame-width: minmax(266px, auto);
   }
 }
 
 @media (min-width: 638px) {
   .PuckLayout .PuckLayout-inner {
-    --puck-side-bar-width: minmax(186px, 250px);
+    --fe-side-bar-width: minmax(186px, 250px);
   }
 }
 
 @media (min-width: 766px) {
   .PuckLayout .PuckLayout-inner {
-    --puck-frame-width: auto;
+    --fe-frame-width: auto;
   }
 }
 
 @media (min-width: 990px) {
   .PuckLayout .PuckLayout-inner {
-    --puck-side-bar-width: 256px;
+    --fe-side-bar-width: 256px;
   }
 }
 
 @media (min-width: 1198px) {
   .PuckLayout .PuckLayout-inner {
-    --puck-side-bar-width: 274px;
+    --fe-side-bar-width: 274px;
   }
 }
 
 @media (min-width: 1398px) {
   .PuckLayout .PuckLayout-inner {
-    --puck-side-bar-width: 290px;
+    --fe-side-bar-width: 290px;
   }
 }
 
 @media (min-width: 1598px) {
   .PuckLayout .PuckLayout-inner {
-    --puck-side-bar-width: 320px;
+    --fe-side-bar-width: 320px;
   }
 }
 
 .PuckLayout-nav {
-  border-top: 1px solid var(--puck-border-subtle);
-  background-color: var(--puck-surface-panel);
+  border-top: 1px solid var(--fe-border-subtle);
+  background-color: var(--fe-surface-panel);
   grid-area: sidenav;
   overflow: hidden;
   width: 100%;
@@ -201,7 +201,7 @@
 @media (min-width: 638px) {
   .PuckLayout-nav {
     border-top: 0;
-    border-right: 1px solid var(--puck-border-subtle);
+    border-right: 1px solid var(--fe-border-subtle);
     box-sizing: border-box;
   }
 }

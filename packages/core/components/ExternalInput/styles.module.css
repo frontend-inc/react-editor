@@ -7,53 +7,53 @@
   gap: 8px;
   align-items: center;
   justify-content: center;
-  background-color: var(--puck-surface-panel);
-  border: 1px solid var(--puck-border-default);
-  border-radius: var(--puck-radius-md);
-  color: var(--puck-text-accent);
+  background-color: var(--fe-surface-panel);
+  border: 1px solid var(--fe-border-default);
+  border-radius: var(--fe-radius-md);
+  color: var(--fe-text-accent);
   padding: 10px 12px;
   font-weight: 500;
   white-space: nowrap;
   text-overflow: ellipsis;
-  transition: background-color var(--puck-motion-fast) var(--puck-ease),
-    border-color var(--puck-motion-fast) var(--puck-ease);
+  transition: background-color var(--fe-motion-fast) var(--fe-ease),
+    border-color var(--fe-motion-fast) var(--fe-ease);
   position: relative;
   overflow: hidden;
   flex-grow: 1;
 }
 
 .ExternalInput--dataSelected .ExternalInput-button {
-  color: var(--puck-text-primary);
+  color: var(--fe-text-primary);
   display: block;
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
 }
 
 .ExternalInput--readOnly .ExternalInput-button {
-  background-color: var(--puck-surface-sunken);
+  background-color: var(--fe-surface-sunken);
 }
 
 .ExternalInput-detachButton {
-  border: 1px solid var(--puck-border-default);
-  border-top-right-radius: var(--puck-radius-md);
-  border-bottom-right-radius: var(--puck-radius-md);
-  background-color: var(--puck-surface-sunken);
-  color: var(--puck-text-tertiary);
+  border: 1px solid var(--fe-border-default);
+  border-top-right-radius: var(--fe-radius-md);
+  border-bottom-right-radius: var(--fe-radius-md);
+  background-color: var(--fe-surface-sunken);
+  color: var(--fe-text-tertiary);
   display: flex;
   gap: 8px;
   align-items: center;
   justify-content: center;
   padding: 8px 12px;
   position: relative;
-  transition: background-color var(--puck-motion-fast) var(--puck-ease),
-    color var(--puck-motion-fast) var(--puck-ease);
+  transition: background-color var(--fe-motion-fast) var(--fe-ease),
+    color var(--fe-motion-fast) var(--fe-ease);
   margin-inline-start: -1px;
 }
 
 .ExternalInput-button:focus-visible,
 .ExternalInput-detachButton:focus-visible {
   outline: none;
-  box-shadow: var(--puck-ring);
+  box-shadow: var(--fe-ring);
   z-index: 1;
 }
 
@@ -61,26 +61,26 @@
   .ExternalInput:not(.ExternalInput--readOnly) .ExternalInput-button:hover,
   .ExternalInput:not(.ExternalInput--readOnly)
     .ExternalInput-detachButton:hover {
-    background: var(--puck-surface-hover);
-    border-color: var(--puck-border-strong);
+    background: var(--fe-surface-hover);
+    border-color: var(--fe-border-strong);
     transition: none;
   }
 
   .ExternalInput:not(.ExternalInput--readOnly)
     .ExternalInput-detachButton:hover {
-    color: var(--puck-text-accent);
+    color: var(--fe-text-accent);
   }
 }
 
 .ExternalInput:not(.ExternalInput--readOnly) .ExternalInput-button:active,
 .ExternalInput:not(.ExternalInput--readOnly)
   .ExternalInput-detachButton:active {
-  background: var(--puck-accent-soft);
+  background: var(--fe-accent-soft);
   transition: none;
 }
 
 .ExternalInputModal {
-  color: var(--puck-color-black);
+  color: var(--fe-color-black);
   display: grid;
   grid-template-rows: min-content minmax(128px, 100%) min-content;
   grid-template-columns: 100%;
@@ -106,7 +106,7 @@
 }
 
 .ExternalInputModal-filters {
-  border-bottom: 1px solid var(--puck-border-subtle);
+  border-bottom: 1px solid var(--fe-border-subtle);
 }
 
 .ExternalInputModal--filtersToggled .ExternalInputModal-filters {
@@ -115,7 +115,7 @@
 
 @media (min-width: 458px) {
   .ExternalInputModal-filters {
-    border-inline-end: 1px solid var(--puck-border-subtle);
+    border-inline-end: 1px solid var(--fe-border-subtle);
     display: none;
   }
 
@@ -125,8 +125,8 @@
 }
 
 .ExternalInputModal-masthead {
-  background-color: var(--puck-surface-sunken);
-  border-bottom: 1px solid var(--puck-border-subtle);
+  background-color: var(--fe-surface-sunken);
+  border-bottom: 1px solid var(--fe-border-subtle);
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
@@ -143,29 +143,29 @@
 .ExternalInputModal-table {
   border-collapse: unset;
   border-spacing: 0px;
-  color: var(--puck-text-primary);
+  color: var(--fe-text-primary);
   position: relative;
   z-index: 0;
   min-width: 100%;
 }
 
 .ExternalInputModal-thead {
-  background-color: var(--puck-surface-panel);
+  background-color: var(--fe-surface-panel);
   position: sticky;
   top: 0;
   z-index: 1;
 }
 
 .ExternalInputModal-th {
-  border-bottom: 1px solid var(--puck-border-subtle);
-  color: var(--puck-text-secondary);
+  border-bottom: 1px solid var(--fe-border-subtle);
+  color: var(--fe-text-secondary);
   font-weight: 500;
   font-size: 14px;
   padding: 16px 24px;
 }
 
 .ExternalInputModal-td {
-  border-bottom: 1px solid var(--puck-border-subtle);
+  border-bottom: 1px solid var(--fe-border-subtle);
   padding: 16px 24px;
 }
 
@@ -177,8 +177,8 @@
 
 @media (hover: hover) and (pointer: fine) {
   .ExternalInputModal-tbody .ExternalInputModal-tr:hover {
-    background: var(--puck-surface-hover);
-    color: var(--puck-text-accent);
+    background: var(--fe-surface-hover);
+    color: var(--fe-text-accent);
     cursor: pointer;
     position: relative;
     margin-inline-start: -5px;
@@ -187,7 +187,7 @@
   .ExternalInputModal-tbody
     .ExternalInputModal-tr:hover
     .ExternalInputModal-td:first-of-type {
-    border-inline-start: 4px solid var(--puck-text-accent);
+    border-inline-start: 4px solid var(--fe-text-accent);
     padding-inline-start: 20px;
   }
 }
@@ -210,7 +210,7 @@
   display: none;
   background-color: color-mix(
     in srgb,
-    var(--puck-surface-panel) 90%,
+    var(--fe-surface-panel) 90%,
     transparent
   );
   padding: 64px;
@@ -242,35 +242,35 @@
 
 .ExternalInputModal-search {
   display: flex;
-  background: var(--puck-surface-panel);
+  background: var(--fe-surface-panel);
   border-width: 1px;
   border-style: solid;
-  border-color: var(--puck-border-subtle);
+  border-color: var(--fe-border-subtle);
   border-radius: 4px;
   flex-grow: 1;
   transition: border-color 50ms ease-in;
 }
 
 .ExternalInputModal-search:focus-within {
-  border-color: var(--puck-border-strong);
-  outline: 2px solid var(--puck-accent);
+  border-color: var(--fe-border-strong);
+  outline: 2px solid var(--fe-accent);
   transition: none;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .ExternalInputModal-search:hover {
-    border-color: var(--puck-border-strong);
+    border-color: var(--fe-border-strong);
     transition: none;
   }
 }
 
 .ExternalInputModal-searchIcon {
   align-items: center;
-  background: var(--puck-surface-sunken);
+  background: var(--fe-surface-sunken);
   border-bottom-left-radius: 4px;
   border-top-left-radius: 4px;
-  border-inline-end: 1px solid var(--puck-border-subtle);
-  color: var(--puck-text-tertiary);
+  border-inline-end: 1px solid var(--fe-border-subtle);
+  color: var(--fe-text-tertiary);
   display: flex;
   justify-content: center;
   padding: 12px 15px;
@@ -278,13 +278,13 @@
 }
 
 .ExternalInputModal-search:focus-within .ExternalInputModal-searchIcon {
-  color: var(--puck-text-secondary);
+  color: var(--fe-text-secondary);
   transition: none;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .ExternalInputModal-search:hover .ExternalInputModal-searchIcon {
-    color: var(--puck-text-secondary);
+    color: var(--fe-text-secondary);
     transition: none;
   }
 }
@@ -302,7 +302,7 @@
 .ExternalInputModal-searchInput {
   border: none;
   border-radius: 4px;
-  background: var(--puck-surface-panel);
+  background: var(--fe-surface-panel);
   font-family: inherit;
   font-size: 14px;
   padding: 12px 15px;
@@ -331,9 +331,9 @@
 }
 
 .ExternalInputModal-footerContainer {
-  background-color: var(--puck-surface-sunken);
-  border-top: 1px solid var(--puck-border-subtle);
-  color: var(--puck-text-secondary);
+  background-color: var(--fe-surface-sunken);
+  border-top: 1px solid var(--fe-border-subtle);
+  color: var(--fe-text-secondary);
   padding: 16px;
 }
 
@@ -344,7 +344,7 @@
 }
 
 .ExternalInputModal-field {
-  color: var(--puck-text-secondary);
+  color: var(--fe-text-secondary);
   margin: 16px;
   margin-bottom: 12px;
   display: block;

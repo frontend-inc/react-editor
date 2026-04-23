@@ -20,57 +20,57 @@
   /* Unitless font sizes
        ======================================================================== */
 
-  --puck-font-size-scale-base-unitless: 12;
-  --puck-font-size-xxxs-unitless: 12;
-  --puck-font-size-xxs-unitless: 14;
-  --puck-font-size-xs-unitless: 16;
-  --puck-font-size-s-unitless: 18;
-  --puck-font-size-m-unitless: 21;
-  --puck-font-size-l-unitless: 24;
-  --puck-font-size-xl-unitless: 28;
-  --puck-font-size-xxl-unitless: 36;
-  --puck-font-size-xxxl-unitless: 48;
-  --puck-font-size-xxxxl-unitless: 56;
+  --fe-font-size-scale-base-unitless: 12;
+  --fe-font-size-xxxs-unitless: 12;
+  --fe-font-size-xxs-unitless: 14;
+  --fe-font-size-xs-unitless: 16;
+  --fe-font-size-s-unitless: 18;
+  --fe-font-size-m-unitless: 21;
+  --fe-font-size-l-unitless: 24;
+  --fe-font-size-xl-unitless: 28;
+  --fe-font-size-xxl-unitless: 36;
+  --fe-font-size-xxxl-unitless: 48;
+  --fe-font-size-xxxxl-unitless: 56;
 
   /* Descriptive font sizes
        ======================================================================== */
 
-  --puck-font-size-xxxs: calc(1rem * var(--puck-font-size-xxxs-unitless) / 16);
-  --puck-font-size-xxs: calc(1rem * var(--puck-font-size-xxs-unitless) / 16);
-  --puck-font-size-xs: calc(1rem * var(--puck-font-size-xs-unitless) / 16);
-  --puck-font-size-s: calc(1rem * var(--puck-font-size-s-unitless) / 16);
-  --puck-font-size-m: calc(1rem * var(--puck-font-size-m-unitless) / 16);
-  --puck-font-size-l: calc(1rem * var(--puck-font-size-l-unitless) / 16);
-  --puck-font-size-xl: calc(1rem * var(--puck-font-size-xl-unitless) / 16);
-  --puck-font-size-xxl: calc(1rem * var(--puck-font-size-xxl-unitless) / 16);
-  --puck-font-size-xxxl: calc(1rem * var(--puck-font-size-xxxl-unitless) / 16);
-  --puck-font-size-xxxxl: calc(
-    1rem * var(--puck-font-size-xxxxl-unitless) / 16
+  --fe-font-size-xxxs: calc(1rem * var(--fe-font-size-xxxs-unitless) / 16);
+  --fe-font-size-xxs: calc(1rem * var(--fe-font-size-xxs-unitless) / 16);
+  --fe-font-size-xs: calc(1rem * var(--fe-font-size-xs-unitless) / 16);
+  --fe-font-size-s: calc(1rem * var(--fe-font-size-s-unitless) / 16);
+  --fe-font-size-m: calc(1rem * var(--fe-font-size-m-unitless) / 16);
+  --fe-font-size-l: calc(1rem * var(--fe-font-size-l-unitless) / 16);
+  --fe-font-size-xl: calc(1rem * var(--fe-font-size-xl-unitless) / 16);
+  --fe-font-size-xxl: calc(1rem * var(--fe-font-size-xxl-unitless) / 16);
+  --fe-font-size-xxxl: calc(1rem * var(--fe-font-size-xxxl-unitless) / 16);
+  --fe-font-size-xxxxl: calc(
+    1rem * var(--fe-font-size-xxxxl-unitless) / 16
   );
 
   /* Functional font sizes
       ========================================================================= */
 
-  --puck-font-size-base: var(--puck-font-size-xs);
+  --fe-font-size-base: var(--fe-font-size-xs);
 
   /* Descriptive line heights
       ========================================================================= */
 
   --line-height-reset: 1;
   --line-height-xs: calc(
-    var(--space-m-unitless) / var(--puck-font-size-m-unitless)
+    var(--space-m-unitless) / var(--fe-font-size-m-unitless)
   );
   --line-height-s: calc(
-    var(--space-m-unitless) / var(--puck-font-size-s-unitless)
+    var(--space-m-unitless) / var(--fe-font-size-s-unitless)
   );
   --line-height-m: calc(
-    var(--space-m-unitless) / var(--puck-font-size-xs-unitless)
+    var(--space-m-unitless) / var(--fe-font-size-xs-unitless)
   );
   --line-height-l: calc(
-    var(--space-m-unitless) / var(--puck-font-size-xxs-unitless)
+    var(--space-m-unitless) / var(--fe-font-size-xxs-unitless)
   );
   --line-height-xl: calc(
-    var(--space-m-unitless) / var(--puck-font-size-scale-base-unitless)
+    var(--space-m-unitless) / var(--fe-font-size-scale-base-unitless)
   );
 
   /* Functional line heights
@@ -85,13 +85,13 @@
     Helvetica Neue, sans-serif, Apple Color Emoji, Segoe UI Emoji,
     Segoe UI Symbol;
 
-  --puck-font-family: Inter, var(--fallback-font-stack);
-  --puck-font-family-monospaced: ui-monospace, "Cascadia Code",
+  --fe-font-family: Inter, var(--fallback-font-stack);
+  --fe-font-family-monospaced: ui-monospace, "Cascadia Code",
     "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono", monospace;
 }
 
 @supports (font-variation-settings: normal) {
   :root {
-    --puck-font-family: InterVariable, var(--fallback-font-stack);
+    --fe-font-family: InterVariable, var(--fallback-font-stack);
   }
 }

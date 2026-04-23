@@ -1,6 +1,6 @@
 .PuckFields {
   position: relative;
-  font-family: var(--puck-font-family);
+  font-family: var(--fe-font-family);
 }
 
 .PuckFields--isLoading {
@@ -8,7 +8,7 @@
 }
 
 .PuckFields-loadingOverlay {
-  background: var(--puck-surface-panel);
+  background: var(--fe-surface-panel);
   display: flex;
   justify-content: flex-end;
   align-items: flex-start;
@@ -34,57 +34,57 @@
 }
 
 .PuckFields--wrapFields .PuckFields-field {
-  color: var(--puck-text-secondary);
+  color: var(--fe-text-secondary);
   padding: 14px 16px;
   display: block;
 }
 
 .PuckFields--wrapFields .PuckFields-field + .PuckFields-field {
-  border-top: 1px solid var(--puck-border-subtle);
+  border-top: 1px solid var(--fe-border-subtle);
 }
 
 .PuckFields-syncButton {
   align-items: center;
   background: transparent;
-  border: 1px solid var(--puck-color-global);
-  border-radius: var(--puck-radius-md);
-  color: var(--puck-color-global);
+  border: 1px solid var(--fe-color-global);
+  border-radius: var(--fe-radius-md);
+  color: var(--fe-color-global);
   cursor: pointer;
   display: flex;
   font: inherit;
-  font-size: var(--puck-font-size-xxs);
+  font-size: var(--fe-font-size-xxs);
   font-weight: 500;
   gap: 8px;
   justify-content: center;
   margin: 12px 16px;
   padding: 10px;
-  transition: background-color var(--puck-motion-fast) var(--puck-ease),
-    border-color var(--puck-motion-fast) var(--puck-ease),
-    color var(--puck-motion-fast) var(--puck-ease);
+  transition: background-color var(--fe-motion-fast) var(--fe-ease),
+    border-color var(--fe-motion-fast) var(--fe-ease),
+    color var(--fe-motion-fast) var(--fe-ease);
   width: calc(100% - 32px);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .PuckFields-syncButton:hover {
-    background: var(--puck-color-global-soft);
+    background: var(--fe-color-global-soft);
   }
 }
 
 .PuckFields-syncButton:focus-visible {
   outline: none;
-  box-shadow: var(--puck-ring);
+  box-shadow: var(--fe-ring);
 }
 
 .PuckFields-syncButton--unlinked {
-  border-color: var(--puck-border-default);
-  color: var(--puck-text-secondary);
+  border-color: var(--fe-border-default);
+  color: var(--fe-text-secondary);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .PuckFields-syncButton--unlinked:hover {
-    background: var(--puck-surface-hover);
-    border-color: var(--puck-border-strong);
-    color: var(--puck-text-primary);
+    background: var(--fe-surface-hover);
+    border-color: var(--fe-border-strong);
+    color: var(--fe-text-primary);
   }
 }
 

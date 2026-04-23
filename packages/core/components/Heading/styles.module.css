@@ -1,6 +1,6 @@
 .Heading {
   display: block;
-  color: var(--puck-text-primary);
+  color: var(--fe-text-primary);
   font-weight: 600;
   letter-spacing: -0.01em;
   margin: 0;
@@ -11,35 +11,35 @@
 }
 
 .Heading--xxxxl {
-  font-size: var(--puck-font-size-xxxxl);
+  font-size: var(--fe-font-size-xxxxl);
   letter-spacing: 0.08ch;
   font-weight: 800;
 }
 
 .Heading--xxxl {
-  font-size: var(--puck-font-size-xxxl);
+  font-size: var(--fe-font-size-xxxl);
 }
 
 .Heading--xxl {
-  font-size: var(--puck-font-size-xxl);
+  font-size: var(--fe-font-size-xxl);
 }
 
 .Heading--xl {
-  font-size: var(--puck-font-size-xl);
+  font-size: var(--fe-font-size-xl);
 }
 
 .Heading--l {
-  font-size: var(--puck-font-size-l);
+  font-size: var(--fe-font-size-l);
 }
 
 .Heading--m {
-  font-size: var(--puck-font-size-m);
+  font-size: var(--fe-font-size-m);
 }
 
 .Heading--s {
-  font-size: var(--puck-font-size-s);
+  font-size: var(--fe-font-size-s);
 }
 
 .Heading--xs {
-  font-size: var(--puck-font-size-xs);
+  font-size: var(--fe-font-size-xs);
 }
