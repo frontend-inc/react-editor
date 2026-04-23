@@ -39,3 +39,6 @@ yarn-error.log*
 .idea
 
 dist
+
+# typescript incremental build artifacts
+*.tsbuildinfo
