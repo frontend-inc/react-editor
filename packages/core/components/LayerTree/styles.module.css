@@ -9,14 +9,20 @@
 }
 
 .LayerTree-zoneTitle {
-  color: var(--puck-text-tertiary);
-  font-size: var(--puck-font-size-xxs);
+  color: var(--puck-color-azure-05);
+  font-family: var(--puck-font-family-monospaced);
+  font-size: var(--puck-font-size-xxxs);
 }
 
 .LayerTree-helper {
   text-align: center;
-  color: var(--puck-text-tertiary);
-  margin: 8px 4px;
+  color: var(--puck-accent-strong);
+  background: var(--puck-accent-soft);
+  border-radius: var(--puck-radius-md);
+  font-family: var(--puck-font-family-monospaced);
+  font-size: var(--puck-font-size-xxxs);
+  padding: 8px;
+  margin: 4px 4px 8px;
 }
 
 .Layer {
@@ -115,6 +121,10 @@
   align-items: center;
   margin: 6px 4px;
   overflow-x: hidden;
+}
+
+.LayerTree-zoneTitle {
+  margin: 4px 4px 2px;
 }
 
 .Layer-name {

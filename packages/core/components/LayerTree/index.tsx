@@ -2,7 +2,7 @@ import styles from "./styles.module.css";
 import getClassNameFactory from "../../lib/get-class-name-factory";
 import { Config } from "../../types";
 import { ItemSelector } from "../../lib/data/get-item";
-import { ChevronRight, Component, CornerDownRight } from "lucide-react";
+import { ChevronRight, Component } from "lucide-react";
 import { rootAreaId } from "../../lib/root-droppable-id";
 import {
   ForwardedRef,
@@ -303,12 +303,7 @@ const LayerTreeZone = ({
   return (
     <>
       {tree.label && (
-        <div className={getClassName("zoneTitle")}>
-          <div className={getClassName("zoneIcon")}>
-            <CornerDownRight size="16" />
-          </div>
-          {tree.label}
-        </div>
+        <div className={getClassName("zoneTitle")}>{tree.label}</div>
       )}
       {shouldVirtualize ? (
         <VirtualizedLayerTreeItems
@@ -343,7 +338,7 @@ const StaticLayerTreeItems = ({
   return (
     <ul className={getClassName()}>
       {tree.items.length === 0 && (
-        <div className={getClassName("helper")}>No items</div>
+        <div className={getClassName("helper")}>empty</div>
       )}
       {tree.items.map((node) => (
         <Layer
@@ -443,7 +438,7 @@ const VirtualizedLayerTreeItems = ({
   return (
     <ul className={getClassName()} ref={listRef}>
       {tree.items.length === 0 && (
-        <div className={getClassName("helper")}>No items</div>
+        <div className={getClassName("helper")}>empty</div>
       )}
       {renderedItems}
     </ul>
