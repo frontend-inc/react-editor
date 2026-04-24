@@ -1,68 +1,31 @@
-import {
-  AlignHorizontalJustifyStart,
-  ArrowDownUp,
-  Columns as ColumnsIcon,
-  Container as ContainerIcon,
-  CreditCard,
-  HelpCircle,
-  Image as ImageIcon,
-  LayoutGrid,
-  LayoutTemplate,
-  ListChecks,
-  MessageSquareQuote,
-  Minus,
-  MousePointerClick,
-  PanelBottom,
-  PanelTop,
-  Quote,
-  Rocket,
-  Sparkles,
-  Square,
-  Tag,
-  Type,
-  Users,
-} from "lucide-react";
-
-import { Typography } from "./blocks/Typography";
-import { Image } from "./blocks/Image";
-import { Button } from "./blocks/Button";
-import { Section } from "./blocks/Section";
-import { Container } from "./blocks/Container";
-import { Grid } from "./blocks/Grid";
-import { Stack } from "./blocks/Stack";
-import { Row } from "./blocks/Row";
-import { Columns } from "./blocks/Columns";
-import { Accordion } from "./blocks/Accordion";
-import { FeatureCard } from "./blocks/FeatureCard";
-import { TestimonialCard } from "./blocks/TestimonialCard";
-import { PriceCard } from "./blocks/PriceCard";
-import { TeamCard } from "./blocks/TeamCard";
-import { Hero } from "./blocks/Hero";
-import { Logos } from "./blocks/Logos";
-import { Features } from "./blocks/Features";
-import { Testimonials } from "./blocks/Testimonials";
-import { Pricing } from "./blocks/Pricing";
-import { Team } from "./blocks/Team";
-import { CTA } from "./blocks/CTA";
-import { FAQ } from "./blocks/FAQ";
-import { Navigation } from "./blocks/Navigation";
-import { NavBar } from "./blocks/NavBar";
-import { Footer } from "./blocks/Footer";
+import { Typography } from "./components/Typography";
+import { Image } from "./components/Image";
+import { Button } from "./components/Button";
+import { Section } from "./components/Section";
+import { Container } from "./components/Container";
+import { Grid } from "./components/Grid";
+import { Stack } from "./components/Stack";
+import { Row } from "./components/Row";
+import { Columns } from "./components/Columns";
+import { Accordion } from "./components/Accordion";
+import { FeatureCard } from "./components/FeatureCard";
+import { TestimonialCard } from "./components/TestimonialCard";
+import { PriceCard } from "./components/PriceCard";
+import { TeamCard } from "./components/TeamCard";
+import { Hero } from "./components/Hero";
+import { Logos } from "./components/Logos";
+import { Features } from "./components/Features";
+import { Testimonials } from "./components/Testimonials";
+import { Pricing } from "./components/Pricing";
+import { Team } from "./components/Team";
+import { CTA } from "./components/CTA";
+import { FAQ } from "./components/FAQ";
+import { Navigation } from "./components/Navigation";
+import { Footer } from "./components/Footer";
 
 import Root from "./root";
 import { UserConfig } from "./types";
 import { initialData } from "./initial-data";
-import {
-  seededFeatureCards,
-  seededTestimonialCards,
-  seededPriceCards,
-  seededTeamCards,
-  defaultLogos,
-  defaultNavLinks,
-  defaultFooterColumns,
-  defaultSocial,
-  defaultFAQItems,
-} from "./seeds";
 
 export const conf: UserConfig = {
   root: Root,
@@ -97,287 +60,7 @@ export const conf: UserConfig = {
     CTA,
     FAQ,
     Navigation,
-    NavBar,
     Footer,
-  },
-  blocks: {
-    // Layout
-    Section: {
-      label: "Section",
-      icon: <Minus size={16} />,
-      category: "layout",
-      component: "Section",
-    },
-    Container: {
-      label: "Container",
-      icon: <ContainerIcon size={16} />,
-      category: "layout",
-      component: "Container",
-    },
-    Grid: {
-      label: "Grid",
-      icon: <LayoutGrid size={16} />,
-      category: "layout",
-      component: "Grid",
-    },
-    Stack: {
-      label: "Stack",
-      icon: <ArrowDownUp size={16} />,
-      category: "layout",
-      component: "Stack",
-    },
-    Row: {
-      label: "Row",
-      icon: <AlignHorizontalJustifyStart size={16} />,
-      category: "layout",
-      component: "Row",
-    },
-    Columns: {
-      label: "Columns",
-      icon: <ColumnsIcon size={16} />,
-      category: "layout",
-      component: "Columns",
-      props: {
-        items: [
-          { span: "6", content: [] },
-          { span: "6", content: [] },
-        ],
-        gap: "md",
-      },
-    },
-
-    // Navigation
-    Navigation: {
-      label: "Navigation",
-      icon: <PanelTop size={16} />,
-      category: "navigation",
-      component: "Navigation",
-      props: {
-        brand: "react-editor",
-        links: defaultNavLinks,
-        cta: { label: "Start building", href: "#" },
-      },
-    },
-    NavBar: {
-      label: "Nav bar",
-      icon: <Square size={16} />,
-      category: "navigation",
-      component: "NavBar",
-      props: {
-        brand: "react-editor",
-        links: defaultNavLinks,
-        cta: { label: "Sign in", href: "#" },
-        align: "center",
-      },
-    },
-    Footer: {
-      label: "Footer",
-      icon: <PanelBottom size={16} />,
-      category: "navigation",
-      component: "Footer",
-      props: {
-        brand: "react-editor",
-        tagline: "A visual editor for your React components.",
-        columns: defaultFooterColumns,
-        copyright: "© 2026 react-editor. All rights reserved.",
-        social: defaultSocial,
-      },
-    },
-
-    // Sections
-    Hero: {
-      label: "Hero",
-      icon: <Rocket size={16} />,
-      category: "sections",
-      component: "Hero",
-      props: {
-        eyebrow: "v2 · Visual editing for React",
-        title: "Ship pages at the speed of thought",
-        subtitle:
-          "A drag-and-drop editor for your own React components. Own your data, keep your stack, extend anything.",
-        primaryCta: { label: "Start building", href: "#" },
-        secondaryCta: { label: "See components", href: "#" },
-        align: "center",
-        media: [],
-      },
-    },
-    Logos: {
-      label: "Logos",
-      icon: <Tag size={16} />,
-      category: "sections",
-      component: "Logos",
-      props: {
-        eyebrow: "Trusted by teams shipping fast",
-        logos: defaultLogos,
-        grayscale: "yes",
-      },
-    },
-    Features: {
-      label: "Features",
-      icon: <LayoutTemplate size={16} />,
-      category: "sections",
-      content: {
-        type: "Features",
-        props: {
-          eyebrow: "Features",
-          heading: "Everything you need to ship a page",
-          subheading:
-            "Composable primitives, rich fields, and a preview that mirrors production.",
-          columns: "3",
-          items: seededFeatureCards,
-        },
-      },
-    },
-    Testimonials: {
-      label: "Testimonials",
-      icon: <MessageSquareQuote size={16} />,
-      category: "sections",
-      content: {
-        type: "Testimonials",
-        props: {
-          eyebrow: "Testimonials",
-          heading: "Loved by teams that ship",
-          subheading:
-            "Engineers and marketers building real products with the editor.",
-          items: seededTestimonialCards,
-        },
-      },
-    },
-    Pricing: {
-      label: "Pricing",
-      icon: <CreditCard size={16} />,
-      category: "sections",
-      content: {
-        type: "Pricing",
-        props: {
-          eyebrow: "Pricing",
-          heading: "Simple, predictable pricing",
-          subheading:
-            "Start free, upgrade when you need more seats, workspaces, or custom roles.",
-          tiers: seededPriceCards,
-        },
-      },
-    },
-    Team: {
-      label: "Team",
-      icon: <Users size={16} />,
-      category: "sections",
-      content: {
-        type: "Team",
-        props: {
-          eyebrow: "Team",
-          heading: "Built by a small, focused team",
-          subheading:
-            "We come from editor, framework, and design-systems teams. This is the tool we always wanted.",
-          members: seededTeamCards,
-        },
-      },
-    },
-    CTA: {
-      label: "CTA",
-      icon: <Rocket size={16} />,
-      category: "sections",
-      component: "CTA",
-      props: {
-        heading: "Start shipping pages today",
-        subheading: "Free for open source and side projects.",
-        variant: "gradient",
-        buttons: [
-          { label: "Start building", href: "#", variant: "secondary" },
-          { label: "Read the docs", href: "#", variant: "outline" },
-        ],
-      },
-    },
-    FAQ: {
-      label: "FAQ",
-      icon: <HelpCircle size={16} />,
-      category: "sections",
-      component: "FAQ",
-      props: {
-        eyebrow: "FAQ",
-        heading: "Frequently asked questions",
-        subheading: "Answers to common questions about the editor.",
-        items: defaultFAQItems,
-      },
-    },
-
-    // Cards
-    FeatureCard: {
-      label: "Feature card",
-      icon: <Sparkles size={16} />,
-      category: "cards",
-      component: "FeatureCard",
-    },
-    TestimonialCard: {
-      label: "Testimonial card",
-      icon: <Quote size={16} />,
-      category: "cards",
-      component: "TestimonialCard",
-      props: {
-        quote:
-          "<p>This tool changed how our team ships pages. Fast to set up, delightful to use.</p>",
-        author: "Jane Doe",
-        role: "Head of Marketing, Acme",
-        avatarUrl: "",
-      },
-    },
-    PriceCard: {
-      label: "Price card",
-      icon: <CreditCard size={16} />,
-      category: "cards",
-      component: "PriceCard",
-    },
-    TeamCard: {
-      label: "Team card",
-      icon: <Users size={16} />,
-      category: "cards",
-      component: "TeamCard",
-    },
-
-    // Elements
-    Typography: {
-      label: "Typography",
-      icon: <Type size={16} />,
-      category: "elements",
-      component: "Typography",
-    },
-    Image: {
-      label: "Image",
-      icon: <ImageIcon size={16} />,
-      category: "elements",
-      component: "Image",
-      props: {
-        src: "https://placehold.co/1600x900",
-        alt: "Placeholder image",
-      },
-    },
-    Button: {
-      label: "Button",
-      icon: <MousePointerClick size={16} />,
-      category: "elements",
-      component: "Button",
-    },
-    Accordion: {
-      label: "Accordion",
-      icon: <ListChecks size={16} />,
-      category: "elements",
-      component: "Accordion",
-      props: {
-        items: [
-          {
-            question: "How do I get started?",
-            answer:
-              "<p>Drag any block from the left sidebar onto the canvas.</p>",
-          },
-          {
-            question: "Can I compose custom layouts?",
-            answer:
-              "<p>Yes — use Section, Container, Grid, Columns, Stack, and Row.</p>",
-          },
-        ],
-        type: "single",
-      },
-    },
   },
 };
 
