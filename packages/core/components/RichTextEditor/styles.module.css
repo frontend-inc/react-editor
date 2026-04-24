@@ -17,13 +17,13 @@
 .RichTextEditor :global(.rich-text blockquote) {
   margin: 1em 0;
   padding: 0 1em;
-  border-left: 4px solid var(--re-border-default);
+  border-left: 4px solid var(--color-border);
 }
 
 .RichTextEditor :global(.rich-text code) {
-  background-color: var(--re-surface-sunken);
+  background-color: var(--color-muted);
   padding: 4px 8px;
-  border-radius: var(--re-radius-sm);
+  border-radius: calc(var(--radius) - 4px);
 }
 
 .RichTextEditor :global(.rich-text p:empty::before) {
@@ -48,20 +48,20 @@
 }
 
 .RichTextEditor--editor {
-  background: var(--re-surface-panel);
+  background: var(--color-card);
   border-width: 1px;
   border-style: solid;
-  border-color: var(--re-border-default);
-  border-radius: var(--re-radius-md);
+  border-color: var(--color-border);
+  border-radius: var(--radius);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   font-family: inherit;
-  font-size: var(--re-font-size-xxs);
+  font-size: 0.875rem;
   resize: vertical;
   text-align: initial;
-  transition: border-color var(--re-motion-fast) var(--re-ease),
-    box-shadow var(--re-motion-fast) var(--re-ease);
+  transition: border-color 120ms cubic-bezier(0.2, 0, 0.1, 1),
+    box-shadow 120ms cubic-bezier(0.2, 0, 0.1, 1);
   width: 100%;
   max-width: 100%;
   min-height: 128px;
@@ -100,14 +100,14 @@
 }
 
 .RichTextEditor--editor:focus-within {
-  border-color: var(--re-accent);
+  border-color: var(--color-accent);
   outline: none;
-  box-shadow: var(--re-ring);
+  box-shadow: 0 0 0 2px color-mix(in oklch, var(--color-ring) 50%, transparent);
   transition: none;
 }
 
 .RichTextEditor--editor.RichTextEditor--disabled {
-  background: var(--re-surface-sunken);
+  background: var(--color-muted);
 }
 
 .RichTextEditor:not(:focus-within):not(.RichTextEditor--isActive)
@@ -117,12 +117,12 @@
 }
 
 .RichTextEditor-menu {
-  border-bottom: 1px solid var(--re-border-subtle);
+  border-bottom: 1px solid var(--color-border);
   position: sticky;
   top: 0;
   z-index: 1;
 }
 
 .RichTextEditor--disabled .RichTextEditor-menu {
-  border-bottom: 1px solid var(--re-border-subtle);
+  border-bottom: 1px solid var(--color-border);
 }

@@ -1,8 +1,4 @@
 import type { JSX } from "react";
-import { getClassNameFactory } from "../../lib";
-import styles from "./styles.module.css";
-
-const getClassName = getClassNameFactory("Loader", styles);
 
 export const Loader = ({
   color,
@@ -14,12 +10,8 @@ export const Loader = ({
 } & JSX.IntrinsicAttributes) => {
   return (
     <span
-      className={getClassName()}
-      style={{
-        width: size,
-        height: size,
-        color,
-      }}
+      className="inline-block rounded-full border-2 border-current border-b-transparent animate-spin"
+      style={{ width: size, height: size, color }}
       aria-label="loading"
       {...props}
     />

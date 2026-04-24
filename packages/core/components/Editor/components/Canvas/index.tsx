@@ -9,16 +9,13 @@ import {
 } from "react";
 import { useAppStore, useAppStoreApi } from "../../../../store";
 import { BrowserBar } from "../../../BrowserBar";
-import styles from "./styles.module.css";
-import { getClassNameFactory } from "../../../../lib";
 import { Preview } from "../Preview";
 import { Loader } from "../../../Loader";
 import { useShallow } from "zustand/react/shallow";
 import { useCanvasFrame } from "../../../../lib/frame-context";
 import { usePropsContext } from "../..";
 import { defaultViewports } from "../../../ViewportControls/default-viewports";
-
-const getClassName = getClassNameFactory("EditorCanvas", styles);
+import { cn } from "../../../../lib/cn";
 
 const TRANSITION_DURATION = 150;
 
@@ -179,13 +176,16 @@ export const Canvas = () => {
     uiProp?.viewports?.current,
   ]);
 
+  const isReady =
+    status === "READY" || !iframe.enabled || !iframe.waitForStyles;
+
   return (
     <div
-      className={getClassName({
-        ready: status === "READY" || !iframe.enabled || !iframe.waitForStyles,
-        showLoader,
-        fullScreen: fullScreenCanvas,
-      })}
+      className={cn(
+        "relative flex flex-col bg-muted p-4 overflow-auto xl:px-6 xl:py-6",
+        fullScreenCanvas && "p-0 overflow-hidden xl:p-0"
+      )}
+      style={{ gridArea: "editor" }}
       onClick={(e) => {
         const el = e.target as Element;
 
@@ -201,9 +201,12 @@ export const Canvas = () => {
         }
       }}
     >
-      <div className={getClassName("inner")} ref={frameRef}>
+      <div
+        className="relative flex h-full w-full min-w-[288px] justify-center"
+        ref={frameRef}
+      >
         <div
-          className={getClassName("rootColumn")}
+          className="box-content absolute inset-y-0 flex flex-col min-w-[321px] xl:min-w-0 origin-top"
           style={{
             width: iframe.enabled ? viewports.current.width : "100%",
             transition: showTransition
@@ -212,7 +215,7 @@ export const Canvas = () => {
           }}
         >
           {iframe.enabled && (
-            <div className={getClassName("browserBar")}>
+            <div className="shrink-0 w-full">
               <BrowserBar
                 onViewportChange={(viewport) => {
                   setShowTransition(true);
@@ -232,7 +235,10 @@ export const Canvas = () => {
             </div>
           )}
           <div
-            className={getClassName("root")}
+            className={cn(
+              "flex-1 min-h-0 rounded-b-md bg-card shadow-lg outline outline-border",
+              isReady ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+            )}
             style={{
               height: zoomConfig.rootHeight,
               transform: iframe.enabled
@@ -243,7 +249,7 @@ export const Canvas = () => {
                 : "",
               overflow: iframe.enabled ? undefined : "auto",
             }}
-            suppressHydrationWarning // Suppress hydration warning as frame is not visible until after load
+            suppressHydrationWarning
             id="editor-canvas-root"
             onTransitionEnd={() => {
               setShowTransition(false);
@@ -255,7 +261,13 @@ export const Canvas = () => {
             </CustomPreview>
           </div>
         </div>
-        <div className={getClassName("loader")}>
+        <div
+          className={cn(
+            "flex h-full items-center justify-center text-muted-foreground transition-opacity duration-300 ease-out",
+            showLoader && !isReady ? "opacity-100" : "opacity-0",
+            showLoader && isReady && "h-0 transition-none"
+          )}
+        >
           <Loader size={24} />
         </div>
       </div>

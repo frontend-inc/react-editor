@@ -17,44 +17,44 @@
 .ComponentList-title {
   background-color: transparent;
   border: 0;
-  color: var(--re-text-secondary);
+  color: var(--color-muted-foreground);
   cursor: pointer;
   display: flex;
   font: inherit;
-  font-size: var(--re-font-size-xxs);
+  font-size: 0.875rem;
   font-weight: 600;
   list-style: none;
   margin-bottom: 4px;
   padding: 8px;
-  transition: background-color var(--re-motion-fast) var(--re-ease),
-    color var(--re-motion-fast) var(--re-ease);
+  transition: background-color 120ms cubic-bezier(0.2, 0, 0.1, 1),
+    color 120ms cubic-bezier(0.2, 0, 0.1, 1);
   gap: 4px;
-  border-radius: var(--re-radius-md);
+  border-radius: var(--radius);
   width: 100%;
 }
 
 .ComponentList-title:focus-visible {
   outline: none;
-  box-shadow: var(--re-ring);
+  box-shadow: 0 0 0 2px color-mix(in oklch, var(--color-ring) 50%, transparent);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .ComponentList-title:hover {
-    background-color: var(--re-surface-hover);
-    color: var(--re-text-accent);
+    background-color: color-mix(in oklch, var(--color-accent) 10%, transparent);
+    color: var(--color-accent);
     transition: none;
   }
 }
 
 .ComponentList-title:active {
-  background-color: var(--re-accent-soft);
+  background-color: color-mix(in oklch, var(--color-accent) 12%, transparent);
   transition: none;
 }
 
 .ComponentList-titleIcon {
   display: flex;
   align-items: center;
-  transition: transform var(--re-motion-fast) var(--re-ease);
+  transition: transform 120ms cubic-bezier(0.2, 0, 0.1, 1);
 }
 
 .ComponentList--isExpanded .ComponentList-titleIcon {

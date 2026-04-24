@@ -100,6 +100,71 @@ type EditorProps<
   height?: CSSProperties["height"];
   fullScreenCanvas?: boolean;
   _experimentalVirtualization?: boolean;
+  /**
+   * Extra className applied to the editor root. Useful for host CSS that
+   * targets a specific scope to override --editor-* tokens.
+   */
+  className?: string;
+  /**
+   * Partial override of the editor color theme. Values are flattened to inline
+   * `--editor-*` CSS vars on the editor root, so they win over any class-level
+   * rule. Undefined keys fall through to the built-in defaults.
+   */
+  theme?: Partial<EditorTheme>;
+};
+
+export type EditorTheme = {
+  background: string;
+  foreground: string;
+  card: string;
+  cardForeground: string;
+  popover: string;
+  popoverForeground: string;
+  muted: string;
+  mutedForeground: string;
+  primary: string;
+  primaryForeground: string;
+  secondary: string;
+  secondaryForeground: string;
+  accent: string;
+  accentForeground: string;
+  border: string;
+  input: string;
+  ring: string;
+  destructive: string;
+  destructiveForeground: string;
+};
+
+const THEME_VAR: Record<keyof EditorTheme, string> = {
+  background: "--editor-background",
+  foreground: "--editor-foreground",
+  card: "--editor-card",
+  cardForeground: "--editor-card-foreground",
+  popover: "--editor-popover",
+  popoverForeground: "--editor-popover-foreground",
+  muted: "--editor-muted",
+  mutedForeground: "--editor-muted-foreground",
+  primary: "--editor-primary",
+  primaryForeground: "--editor-primary-foreground",
+  secondary: "--editor-secondary",
+  secondaryForeground: "--editor-secondary-foreground",
+  accent: "--editor-accent",
+  accentForeground: "--editor-accent-foreground",
+  border: "--editor-border",
+  input: "--editor-input",
+  ring: "--editor-ring",
+  destructive: "--editor-destructive",
+  destructiveForeground: "--editor-destructive-foreground",
+};
+
+export const themeToCssVars = (theme?: Partial<EditorTheme>) => {
+  if (!theme) return undefined;
+  const style: Record<string, string> = {};
+  for (const key of Object.keys(theme) as (keyof EditorTheme)[]) {
+    const value = theme[key];
+    if (value) style[THEME_VAR[key]] = value;
+  }
+  return style;
 };
 
 const propsContext = createContext<Partial<EditorProps>>({});

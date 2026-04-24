@@ -4,7 +4,7 @@
 
   --overlay-background: color-mix(
     in srgb,
-    var(--re-color-azure-05) 14%,
+    var(--color-accent) 14%,
     transparent
   );
 }
@@ -22,22 +22,22 @@
 .DraggableComponent-overlay {
   cursor: pointer;
   height: 100%;
-  outline: 1.5px var(--re-accent) solid;
+  outline: 1.5px var(--color-accent) solid;
   outline-offset: -1.5px;
   width: 100%;
-  transition: outline-color var(--re-motion-fast) var(--re-ease),
-    background-color var(--re-motion-fast) var(--re-ease);
+  transition: outline-color 120ms cubic-bezier(0.2, 0, 0.1, 1),
+    background-color 120ms cubic-bezier(0.2, 0, 0.1, 1);
 }
 
 .DraggableComponent:focus-visible > .DraggableComponent-overlayWrapper {
-  outline: 1px solid var(--re-accent);
+  outline: 1px solid var(--color-accent);
 }
 
 .DraggableComponent-loadingOverlay {
-  background: var(--re-surface-panel);
-  color: var(--re-text-primary);
-  border-radius: var(--re-radius-md);
-  box-shadow: var(--re-shadow-sm);
+  background: var(--color-card);
+  color: var(--color-foreground);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
   display: flex;
   padding: 8px;
   top: 8px;
@@ -54,13 +54,13 @@
   > .DraggableComponent-overlayWrapper
   > .DraggableComponent-overlay {
   background: var(--overlay-background);
-  outline: 1.5px var(--re-accent) solid;
+  outline: 1.5px var(--color-accent) solid;
 }
 
 .DraggableComponent--isSelected
   > .DraggableComponent-overlayWrapper
   > .DraggableComponent-overlay {
-  outline-color: var(--re-accent-strong);
+  outline-color: var(--color-accent);
   outline-width: 2px;
 }
 
@@ -69,7 +69,7 @@
 .DraggableComponent--isGlobal {
   --overlay-background: color-mix(
     in srgb,
-    var(--re-color-global) 14%,
+    #7c3aed 14%,
     transparent
   );
 }
@@ -80,18 +80,18 @@
 .DraggableComponent--isGlobal.DraggableComponent--hover
   > .DraggableComponent-overlayWrapper
   > .DraggableComponent-overlay {
-  outline-color: var(--re-color-global);
+  outline-color: #7c3aed;
 }
 
 .DraggableComponent--isGlobal.DraggableComponent--isSelected
   > .DraggableComponent-overlayWrapper
   > .DraggableComponent-overlay {
-  outline-color: var(--re-color-global-strong);
+  outline-color: #5b21b6;
 }
 
 .DraggableComponent--isGlobal:focus-visible
   > .DraggableComponent-overlayWrapper {
-  outline-color: var(--re-color-global);
+  outline-color: #7c3aed;
 }
 
 /* Won't work in FF */

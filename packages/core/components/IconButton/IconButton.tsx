@@ -1,9 +1,6 @@
 import { ReactNode, SyntheticEvent, useState } from "react";
-import styles from "./IconButton.module.css";
-import getClassNameFactory from "../../lib/get-class-name-factory";
 import { Loader } from "../Loader";
-
-const getClassName = getClassNameFactory("IconButton", styles);
+import { cn } from "../../lib/cn";
 
 export const IconButton = ({
   active = false,
@@ -34,20 +31,20 @@ export const IconButton = ({
 
   const ElementType = href ? "a" : "button";
 
-  const el = (
+  return (
     <ElementType
-      className={getClassName({
-        active,
-        disabled,
-        fullWidth,
-      })}
+      className={cn(
+        "inline-flex items-center justify-center rounded-md p-1 transition-colors",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+        "hover:bg-accent hover:text-accent-foreground",
+        active && "bg-accent text-accent-foreground",
+        disabled && "text-muted-foreground pointer-events-none opacity-60",
+        fullWidth && "w-full"
+      )}
       onClick={(e) => {
         if (!onClick) return;
-
         setLoading(true);
-        Promise.resolve(onClick(e)).then(() => {
-          setLoading(false);
-        });
+        Promise.resolve(onClick(e)).then(() => setLoading(false));
       }}
       type={type}
       disabled={disabled || loading}
@@ -58,7 +55,7 @@ export const IconButton = ({
       title={title}
       suppressHydrationWarning={suppressHydrationWarning}
     >
-      <span className={getClassName("title")}>{title}</span>
+      <span className="sr-only">{title}</span>
       {children}
       {loading && (
         <>
@@ -68,6 +65,4 @@ export const IconButton = ({
       )}
     </ElementType>
   );
-
-  return el;
 };

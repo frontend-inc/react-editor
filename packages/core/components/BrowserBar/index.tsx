@@ -1,8 +1,13 @@
-import { Globe, Maximize, Minimize, Monitor, Smartphone } from "lucide-react";
+import {
+  Globe,
+  Maximize,
+  Minimize,
+  Monitor,
+  Smartphone,
+} from "lucide-react";
 import { useMemo } from "react";
 import { useAppStore } from "../../store";
 import { usePropsContext } from "../Editor";
-import { getClassNameFactory } from "../../lib";
 import { IconButton } from "../IconButton";
 import {
   Select,
@@ -11,10 +16,7 @@ import {
   SelectTrigger,
 } from "../ui/Select";
 import { Viewport } from "../../types";
-
-import styles from "./styles.module.css";
-
-const getClassName = getClassNameFactory("BrowserBar", styles);
+import { cn } from "../../lib/cn";
 
 type Device = "desktop" | "mobile";
 
@@ -48,7 +50,6 @@ export const BrowserBar = ({
     });
   };
 
-  // Mobile when current width is a number ≤ 640; everything else treated as desktop.
   const activeDevice: Device = useMemo(() => {
     const w = viewports.current.width;
     if (typeof w === "number" && w <= 640) return "mobile";
@@ -64,8 +65,16 @@ export const BrowserBar = ({
 
   const selectedTitle = routes?.find((r) => r.path === currentPath)?.title;
 
+  const urlTriggerClass = cn(
+    "flex flex-1 min-w-0 items-center gap-2 overflow-hidden rounded-full border border-border bg-muted px-3 py-2 text-xs text-foreground",
+    "hover:bg-accent/10 hover:border-border/80",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+    "data-[state=open]:border-border data-[state=open]:ring-2 data-[state=open]:ring-ring",
+    "[&>svg:last-child]:hidden"
+  );
+
   return (
-    <div className={getClassName()}>
+    <div className="flex w-full items-center gap-2 rounded-t-md border border-b-0 border-border bg-card px-[10px] py-2">
       {showRoutePicker ? (
         <Select
           value={currentPath}
@@ -73,12 +82,14 @@ export const BrowserBar = ({
             void onRouteChange?.(next);
           }}
         >
-          <SelectTrigger className={getClassName("urlTrigger")}>
-            <Globe className={getClassName("urlIcon")} size={14} />
-            <span className={getClassName("urlText")}>
-              <span className={getClassName("urlPath")}>{currentPath}</span>
+          <SelectTrigger className={urlTriggerClass}>
+            <Globe className="shrink-0 text-muted-foreground" size={14} />
+            <span className="flex flex-1 min-w-0 items-center gap-2 overflow-hidden text-left whitespace-nowrap truncate">
+              <span className="shrink-0 text-muted-foreground">
+                {currentPath}
+              </span>
               {selectedTitle ? (
-                <span className={getClassName("urlTitle")}>
+                <span className="overflow-hidden text-ellipsis">
                   {selectedTitle}
                 </span>
               ) : null}
@@ -96,12 +107,12 @@ export const BrowserBar = ({
           </SelectContent>
         </Select>
       ) : (
-        <div className={getClassName("urlTrigger")}>
-          <Globe className={getClassName("urlIcon")} size={14} />
-          <span className={getClassName("urlText")}>/</span>
+        <div className={urlTriggerClass}>
+          <Globe className="shrink-0 text-muted-foreground" size={14} />
+          <span className="flex flex-1 min-w-0 items-center gap-2">/</span>
         </div>
       )}
-      <div className={getClassName("actions")}>
+      <div className="flex shrink-0 items-center gap-0.5">
         <IconButton
           type="button"
           title={
@@ -113,7 +124,7 @@ export const BrowserBar = ({
             setDevice(activeDevice === "desktop" ? "mobile" : "desktop")
           }
         >
-          <span className={getClassName("deviceIcon")}>
+          <span className="inline-flex text-foreground">
             {activeDevice === "desktop" ? (
               <Monitor size={16} />
             ) : (
@@ -126,12 +137,8 @@ export const BrowserBar = ({
           title={isFullScreen ? "Exit full screen" : "Enter full screen"}
           onClick={toggleFullScreen}
         >
-          <span className={getClassName("deviceIcon")}>
-            {isFullScreen ? (
-              <Minimize size={16} />
-            ) : (
-              <Maximize size={16} />
-            )}
+          <span className="inline-flex text-foreground">
+            {isFullScreen ? <Minimize size={16} /> : <Maximize size={16} />}
           </span>
         </IconButton>
       </div>

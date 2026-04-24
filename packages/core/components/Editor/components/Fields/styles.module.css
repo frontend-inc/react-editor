@@ -1,6 +1,6 @@
 .EditorFields {
   position: relative;
-  font-family: var(--re-font-family);
+  font-family: var(--font-sans);
 }
 
 .EditorFields--isLoading {
@@ -8,7 +8,7 @@
 }
 
 .EditorFields-loadingOverlay {
-  background: var(--re-surface-panel);
+  background: var(--color-card);
   display: flex;
   justify-content: flex-end;
   align-items: flex-start;
@@ -34,57 +34,57 @@
 }
 
 .EditorFields--wrapFields .EditorFields-field {
-  color: var(--re-text-secondary);
+  color: var(--color-muted-foreground);
   padding: 14px 16px;
   display: block;
 }
 
 .EditorFields--wrapFields .EditorFields-field + .EditorFields-field {
-  border-top: 1px solid var(--re-border-subtle);
+  border-top: 1px solid var(--color-border);
 }
 
 .EditorFields-syncButton {
   align-items: center;
   background: transparent;
-  border: 1px solid var(--re-color-global);
-  border-radius: var(--re-radius-md);
-  color: var(--re-color-global);
+  border: 1px solid #7c3aed;
+  border-radius: var(--radius);
+  color: #7c3aed;
   cursor: pointer;
   display: flex;
   font: inherit;
-  font-size: var(--re-font-size-xxs);
+  font-size: 0.875rem;
   font-weight: 500;
   gap: 8px;
   justify-content: center;
   margin: 12px 16px;
   padding: 10px;
-  transition: background-color var(--re-motion-fast) var(--re-ease),
-    border-color var(--re-motion-fast) var(--re-ease),
-    color var(--re-motion-fast) var(--re-ease);
+  transition: background-color 120ms cubic-bezier(0.2, 0, 0.1, 1),
+    border-color 120ms cubic-bezier(0.2, 0, 0.1, 1),
+    color 120ms cubic-bezier(0.2, 0, 0.1, 1);
   width: calc(100% - 32px);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .EditorFields-syncButton:hover {
-    background: var(--re-color-global-soft);
+    background: #f3e8ff;
   }
 }
 
 .EditorFields-syncButton:focus-visible {
   outline: none;
-  box-shadow: var(--re-ring);
+  box-shadow: 0 0 0 2px color-mix(in oklch, var(--color-ring) 50%, transparent);
 }
 
 .EditorFields-syncButton--unlinked {
-  border-color: var(--re-border-default);
-  color: var(--re-text-secondary);
+  border-color: var(--color-border);
+  color: var(--color-muted-foreground);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .EditorFields-syncButton--unlinked:hover {
-    background: var(--re-surface-hover);
-    border-color: var(--re-border-strong);
-    color: var(--re-text-primary);
+    background: color-mix(in oklch, var(--color-accent) 10%, transparent);
+    border-color: var(--color-border);
+    color: var(--color-foreground);
   }
 }
 

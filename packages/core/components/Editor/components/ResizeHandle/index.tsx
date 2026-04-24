@@ -1,9 +1,6 @@
 import React, { useCallback, useRef } from "react";
-import getClassNameFactory from "../../../../lib/get-class-name-factory";
-import styles from "./styles.module.css";
+import { cn } from "../../../../lib/cn";
 import "./styles.css";
-
-const getClassName = getClassNameFactory("ResizeHandle", styles);
 
 interface ResizeHandleProps {
   position: "left" | "right";
@@ -52,7 +49,6 @@ export const ResizeHandle: React.FC<ResizeHandleProps> = ({
       document.body.removeChild(overlay);
     }
 
-    // Remove event listeners when dragging ends
     document.removeEventListener("mousemove", handleMouseMove);
     document.removeEventListener("mouseup", handleMouseUp);
 
@@ -76,7 +72,6 @@ export const ResizeHandle: React.FC<ResizeHandleProps> = ({
       overlay.setAttribute("data-resize-overlay", "");
       document.body.appendChild(overlay);
 
-      // Add event listeners only when dragging starts
       document.addEventListener("mousemove", handleMouseMove);
       document.addEventListener("mouseup", handleMouseUp);
 
@@ -88,7 +83,11 @@ export const ResizeHandle: React.FC<ResizeHandleProps> = ({
   return (
     <div
       ref={handleRef}
-      className={getClassName({ [position]: true })}
+      className={cn(
+        "hidden md:block md:absolute md:top-0 md:h-full md:w-[5px] md:cursor-col-resize md:z-10 md:bg-transparent md:hover:bg-accent/20",
+        position === "left" && "md:-right-[3px]",
+        position === "right" && "md:-left-[3px]"
+      )}
       onMouseDown={handleMouseDown}
     />
   );

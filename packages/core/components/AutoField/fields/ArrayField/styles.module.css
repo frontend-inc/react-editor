@@ -5,22 +5,22 @@
 .ArrayField {
   display: flex;
   flex-direction: column;
-  background: var(--re-surface-sunken);
-  border: 1px solid var(--re-border-subtle);
-  border-radius: var(--re-radius-md);
+  background: var(--color-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
   overflow: hidden;
 }
 
 .ArrayField--isDraggingFrom {
-  background-color: var(--re-accent-soft);
+  background-color: color-mix(in oklch, var(--color-accent) 12%, transparent);
   overflow: hidden;
 }
 
 .ArrayField-addButton {
-  background-color: var(--re-surface-panel);
+  background-color: var(--color-card);
   border: none;
   display: flex;
-  color: var(--re-text-accent);
+  color: var(--color-accent);
   justify-content: center;
   cursor: pointer;
   width: 100%;
@@ -28,33 +28,33 @@
   padding: 10px; /* Retain same height as other items */
   text-align: left;
   font-weight: 500;
-  transition: background-color var(--re-motion-fast) var(--re-ease),
-    color var(--re-motion-fast) var(--re-ease);
+  transition: background-color 120ms cubic-bezier(0.2, 0, 0.1, 1),
+    color 120ms cubic-bezier(0.2, 0, 0.1, 1);
 }
 
 .ArrayField--hasItems > .ArrayField-addButton {
-  border-top: 1px solid var(--re-border-subtle);
+  border-top: 1px solid var(--color-border);
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
 
 .ArrayField-addButton:focus-visible {
   outline: none;
-  box-shadow: var(--re-ring);
+  box-shadow: 0 0 0 2px color-mix(in oklch, var(--color-ring) 50%, transparent);
   position: relative;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .ArrayField:not(.ArrayField--isDraggingFrom) > .ArrayField-addButton:hover {
-    background: var(--re-surface-hover);
-    color: var(--re-accent-strong);
+    background: color-mix(in oklch, var(--color-accent) 10%, transparent);
+    color: var(--color-accent);
     transition: none;
   }
 }
 
 .ArrayField:not(.ArrayField--isDraggingFrom) > .ArrayField-addButton:active {
-  background: var(--re-accent-soft);
-  color: var(--re-accent-strong);
+  background: color-mix(in oklch, var(--color-accent) 12%, transparent);
+  color: var(--color-accent);
   transition: none;
 }
 
@@ -72,7 +72,7 @@
 }
 
 .ArrayFieldItem {
-  border-top: 1px solid var(--re-border-subtle);
+  border-top: 1px solid var(--color-border);
 }
 
 .ArrayFieldItem--isDragging {
@@ -86,33 +86,33 @@
 .ArrayFieldItem--isExpanded {
   border-bottom: 0;
   outline-offset: 0px !important;
-  outline: 1px solid var(--re-accent) !important;
+  outline: 1px solid var(--color-accent) !important;
   z-index: 2;
 }
 
 .ArrayFieldItem--isDragging {
-  outline: 1px var(--re-accent) solid !important;
+  outline: 1px var(--color-accent) solid !important;
 }
 
 .ArrayFieldItem--isDragging .ArrayFieldItem-summary:active {
-  background-color: var(--re-surface-panel);
+  background-color: var(--color-card);
 }
 
 .ArrayFieldItem-summary {
-  background: var(--re-surface-panel);
-  color: var(--re-text-secondary);
+  background: var(--color-card);
+  color: var(--color-muted-foreground);
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 2px;
   justify-content: space-between;
-  font-size: var(--re-font-size-xxs);
+  font-size: 0.875rem;
   list-style: none;
   padding: 10px 12px;
   position: relative;
   overflow: hidden;
-  transition: background-color var(--re-motion-fast) var(--re-ease),
-    color var(--re-motion-fast) var(--re-ease);
+  transition: background-color 120ms cubic-bezier(0.2, 0, 0.1, 1),
+    color 120ms cubic-bezier(0.2, 0, 0.1, 1);
 }
 
 .ArrayFieldItem--noFields > .ArrayFieldItem-summary {
@@ -121,31 +121,31 @@
 
 .ArrayFieldItem-summary:focus-visible {
   outline: none;
-  box-shadow: var(--re-ring);
+  box-shadow: 0 0 0 2px color-mix(in oklch, var(--color-ring) 50%, transparent);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .ArrayFieldItem-summary:hover {
-    background-color: var(--re-surface-hover);
-    color: var(--re-text-primary);
+    background-color: color-mix(in oklch, var(--color-accent) 10%, transparent);
+    color: var(--color-foreground);
     transition: none;
   }
 }
 
 .ArrayFieldItem-summary:active {
-  background-color: var(--re-accent-soft);
+  background-color: color-mix(in oklch, var(--color-accent) 12%, transparent);
   transition: none;
 }
 
 .ArrayFieldItem--isExpanded > .ArrayFieldItem-summary {
-  background: var(--re-accent-soft);
-  color: var(--re-text-accent);
+  background: color-mix(in oklch, var(--color-accent) 12%, transparent);
+  color: var(--color-accent);
   font-weight: 600;
   transition: none;
 }
 
 .ArrayFieldItem-body {
-  background: var(--re-surface-panel);
+  background: var(--color-card);
   display: none;
 }
 
@@ -155,7 +155,7 @@
 
 .ArrayFieldItem-fieldset {
   border: none;
-  border-top: 1px solid var(--re-border-subtle);
+  border-top: 1px solid var(--color-border);
   margin: 0;
   min-width: 0;
   padding: 14px 12px;
@@ -168,11 +168,11 @@
 }
 
 .ArrayFieldItem-actions {
-  color: var(--re-text-tertiary);
+  color: var(--color-muted-foreground);
   display: flex;
   gap: 4px;
   opacity: 0;
-  transition: opacity var(--re-motion-fast) var(--re-ease);
+  transition: opacity 120ms cubic-bezier(0.2, 0, 0.1, 1);
 }
 
 .ArrayFieldItem-summary:focus-within

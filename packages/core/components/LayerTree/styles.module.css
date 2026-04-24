@@ -1,7 +1,7 @@
 .LayerTree {
-  color: var(--re-text-primary);
-  font-family: var(--re-font-family);
-  font-size: var(--re-font-size-xxs);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
   margin: 0;
   position: relative;
   list-style: none;
@@ -9,18 +9,18 @@
 }
 
 .LayerTree-zoneTitle {
-  color: var(--re-color-azure-05);
-  font-family: var(--re-font-family-monospaced);
-  font-size: var(--re-font-size-xxxs);
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
 }
 
 .LayerTree-helper {
   text-align: center;
-  color: var(--re-accent-strong);
-  background: var(--re-accent-soft);
-  border-radius: var(--re-radius-md);
-  font-family: var(--re-font-family-monospaced);
-  font-size: var(--re-font-size-xxxs);
+  color: var(--color-accent);
+  background: color-mix(in oklch, var(--color-accent) 12%, transparent);
+  border-radius: var(--radius);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
   padding: 8px;
   margin: 4px 4px 8px;
 }
@@ -28,15 +28,15 @@
 .Layer {
   position: relative;
   border: 1px solid transparent;
-  border-radius: var(--re-radius-md);
+  border-radius: var(--radius);
 }
 
 .Layer-inner {
   border: 1px solid transparent;
-  border-radius: var(--re-radius-md);
-  transition: background-color var(--re-motion-fast) var(--re-ease),
-    color var(--re-motion-fast) var(--re-ease),
-    border-color var(--re-motion-fast) var(--re-ease);
+  border-radius: var(--radius);
+  transition: background-color 120ms cubic-bezier(0.2, 0, 0.1, 1),
+    color 120ms cubic-bezier(0.2, 0, 0.1, 1),
+    border-color 120ms cubic-bezier(0.2, 0, 0.1, 1);
 }
 
 .Layer--containsZone > .Layer-inner {
@@ -47,7 +47,7 @@
   align-items: center;
   background: none;
   border: 0;
-  border-radius: var(--re-radius-md);
+  border-radius: var(--radius);
   color: inherit;
   cursor: pointer;
   display: flex;
@@ -59,27 +59,27 @@
 
 .Layer-clickable:focus-visible {
   outline: none;
-  box-shadow: var(--re-ring);
+  box-shadow: 0 0 0 2px color-mix(in oklch, var(--color-ring) 50%, transparent);
   position: relative;
   z-index: 1;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .Layer:not(.Layer--isSelected) > .Layer-inner:hover {
-    background: var(--re-surface-hover);
-    color: var(--re-text-accent);
+    background: color-mix(in oklch, var(--color-accent) 10%, transparent);
+    color: var(--color-accent);
     transition: none;
   }
 }
 
 .Layer--isSelected > .Layer-inner {
-  background: var(--re-accent-soft);
-  color: var(--re-text-accent);
+  background: color-mix(in oklch, var(--color-accent) 12%, transparent);
+  color: var(--color-accent);
 }
 
 .Layer--isSelected > .Layer-inner .Layer-icon,
 .Layer--isSelected > .Layer-inner .Layer-zoneIcon {
-  color: var(--re-accent-strong);
+  color: var(--color-accent);
 }
 
 .Layer-chevron {
@@ -89,8 +89,8 @@
   flex: 0 0 auto;
   width: 12px;
   margin-inline-end: 4px;
-  transition: transform var(--re-motion-base) var(--re-ease);
-  color: var(--re-text-tertiary);
+  transition: transform 150ms cubic-bezier(0.2, 0, 0.1, 1);
+  color: var(--color-muted-foreground);
 }
 
 .Layer--isSelected > .Layer-inner > .Layer-clickable > .Layer-chevron,
@@ -102,7 +102,7 @@
   display: none;
   margin-inline-start: 14px;
   padding-inline-start: 16px;
-  border-inline-start: 1px solid var(--re-border-subtle);
+  border-inline-start: 1px solid var(--color-border);
 }
 
 .Layer--isSelected > .Layer-zones,
@@ -134,13 +134,13 @@
 }
 
 .Layer-icon {
-  color: var(--re-accent);
+  color: var(--color-accent);
   display: flex;
   align-items: center;
 }
 
 .Layer-zoneIcon {
-  color: var(--re-text-tertiary);
+  color: var(--color-muted-foreground);
   display: flex;
   align-items: center;
 }
@@ -148,21 +148,21 @@
 /* Global-marked components render with the purple accent everywhere — icon,
    label, selected state — so users see at a glance that edits propagate. */
 .Layer--isGlobal > .Layer-inner .Layer-icon {
-  color: var(--re-color-global);
+  color: #7c3aed;
 }
 
 .Layer--isGlobal > .Layer-inner .Layer-name {
-  color: var(--re-color-global);
+  color: #7c3aed;
 }
 
 .Layer--isGlobal.Layer--isSelected > .Layer-inner {
-  background: var(--re-color-global-soft);
-  color: var(--re-color-global-strong);
+  background: #f3e8ff;
+  color: #5b21b6;
 }
 
 .Layer--isGlobal.Layer--isSelected > .Layer-inner .Layer-icon,
 .Layer--isGlobal.Layer--isSelected > .Layer-inner .Layer-name {
-  color: var(--re-color-global-strong);
+  color: #5b21b6;
 }
 
 /* Unlinked-from-shared: instance opted out of globalData sync. Renders in
@@ -173,7 +173,7 @@
 }
 
 .Layer-unlinkedGlyph {
-  color: var(--re-color-global);
+  color: #7c3aed;
   display: flex;
   align-items: center;
   margin-inline-start: 4px;
@@ -181,6 +181,6 @@
 }
 
 .Layer--isUnlinked.Layer--isSelected > .Layer-inner .Layer-unlinkedGlyph {
-  color: var(--re-accent-strong);
+  color: var(--color-accent);
   opacity: 1;
 }

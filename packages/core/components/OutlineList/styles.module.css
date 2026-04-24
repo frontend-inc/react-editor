@@ -1,6 +1,6 @@
 .OutlineList {
-  color: var(--re-text-primary);
-  font-family: var(--re-font-family);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
   margin: 0;
   padding-inline-start: 16px;
   position: relative;
@@ -8,7 +8,7 @@
 }
 
 .OutlineList::before {
-  background: var(--re-border-default);
+  background: var(--color-border);
   position: absolute;
   left: -1px;
   top: 0px;
@@ -28,7 +28,7 @@
 }
 
 .OutlineListItem::before {
-  background: var(--re-border-default);
+  background: var(--color-border);
   position: absolute;
   left: -17px;
   top: 9px;
@@ -44,23 +44,23 @@
 
 .OutlineListItem--clickable {
   cursor: pointer;
-  transition: color var(--re-motion-fast) var(--re-ease);
+  transition: color 120ms cubic-bezier(0.2, 0, 0.1, 1);
 }
 
 .OutlineListItem--clickable:focus-visible {
   outline: none;
-  box-shadow: var(--re-ring);
+  box-shadow: 0 0 0 2px color-mix(in oklch, var(--color-ring) 50%, transparent);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .OutlineListItem--clickable:hover {
-    color: var(--re-text-accent);
+    color: var(--color-accent);
     transition: none;
   }
 }
 
 .OutlineListItem--clickable:active {
-  color: var(--re-accent-strong);
+  color: var(--color-accent);
   transition: none;
 }
 

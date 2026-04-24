@@ -1,9 +1,6 @@
 import React from "react";
 import { ResizeHandle } from "../ResizeHandle";
-import getClassNameFactory from "../../../../lib/get-class-name-factory";
-import styles from "./styles.module.css";
-
-const getClassName = getClassNameFactory("Sidebar", styles);
+import { cn } from "../../../../lib/cn";
 
 interface SidebarProps {
   position: "left" | "right";
@@ -26,11 +23,24 @@ export const Sidebar: React.FC<SidebarProps> = ({
     <>
       <div
         ref={sidebarRef}
-        className={getClassName({ [position]: true, isVisible })}
+        style={{ gridArea: position }}
+        className={cn(
+          "relative hidden flex-col overflow-y-auto border-t border-border bg-card",
+          isVisible && "flex",
+          position === "left" && "md:border-t-0 md:border-r",
+          position === "right" && "md:border-t-0 md:border-l"
+        )}
       >
         {children}
       </div>
-      <div className={`${getClassName("resizeHandle")}`}>
+      <div
+        className={cn(
+          "absolute h-full",
+          position === "left" && "justify-self-end",
+          position === "right" && "justify-self-start"
+        )}
+        style={{ gridArea: position }}
+      >
         <ResizeHandle
           position={position}
           sidebarRef={sidebarRef}

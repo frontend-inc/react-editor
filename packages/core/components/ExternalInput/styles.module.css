@@ -7,53 +7,53 @@
   gap: 8px;
   align-items: center;
   justify-content: center;
-  background-color: var(--re-surface-panel);
-  border: 1px solid var(--re-border-default);
-  border-radius: var(--re-radius-md);
-  color: var(--re-text-accent);
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-accent);
   padding: 10px 12px;
   font-weight: 500;
   white-space: nowrap;
   text-overflow: ellipsis;
-  transition: background-color var(--re-motion-fast) var(--re-ease),
-    border-color var(--re-motion-fast) var(--re-ease);
+  transition: background-color 120ms cubic-bezier(0.2, 0, 0.1, 1),
+    border-color 120ms cubic-bezier(0.2, 0, 0.1, 1);
   position: relative;
   overflow: hidden;
   flex-grow: 1;
 }
 
 .ExternalInput--dataSelected .ExternalInput-button {
-  color: var(--re-text-primary);
+  color: var(--color-foreground);
   display: block;
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
 }
 
 .ExternalInput--readOnly .ExternalInput-button {
-  background-color: var(--re-surface-sunken);
+  background-color: var(--color-muted);
 }
 
 .ExternalInput-detachButton {
-  border: 1px solid var(--re-border-default);
-  border-top-right-radius: var(--re-radius-md);
-  border-bottom-right-radius: var(--re-radius-md);
-  background-color: var(--re-surface-sunken);
-  color: var(--re-text-tertiary);
+  border: 1px solid var(--color-border);
+  border-top-right-radius: var(--radius);
+  border-bottom-right-radius: var(--radius);
+  background-color: var(--color-muted);
+  color: var(--color-muted-foreground);
   display: flex;
   gap: 8px;
   align-items: center;
   justify-content: center;
   padding: 8px 12px;
   position: relative;
-  transition: background-color var(--re-motion-fast) var(--re-ease),
-    color var(--re-motion-fast) var(--re-ease);
+  transition: background-color 120ms cubic-bezier(0.2, 0, 0.1, 1),
+    color 120ms cubic-bezier(0.2, 0, 0.1, 1);
   margin-inline-start: -1px;
 }
 
 .ExternalInput-button:focus-visible,
 .ExternalInput-detachButton:focus-visible {
   outline: none;
-  box-shadow: var(--re-ring);
+  box-shadow: 0 0 0 2px color-mix(in oklch, var(--color-ring) 50%, transparent);
   z-index: 1;
 }
 
@@ -61,26 +61,26 @@
   .ExternalInput:not(.ExternalInput--readOnly) .ExternalInput-button:hover,
   .ExternalInput:not(.ExternalInput--readOnly)
     .ExternalInput-detachButton:hover {
-    background: var(--re-surface-hover);
-    border-color: var(--re-border-strong);
+    background: color-mix(in oklch, var(--color-accent) 10%, transparent);
+    border-color: var(--color-border);
     transition: none;
   }
 
   .ExternalInput:not(.ExternalInput--readOnly)
     .ExternalInput-detachButton:hover {
-    color: var(--re-text-accent);
+    color: var(--color-accent);
   }
 }
 
 .ExternalInput:not(.ExternalInput--readOnly) .ExternalInput-button:active,
 .ExternalInput:not(.ExternalInput--readOnly)
   .ExternalInput-detachButton:active {
-  background: var(--re-accent-soft);
+  background: color-mix(in oklch, var(--color-accent) 12%, transparent);
   transition: none;
 }
 
 .ExternalInputModal {
-  color: var(--re-color-black);
+  color: black;
   display: grid;
   grid-template-rows: min-content minmax(128px, 100%) min-content;
   grid-template-columns: 100%;
@@ -106,7 +106,7 @@
 }
 
 .ExternalInputModal-filters {
-  border-bottom: 1px solid var(--re-border-subtle);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .ExternalInputModal--filtersToggled .ExternalInputModal-filters {
@@ -115,7 +115,7 @@
 
 @media (min-width: 458px) {
   .ExternalInputModal-filters {
-    border-inline-end: 1px solid var(--re-border-subtle);
+    border-inline-end: 1px solid var(--color-border);
     display: none;
   }
 
@@ -125,8 +125,8 @@
 }
 
 .ExternalInputModal-masthead {
-  background-color: var(--re-surface-sunken);
-  border-bottom: 1px solid var(--re-border-subtle);
+  background-color: var(--color-muted);
+  border-bottom: 1px solid var(--color-border);
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
@@ -143,29 +143,29 @@
 .ExternalInputModal-table {
   border-collapse: unset;
   border-spacing: 0px;
-  color: var(--re-text-primary);
+  color: var(--color-foreground);
   position: relative;
   z-index: 0;
   min-width: 100%;
 }
 
 .ExternalInputModal-thead {
-  background-color: var(--re-surface-panel);
+  background-color: var(--color-card);
   position: sticky;
   top: 0;
   z-index: 1;
 }
 
 .ExternalInputModal-th {
-  border-bottom: 1px solid var(--re-border-subtle);
-  color: var(--re-text-secondary);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-muted-foreground);
   font-weight: 500;
   font-size: 14px;
   padding: 16px 24px;
 }
 
 .ExternalInputModal-td {
-  border-bottom: 1px solid var(--re-border-subtle);
+  border-bottom: 1px solid var(--color-border);
   padding: 16px 24px;
 }
 
@@ -177,8 +177,8 @@
 
 @media (hover: hover) and (pointer: fine) {
   .ExternalInputModal-tbody .ExternalInputModal-tr:hover {
-    background: var(--re-surface-hover);
-    color: var(--re-text-accent);
+    background: color-mix(in oklch, var(--color-accent) 10%, transparent);
+    color: var(--color-accent);
     cursor: pointer;
     position: relative;
     margin-inline-start: -5px;
@@ -187,7 +187,7 @@
   .ExternalInputModal-tbody
     .ExternalInputModal-tr:hover
     .ExternalInputModal-td:first-of-type {
-    border-inline-start: 4px solid var(--re-text-accent);
+    border-inline-start: 4px solid var(--color-accent);
     padding-inline-start: 20px;
   }
 }
@@ -210,7 +210,7 @@
   display: none;
   background-color: color-mix(
     in srgb,
-    var(--re-surface-panel) 90%,
+    var(--color-card) 90%,
     transparent
   );
   padding: 64px;
@@ -242,35 +242,35 @@
 
 .ExternalInputModal-search {
   display: flex;
-  background: var(--re-surface-panel);
+  background: var(--color-card);
   border-width: 1px;
   border-style: solid;
-  border-color: var(--re-border-subtle);
+  border-color: var(--color-border);
   border-radius: 4px;
   flex-grow: 1;
   transition: border-color 50ms ease-in;
 }
 
 .ExternalInputModal-search:focus-within {
-  border-color: var(--re-border-strong);
-  outline: 2px solid var(--re-accent);
+  border-color: var(--color-border);
+  outline: 2px solid var(--color-accent);
   transition: none;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .ExternalInputModal-search:hover {
-    border-color: var(--re-border-strong);
+    border-color: var(--color-border);
     transition: none;
   }
 }
 
 .ExternalInputModal-searchIcon {
   align-items: center;
-  background: var(--re-surface-sunken);
+  background: var(--color-muted);
   border-bottom-left-radius: 4px;
   border-top-left-radius: 4px;
-  border-inline-end: 1px solid var(--re-border-subtle);
-  color: var(--re-text-tertiary);
+  border-inline-end: 1px solid var(--color-border);
+  color: var(--color-muted-foreground);
   display: flex;
   justify-content: center;
   padding: 12px 15px;
@@ -278,13 +278,13 @@
 }
 
 .ExternalInputModal-search:focus-within .ExternalInputModal-searchIcon {
-  color: var(--re-text-secondary);
+  color: var(--color-muted-foreground);
   transition: none;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .ExternalInputModal-search:hover .ExternalInputModal-searchIcon {
-    color: var(--re-text-secondary);
+    color: var(--color-muted-foreground);
     transition: none;
   }
 }
@@ -302,7 +302,7 @@
 .ExternalInputModal-searchInput {
   border: none;
   border-radius: 4px;
-  background: var(--re-surface-panel);
+  background: var(--color-card);
   font-family: inherit;
   font-size: 14px;
   padding: 12px 15px;
@@ -331,9 +331,9 @@
 }
 
 .ExternalInputModal-footerContainer {
-  background-color: var(--re-surface-sunken);
-  border-top: 1px solid var(--re-border-subtle);
-  color: var(--re-text-secondary);
+  background-color: var(--color-muted);
+  border-top: 1px solid var(--color-border);
+  color: var(--color-muted-foreground);
   padding: 16px;
 }
 
@@ -344,7 +344,7 @@
 }
 
 .ExternalInputModal-field {
-  color: var(--re-text-secondary);
+  color: var(--color-muted-foreground);
   margin: 16px;
   margin-bottom: 12px;
   display: block;

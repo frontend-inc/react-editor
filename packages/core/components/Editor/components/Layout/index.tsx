@@ -1,8 +1,6 @@
 import { ReactElement, ReactNode, useEffect, useMemo, useState } from "react";
-import { getClassNameFactory } from "../../../../lib";
 import { IframeConfig, UiState } from "../../../../types";
 import { usePropsContext } from "../..";
-import styles from "./styles.module.css";
 import { useInjectGlobalCss } from "../../../../lib/use-inject-css";
 import { useAppStore, useAppStoreApi } from "../../../../store";
 import { DefaultOverride } from "../../../DefaultOverride";
@@ -33,10 +31,8 @@ import { blocksPlugin } from "../../../../plugins/blocks";
 import { outlinePlugin } from "../../../../plugins/outline";
 import { fieldsPlugin } from "../../../../plugins/fields";
 import { Button } from "../../../Button";
-
-const getClassName = getClassNameFactory("Editor", styles);
-const getLayoutClassName = getClassNameFactory("EditorLayout", styles);
-const getPluginTabClassName = getClassNameFactory("EditorPluginTab", styles);
+import { cn } from "../../../../lib/cn";
+import { themeToCssVars } from "../..";
 
 const FieldSideBarToolbar = () => {
   const appStore = useAppStoreApi();
@@ -52,8 +48,8 @@ const FieldSideBarToolbar = () => {
   );
 
   return (
-    <div className={getClassName("fieldSideBarToolbar")}>
-      <div className={getClassName("fieldSideBarHistory")}>
+    <div className="flex items-center justify-between gap-2 border-b border-border bg-card px-3 py-2">
+      <div className="flex gap-0.5 text-muted-foreground">
         <IconButton
           type="button"
           title="undo"
@@ -71,7 +67,7 @@ const FieldSideBarToolbar = () => {
           <Redo2Icon size={18} />
         </IconButton>
       </div>
-      <div className={getClassName("fieldSideBarActions")}>
+      <div className="flex items-center gap-2">
         <CustomHeaderActions>
           <Button
             onClick={() => {
@@ -115,8 +111,14 @@ const PluginTab = ({
   mobileOnly?: boolean;
 }) => {
   return (
-    <div className={getPluginTabClassName({ visible, mobileOnly })}>
-      <div className={getPluginTabClassName("body")}>{children}</div>
+    <div
+      className={cn(
+        "hidden max-h-full grow",
+        visible && "flex flex-col",
+        mobileOnly && "sm:hidden"
+      )}
+    >
+      <div className="max-h-full grow">{children}</div>
     </div>
   );
 };
@@ -128,6 +130,8 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
     initialHistory: _initialHistory,
     plugins,
     height,
+    className: rootClassName,
+    theme: themeProp,
   } = usePropsContext();
 
   const iframe: IframeConfig = useMemo(
@@ -223,16 +227,6 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
   usePreviewModeHotkeys();
   useDeleteHotkeys();
 
-  const layoutOptions: Record<string, any> = {};
-
-  if (leftWidth) {
-    layoutOptions["--re-user-left-side-bar-width"] = `${leftWidth}px`;
-  }
-
-  if (rightWidth) {
-    layoutOptions["--re-user-right-side-bar-width"] = `${rightWidth}px`;
-  }
-
   const setUi = useAppStore((s) => s.setUi);
   const currentPlugin = useAppStore((s) => s.state.ui.plugin?.current);
   const appStoreApi = useAppStoreApi();
@@ -279,8 +273,6 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
     const isLegacy = (plugin: PluginInternal) =>
       plugin.name === "legacy-side-bar" ? -1 : 0;
 
-    // Always place legacy-side-bar first
-    // Stable tie-break ensures consistent order for non-legacy plugins
     const combinedPlugins: PluginInternal[] = [
       ...defaultPlugins,
       ...(plugins ?? []),
@@ -293,7 +285,6 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
     combinedPlugins?.forEach((plugin) => {
       if (plugin.name && plugin.render) {
         if (details[plugin.name]) {
-          // Delete existing plugins with this name to enable user sorting
           delete details[plugin.name];
         }
 
@@ -344,37 +335,69 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
     (s) => s.state.ui.mobilePanelExpanded ?? false
   );
 
+  // Grid layout — dynamic based on viewport + sidebar visibility.
+  // Mobile (<638px): rows = editor / left / right / sidenav.
+  // Desktop (≥638px): cols = sidenav | left | editor | right.
+  const showRight = !hasDesktopFieldsPlugin && rightSideBarVisible;
+  const sidenavWidth = hasLegacySideBarPlugin ? "0px" : "44px";
+  const leftCol = mounted && leftSideBarVisible ? `${leftWidth || 250}px` : "0px";
+  const rightCol = mounted && showRight ? `${rightWidth || 250}px` : "0px";
+
+  const mobileLeftRow =
+    leftSideBarVisible && mobilePanelHeightMode === "toggle"
+      ? mobilePanelExpanded
+        ? "55%"
+        : "30%"
+      : leftSideBarVisible && mobilePanelHeightMode === "min-content"
+      ? "min-content"
+      : "0";
+
+  const [isDesktop, setIsDesktop] = useState(false);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia("(min-width: 638px)");
+    setIsDesktop(mq.matches);
+    const listener = () => setIsDesktop(mq.matches);
+    mq.addEventListener("change", listener);
+    return () => mq.removeEventListener("change", listener);
+  }, []);
+
+  const gridStyle = isDesktop
+    ? {
+        gridTemplateAreas: '"sidenav left editor right"',
+        gridTemplateColumns: `${sidenavWidth} ${leftCol} auto ${rightCol}`,
+        gridTemplateRows: "auto",
+      }
+    : {
+        gridTemplateAreas: '"editor" "left" "right" "sidenav"',
+        gridTemplateColumns: "auto",
+        gridTemplateRows: `auto ${mobileLeftRow} 0 ${sidenavWidth}`,
+        transition: "grid-template-rows 150ms ease-in",
+      };
+
   return (
     <div
-      className={`Editor ${getClassName({
-        hidePlugins: hasLegacySideBarPlugin,
-      })}`}
+      className={cn(
+        "Editor overflow-x-hidden text-foreground font-sans",
+        rootClassName
+      )}
       id={instanceId}
       data-theme={theme}
-      style={{ height }}
+      style={{ height, ...themeToCssVars(themeProp) }}
     >
       <DragDropContext disableAutoScroll={dnd?.disableAutoScroll}>
         <CustomEditor>
           {children || (
             <FrameProvider>
-              <div
-                className={getLayoutClassName({
-                  leftSideBarVisible,
-                  mounted,
-                  rightSideBarVisible:
-                    !hasDesktopFieldsPlugin && rightSideBarVisible,
-                  isExpanded: mobilePanelExpanded,
-                  mobilePanelHeightToggle: mobilePanelHeightMode === "toggle",
-                  mobilePanelHeightMinContent:
-                    mobilePanelHeightMode === "min-content",
-                })}
-                style={{ height }}
-              >
+              <div className="h-dvh" style={{ height }}>
                 <div
-                  className={getLayoutClassName("inner")}
-                  style={layoutOptions}
+                  className="relative z-0 grid h-full overflow-hidden bg-background"
+                  style={gridStyle}
                 >
-                  <div className={getLayoutClassName("nav")}>
+                  <div
+                    className="w-full overflow-hidden border-t border-border bg-card sm:border-t-0 sm:border-r"
+                    style={{ gridArea: "sidenav" }}
+                  >
                     <Nav
                       items={pluginItems}
                       mobileActions={
@@ -445,7 +468,7 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
           )}
         </CustomEditor>
       </DragDropContext>
-      <div id="editor-portal-root" className={getClassName("portal")} />
+      <div id="editor-portal-root" className="relative z-[2]" />
     </div>
   );
 };
