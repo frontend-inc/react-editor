@@ -1,0 +1,94 @@
+/*
+ * Editor color tokens.
+ *
+ * All colors are prefixed --editor-* to avoid collision with host tokens.
+ * Non-color tokens (spacing, radius, font, shadow) inherit from the host
+ * via Tailwind's native unprefixed vars.
+ *
+ * Host override paths (any of these wins):
+ *   1. <ReactEditor theme={{ primary: "#f60" }} />   inline style on root
+ *   2. <ReactEditor className="brand" />             host CSS targeting .brand
+ *   3. :root { --editor-primary: #f60 }              global host override
+ */
+
+:root {
+  /* Surfaces */
+  --editor-background: #fafafb;
+  --editor-foreground: #1b1d22;
+  --editor-card: #ffffff;
+  --editor-card-foreground: #1b1d22;
+  --editor-popover: #ffffff;
+  --editor-popover-foreground: #1b1d22;
+  --editor-muted: #f4f5f7;
+  --editor-muted-foreground: #555863;
+
+  /* Brand */
+  --editor-primary: #1b1d22;
+  --editor-primary-foreground: #ffffff;
+  --editor-secondary: #f4f5f7;
+  --editor-secondary-foreground: #1b1d22;
+  --editor-accent: #0158ad;
+  --editor-accent-foreground: #ffffff;
+
+  /* UI chrome */
+  --editor-border: #ececf0;
+  --editor-input: #e2e3e8;
+  --editor-ring: #3479be;
+
+  /* Semantic */
+  --editor-destructive: #ac1f35;
+  --editor-destructive-foreground: #ffffff;
+}
+
+.dark {
+  --editor-background: #0f1115;
+  --editor-foreground: #e7e9ee;
+  --editor-card: #161a20;
+  --editor-card-foreground: #e7e9ee;
+  --editor-popover: #1c2028;
+  --editor-popover-foreground: #e7e9ee;
+  --editor-muted: #0b0d11;
+  --editor-muted-foreground: #a7abb5;
+
+  --editor-primary: #f4f5f7;
+  --editor-primary-foreground: #0f1115;
+  --editor-secondary: #1f232b;
+  --editor-secondary-foreground: #e7e9ee;
+  --editor-accent: #8ab3ee;
+  --editor-accent-foreground: #0f1115;
+
+  --editor-border: #1f232b;
+  --editor-input: #262c35;
+  --editor-ring: #8ab3ee;
+
+  --editor-destructive: #f87171;
+  --editor-destructive-foreground: #0f1115;
+}
+
+/*
+ * Tailwind v4 @theme: bind shadcn utility class names (bg-background,
+ * text-foreground, border-border, etc.) to our prefixed tokens.
+ * Result: vanilla shadcn components work unmodified.
+ */
+
+@theme inline {
+  --color-background: var(--editor-background);
+  --color-foreground: var(--editor-foreground);
+  --color-card: var(--editor-card);
+  --color-card-foreground: var(--editor-card-foreground);
+  --color-popover: var(--editor-popover);
+  --color-popover-foreground: var(--editor-popover-foreground);
+  --color-muted: var(--editor-muted);
+  --color-muted-foreground: var(--editor-muted-foreground);
+  --color-primary: var(--editor-primary);
+  --color-primary-foreground: var(--editor-primary-foreground);
+  --color-secondary: var(--editor-secondary);
+  --color-secondary-foreground: var(--editor-secondary-foreground);
+  --color-accent: var(--editor-accent);
+  --color-accent-foreground: var(--editor-accent-foreground);
+  --color-border: var(--editor-border);
+  --color-input: var(--editor-input);
+  --color-ring: var(--editor-ring);
+  --color-destructive: var(--editor-destructive);
+  --color-destructive-foreground: var(--editor-destructive-foreground);
+}

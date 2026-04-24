@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@import "./editor-theme.css";
+
+@source "../components/**/*.{ts,tsx}";
+@source "../plugins/**/*.{ts,tsx}";
+@source "../lib/**/*.{ts,tsx}";
