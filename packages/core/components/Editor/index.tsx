@@ -98,7 +98,7 @@ type EditorProps<
   initialHistory?: InitialHistory;
   metadata?: Metadata;
   height?: CSSProperties["height"];
-  _experimentalFullScreenCanvas?: boolean;
+  fullScreenCanvas?: boolean;
   _experimentalVirtualization?: boolean;
 };
 
@@ -137,7 +137,7 @@ function EditorProvider<
     metadata,
     onAction,
     fieldTransforms,
-    _experimentalFullScreenCanvas,
+    fullScreenCanvas,
     _experimentalVirtualization,
   } = usePropsContext();
 
@@ -295,7 +295,7 @@ function EditorProvider<
         overrides: loadedOverrides,
         viewports,
         iframe,
-        _experimentalFullScreenCanvas: !!_experimentalFullScreenCanvas,
+        fullScreenCanvas: !!fullScreenCanvas,
         _experimentalVirtualization: !!_experimentalVirtualization,
         onAction,
         metadata,
@@ -310,7 +310,7 @@ function EditorProvider<
       loadedOverrides,
       viewports,
       iframe,
-      _experimentalFullScreenCanvas,
+      fullScreenCanvas,
       _experimentalVirtualization,
       onAction,
       metadata,

@@ -36,7 +36,7 @@ export const Canvas = () => {
     setZoomConfig,
     status,
     iframe,
-    _experimentalFullScreenCanvas,
+    fullScreenCanvas,
   } = useAppStore(
     useShallow((s) => ({
       dispatch: s.dispatch,
@@ -46,7 +46,7 @@ export const Canvas = () => {
       setZoomConfig: s.setZoomConfig,
       status: s.status,
       iframe: s.iframe,
-      _experimentalFullScreenCanvas: s._experimentalFullScreenCanvas,
+      fullScreenCanvas: s.fullScreenCanvas,
     }))
   );
   const viewports = useAppStore((s) => s.state.ui.viewports);
@@ -184,7 +184,7 @@ export const Canvas = () => {
       className={getClassName({
         ready: status === "READY" || !iframe.enabled || !iframe.waitForStyles,
         showLoader,
-        fullScreen: _experimentalFullScreenCanvas,
+        fullScreen: fullScreenCanvas,
       })}
       onClick={(e) => {
         const el = e.target as Element;

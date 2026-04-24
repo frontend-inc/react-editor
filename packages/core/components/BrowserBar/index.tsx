@@ -1,4 +1,4 @@
-import { Globe, Monitor, Smartphone } from "lucide-react";
+import { Globe, Maximize, Minimize, Monitor, Smartphone } from "lucide-react";
 import { useMemo } from "react";
 import { useAppStore } from "../../store";
 import { usePropsContext } from "../Editor";
@@ -30,6 +30,23 @@ export const BrowserBar = ({
 }) => {
   const { routes, currentPath, onRouteChange } = usePropsContext();
   const viewports = useAppStore((s) => s.state.ui.viewports);
+  const dispatch = useAppStore((s) => s.dispatch);
+  const leftSideBarVisible = useAppStore((s) => s.state.ui.leftSideBarVisible);
+  const rightSideBarVisible = useAppStore(
+    (s) => s.state.ui.rightSideBarVisible
+  );
+  const isFullScreen = !leftSideBarVisible && !rightSideBarVisible;
+
+  const toggleFullScreen = () => {
+    const next = !isFullScreen;
+    dispatch({
+      type: "setUi",
+      ui: {
+        leftSideBarVisible: !next,
+        rightSideBarVisible: !next,
+      },
+    });
+  };
 
   // Mobile when current width is a number ≤ 640; everything else treated as desktop.
   const activeDevice: Device = useMemo(() => {
@@ -101,6 +118,19 @@ export const BrowserBar = ({
               <Monitor size={16} />
             ) : (
               <Smartphone size={16} />
+            )}
+          </span>
+        </IconButton>
+        <IconButton
+          type="button"
+          title={isFullScreen ? "Exit full screen" : "Enter full screen"}
+          onClick={toggleFullScreen}
+        >
+          <span className={getClassName("deviceIcon")}>
+            {isFullScreen ? (
+              <Minimize size={16} />
+            ) : (
+              <Maximize size={16} />
             )}
           </span>
         </IconButton>

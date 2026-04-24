@@ -52,9 +52,9 @@
   );
   background-color: var(--re-surface-app);
   display: grid;
-  grid-template-areas: "header" "editor" "left" "right" "sidenav";
+  grid-template-areas: "editor" "left" "right" "sidenav";
   grid-template-columns: var(--re-frame-width);
-  grid-template-rows: min-content auto 0 0 var(--re-side-nav-width);
+  grid-template-rows: auto 0 0 var(--re-side-nav-width);
   height: 100%;
   position: relative;
   transition: grid-template-rows 150ms ease-in;
@@ -65,9 +65,9 @@
 @media (min-width: 638px) {
   .EditorLayout-inner {
     --re-side-nav-width: 44px;
-    grid-template-areas: "header header header header" "sidenav left editor right";
+    grid-template-areas: "sidenav left editor right";
     grid-template-columns: var(--re-side-nav-width) 0 var(--re-frame-width) 0;
-    grid-template-rows: min-content auto;
+    grid-template-rows: auto;
   }
 
   .Editor--hidePlugins .EditorLayout-inner {
@@ -81,14 +81,12 @@
 
 .EditorLayout--mobilePanelHeightToggle.EditorLayout--leftSideBarVisible
   .EditorLayout-inner {
-  /* Setting header to 0 causes jump as it can't be animated. Can't use fixed number as we don't know user's header dimensions. Consider using ref + JS. */
-  grid-template-rows: 0 auto 30% 0 var(--re-side-nav-width);
+  grid-template-rows: auto 30% 0 var(--re-side-nav-width);
 }
 
 .EditorLayout--mobilePanelHeightToggle.EditorLayout--leftSideBarVisible.EditorLayout--isExpanded
   .EditorLayout-inner {
-  /* Setting header to 0 causes jump as it can't be animated. Can't use fixed number as we don't know user's header dimensions. Consider using ref + JS. */
-  grid-template-rows: 0 auto 55% 0 var(--re-side-nav-width);
+  grid-template-rows: auto 55% 0 var(--re-side-nav-width);
 }
 
 @media (min-width: 638px) {
@@ -99,7 +97,7 @@
         --re-frame-width
       )
       0;
-    grid-template-rows: min-content auto;
+    grid-template-rows: auto;
   }
 }
 
@@ -107,8 +105,7 @@
   .EditorLayout-inner,
 .EditorLayout--mobilePanelHeightMinContent.EditorLayout--leftSideBarVisible.EditorLayout--isExpanded
   .EditorLayout-inner {
-  /* Setting header to 0 causes jump as it can't be animated. Can't use fixed number as we don't know user's header dimensions. Consider using ref + JS. */
-  grid-template-rows: 0 auto min-content 0 var(--re-side-nav-width);
+  grid-template-rows: auto min-content 0 var(--re-side-nav-width);
 }
 
 @media (min-width: 638px) {
@@ -125,7 +122,7 @@
         --re-frame-width
       )
       0;
-    grid-template-rows: min-content auto;
+    grid-template-rows: auto;
   }
 }
 
@@ -206,18 +203,26 @@
   }
 }
 
-.EditorLayout-header {
-  grid-area: header;
+.Editor-fieldSideBarToolbar {
+  align-items: center;
+  background: var(--re-surface-panel);
+  border-bottom: 1px solid var(--re-border-subtle);
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  padding: 8px 12px;
 }
 
-.EditorLayout--leftSideBarVisible .EditorLayout-header {
-  overflow: hidden;
+.Editor-fieldSideBarHistory {
+  color: var(--re-text-tertiary);
+  display: flex;
+  gap: 2px;
 }
 
-@media (min-width: 638px) {
-  .EditorLayout--leftSideBarVisible .EditorLayout-header {
-    overflow: auto;
-  }
+.Editor-fieldSideBarActions {
+  align-items: center;
+  display: flex;
+  gap: 8px;
 }
 
 .EditorPluginTab {

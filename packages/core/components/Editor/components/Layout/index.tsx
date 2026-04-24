@@ -10,7 +10,6 @@ import { monitorHotkeys, useMonitorHotkeys } from "../../../../lib/use-hotkey";
 import { getFrame } from "../../../../lib/get-frame";
 import { usePreviewModeHotkeys } from "../../../../lib/use-preview-mode-hotkeys";
 import { DragDropContext } from "../../../DragDropContext";
-import { Header } from "../Header";
 import { SidebarSection } from "../../../SidebarSection";
 import { Canvas } from "../Canvas";
 import { Fields } from "../Fields";
@@ -20,15 +19,73 @@ import { Sidebar } from "../Sidebar";
 import { useDeleteHotkeys } from "../../../../lib/use-delete-hotkeys";
 import { MenuItem, Nav } from "../Nav";
 import { IconButton } from "../../../IconButton";
-import { Maximize2, Minimize2, Moon, Sun, ToyBrick } from "lucide-react";
+import {
+  Maximize2,
+  Minimize2,
+  Moon,
+  Redo2Icon,
+  Sun,
+  ToyBrick,
+  Undo2Icon,
+} from "lucide-react";
 import { PluginInternal } from "../../../../types/Internal";
 import { blocksPlugin } from "../../../../plugins/blocks";
 import { outlinePlugin } from "../../../../plugins/outline";
 import { fieldsPlugin } from "../../../../plugins/fields";
+import { Button } from "../../../Button";
 
 const getClassName = getClassNameFactory("Editor", styles);
 const getLayoutClassName = getClassNameFactory("EditorLayout", styles);
 const getPluginTabClassName = getClassNameFactory("EditorPluginTab", styles);
+
+const FieldSideBarToolbar = () => {
+  const appStore = useAppStoreApi();
+  const { onPublish } = usePropsContext();
+
+  const back = useAppStore((s) => s.history.back);
+  const forward = useAppStore((s) => s.history.forward);
+  const hasFuture = useAppStore((s) => s.history.hasFuture());
+  const hasPast = useAppStore((s) => s.history.hasPast());
+
+  const CustomHeaderActions = useAppStore(
+    (s) => s.overrides.headerActions || DefaultOverride
+  );
+
+  return (
+    <div className={getClassName("fieldSideBarToolbar")}>
+      <div className={getClassName("fieldSideBarHistory")}>
+        <IconButton
+          type="button"
+          title="undo"
+          disabled={!hasPast}
+          onClick={back}
+        >
+          <Undo2Icon size={18} />
+        </IconButton>
+        <IconButton
+          type="button"
+          title="redo"
+          disabled={!hasFuture}
+          onClick={forward}
+        >
+          <Redo2Icon size={18} />
+        </IconButton>
+      </div>
+      <div className={getClassName("fieldSideBarActions")}>
+        <CustomHeaderActions>
+          <Button
+            onClick={() => {
+              const data = appStore.getState().state.data;
+              onPublish && onPublish(data);
+            }}
+          >
+            Publish
+          </Button>
+        </CustomHeaderActions>
+      </div>
+    </div>
+  );
+};
 
 const FieldSideBar = () => {
   const title = useAppStore((s) =>
@@ -39,9 +96,12 @@ const FieldSideBar = () => {
   );
 
   return (
-    <SidebarSection noBorderTop showBreadcrumbs title={title}>
-      <Fields />
-    </SidebarSection>
+    <>
+      <FieldSideBarToolbar />
+      <SidebarSection noBorderTop showBreadcrumbs title={title}>
+        <Fields />
+      </SidebarSection>
+    </>
   );
 };
 
@@ -314,9 +374,6 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
                   className={getLayoutClassName("inner")}
                   style={layoutOptions}
                 >
-                  <div className={getLayoutClassName("header")}>
-                    <Header hidePlugins={hasLegacySideBarPlugin} />
-                  </div>
                   <div className={getLayoutClassName("nav")}>
                     <Nav
                       items={pluginItems}
