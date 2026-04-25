@@ -49,9 +49,7 @@ const scoped = await postcss([
         }
 
         // Already scoped? skip.
-        const scopeRe = new RegExp(
-          `\\${SCOPE}(\\s|,|\\.|:|$)`
-        );
+        const scopeRe = new RegExp(`\\${SCOPE}(\\s|,|\\.|:|$)`);
         if (scopeRe.test(rule.selector)) return;
 
         rule.selectors = rule.selectors.map((sel) => {

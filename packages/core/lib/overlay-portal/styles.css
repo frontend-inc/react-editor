@@ -4,11 +4,11 @@
 }
 
 [data-editor-overlay-portal]:hover {
-  outline: 2px var(--color-accent) dashed;
+  outline: 2px var(--editor-highlight) dashed;
   outline-offset: 2px;
 }
 
 [data-editor-overlay-portal]:focus-within {
-  outline: 2px var(--color-accent) dashed;
+  outline: 2px var(--editor-highlight) dashed;
   outline-offset: 2px;
 }

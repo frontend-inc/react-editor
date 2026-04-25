@@ -23,8 +23,8 @@
 
 .DropZone--isAreaSelected,
 .DropZone--hoveringOverArea:not(.DropZone--isRootZone) {
-  background: color-mix(in oklch, var(--color-accent) 12%, transparent);
-  outline: 1px dashed var(--color-accent);
+  background: color-mix(in oklch, var(--editor-highlight) 12%, transparent);
+  outline: 1px dashed var(--editor-highlight);
   border-radius: var(--radius);
 }
 
@@ -37,12 +37,12 @@
 }
 
 .DropZone--isDestination {
-  outline: 1px dashed var(--color-accent) !important;
+  outline: 1px dashed var(--editor-highlight) !important;
   border-radius: var(--radius);
 }
 
 .DropZone--isDestination:not(.DropZone--isRootZone) {
-  background: color-mix(in oklch, var(--color-accent) 12%, transparent) !important;
+  background: color-mix(in oklch, var(--editor-highlight) 12%, transparent) !important;
 }
 
 .DropZone-item {
@@ -58,7 +58,7 @@
 }
 
 [data-editor-dragging] .DropZone--isEnabled {
-  outline: 1px dashed var(--color-accent);
+  outline: 1px dashed var(--editor-highlight);
   border-radius: var(--radius);
 }
 

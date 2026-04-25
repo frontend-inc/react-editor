@@ -38,6 +38,11 @@
   /* Semantic */
   --editor-destructive: #ac1f35;
   --editor-destructive-foreground: #ffffff;
+
+  /* Chrome — outline color used for component hover/select overlays
+     and drop-zone targeting. Independent of brand `accent` so it stays
+     a clear editor signal regardless of theme. */
+  --editor-highlight: #3b82f6;
 }
 
 .dark {
@@ -63,4 +68,6 @@
 
   --editor-destructive: #f87171;
   --editor-destructive-foreground: #0f1115;
+
+  --editor-highlight: #60a5fa;
 }

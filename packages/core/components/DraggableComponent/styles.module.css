@@ -4,7 +4,7 @@
 
   --overlay-background: color-mix(
     in srgb,
-    var(--color-accent) 14%,
+    var(--editor-highlight) 14%,
     transparent
   );
 }
@@ -22,7 +22,7 @@
 .DraggableComponent-overlay {
   cursor: pointer;
   height: 100%;
-  outline: 1.5px var(--color-accent) solid;
+  outline: 1.5px var(--editor-highlight) solid;
   outline-offset: -1.5px;
   width: 100%;
   transition: outline-color 120ms cubic-bezier(0.2, 0, 0.1, 1),
@@ -30,7 +30,7 @@
 }
 
 .DraggableComponent:focus-visible > .DraggableComponent-overlayWrapper {
-  outline: 1px solid var(--color-accent);
+  outline: 1px solid var(--editor-highlight);
 }
 
 .DraggableComponent-loadingOverlay {
@@ -54,13 +54,13 @@
   > .DraggableComponent-overlayWrapper
   > .DraggableComponent-overlay {
   background: var(--overlay-background);
-  outline: 1.5px var(--color-accent) solid;
+  outline: 1.5px var(--editor-highlight) solid;
 }
 
 .DraggableComponent--isSelected
   > .DraggableComponent-overlayWrapper
   > .DraggableComponent-overlay {
-  outline-color: var(--color-accent);
+  outline-color: var(--editor-highlight);
   outline-width: 2px;
 }
 

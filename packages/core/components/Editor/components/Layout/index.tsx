@@ -379,6 +379,7 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
     <div
       className={cn(
         "react-editor overflow-x-hidden text-foreground font-sans",
+        theme === "dark" && "dark",
         rootClassName
       )}
       id={instanceId}
@@ -421,13 +422,17 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
                         )
                       }
                       footer={
-                        <IconButton
+                        <button
                           type="button"
                           title={themeLabel}
                           onClick={toggleTheme}
+                          className="relative box-border flex h-8 w-8 cursor-pointer items-center justify-center rounded-md border-0 bg-transparent p-1 text-muted-foreground transition-colors hover:bg-accent/5 hover:text-accent"
                         >
-                          {themeIcon}
-                        </IconButton>
+                          <span className="flex h-[18px] w-[18px] items-center justify-center [&_svg]:h-[18px] [&_svg]:w-[18px]">
+                            {themeIcon}
+                          </span>
+                          <span className="sr-only">{themeLabel}</span>
+                        </button>
                       }
                     />
                   </div>
