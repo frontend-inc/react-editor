@@ -378,7 +378,7 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
   return (
     <div
       className={cn(
-        "Editor overflow-x-hidden text-foreground font-sans",
+        "react-editor overflow-x-hidden text-foreground font-sans",
         rootClassName
       )}
       id={instanceId}

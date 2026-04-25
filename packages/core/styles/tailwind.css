@@ -1,6 +1,33 @@
 @import "tailwindcss";
-@import "./editor-theme.css";
 
 @source "../components/**/*.{ts,tsx}";
 @source "../plugins/**/*.{ts,tsx}";
 @source "../lib/**/*.{ts,tsx}";
+
+/*
+ * Bind shadcn utility names (bg-background, text-foreground, etc.) to our
+ * prefixed editor tokens. The :root, :host declarations emitted here are
+ * rewritten to .react-editor by build-tailwind.mjs so the bindings only
+ * resolve inside the editor subtree.
+ */
+@theme inline {
+  --color-background: var(--editor-background);
+  --color-foreground: var(--editor-foreground);
+  --color-card: var(--editor-card);
+  --color-card-foreground: var(--editor-card-foreground);
+  --color-popover: var(--editor-popover);
+  --color-popover-foreground: var(--editor-popover-foreground);
+  --color-muted: var(--editor-muted);
+  --color-muted-foreground: var(--editor-muted-foreground);
+  --color-primary: var(--editor-primary);
+  --color-primary-foreground: var(--editor-primary-foreground);
+  --color-secondary: var(--editor-secondary);
+  --color-secondary-foreground: var(--editor-secondary-foreground);
+  --color-accent: var(--editor-accent);
+  --color-accent-foreground: var(--editor-accent-foreground);
+  --color-border: var(--editor-border);
+  --color-input: var(--editor-input);
+  --color-ring: var(--editor-ring);
+  --color-destructive: var(--editor-destructive);
+  --color-destructive-foreground: var(--editor-destructive-foreground);
+}
