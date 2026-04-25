@@ -20,6 +20,8 @@ import { useRegisterFieldsSlice } from "../../../../store/slices/fields";
 import { useShallow } from "zustand/react/shallow";
 import { StoreApi } from "zustand";
 import { Link } from "lucide-react";
+import { Button } from "../../../ui/button";
+import { cn } from "../../../../lib/cn";
 
 const getClassName = getClassNameFactory("EditorFields", styles);
 
@@ -226,18 +228,21 @@ const GlobalSyncButton = () => {
     });
   };
 
-  const syncButtonClass = [
-    getClassName("syncButton"),
-    isUnlinked ? styles["EditorFields-syncButton--unlinked"] : null,
-  ]
-    .filter(Boolean)
-    .join(" ");
-
   return (
-    <button type="button" className={syncButtonClass} onClick={onClick}>
+    <Button
+      type="button"
+      variant="outline"
+      onClick={onClick}
+      className={cn(
+        "mx-4 my-3 w-[calc(100%-32px)] gap-2 bg-transparent shadow-none",
+        isUnlinked
+          ? "border-border text-muted-foreground hover:bg-accent/10 hover:text-foreground dark:bg-transparent"
+          : "border-violet-600 text-violet-600 hover:bg-violet-500/10 hover:text-violet-600 dark:bg-transparent dark:border-violet-400 dark:text-violet-400 dark:hover:bg-violet-400/10 dark:hover:text-violet-400"
+      )}
+    >
       <Link size={14} />
       <span>{isUnlinked ? "Link to shared" : "Linked to shared"}</span>
-    </button>
+    </Button>
   );
 };
 

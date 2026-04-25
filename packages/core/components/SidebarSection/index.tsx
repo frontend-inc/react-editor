@@ -31,12 +31,15 @@ export const SidebarSection = ({
         )}
       >
         <div className="flex items-center gap-1">
-          {showBreadcrumbs && <Breadcrumbs />}
-          <div className="pr-4 text-[13px] leading-tight">
-            <Heading rank="2" size="xs">
-              {title}
-            </Heading>
-          </div>
+          {showBreadcrumbs ? (
+            <Breadcrumbs />
+          ) : (
+            <div className="pr-4 text-[13px] leading-tight">
+              <Heading rank="2" size="xs">
+                {title}
+              </Heading>
+            </div>
+          )}
         </div>
       </div>
       <div className="last:grow last:border-b-0 [&:last-child]:pb-1">

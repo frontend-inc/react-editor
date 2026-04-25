@@ -1,12 +1,9 @@
 #!/usr/bin/env node
-// Pre-compile Tailwind v4 + scope its output to .react-editor so the editor's
-// preflight, utilities, and --color-* bindings never leak to the host.
-//
-// Two outputs:
-//   styles/.editor-theme.generated.css — host-overridable --editor-* tokens
-//                                        at :root and .dark (NOT scoped)
-//   styles/.tailwind.generated.css     — Tailwind preflight + utilities,
-//                                        scoped under .react-editor
+// Pre-compile Tailwind v4 + scope its output to .react-editor so the
+// editor's preflight, utilities, and --color-* bindings never leak to
+// the host. Output: styles/.tailwind.generated.css. The host-overridable
+// --editor-* tokens live in styles/editor-theme.css and are imported
+// unscoped from bundle/core.css.
 
 import fs from "fs";
 import path from "path";
@@ -15,13 +12,6 @@ import tailwindcss from "@tailwindcss/postcss";
 
 const SCOPE = ".react-editor";
 const root = path.resolve(import.meta.dirname, "..");
-
-// Pass-through copy of editor-theme.css. Stays at :root so host can
-// override --editor-* tokens with higher-specificity rules.
-fs.copyFileSync(
-  path.join(root, "styles/editor-theme.css"),
-  path.join(root, "styles/.editor-theme.generated.css")
-);
 
 // Run Tailwind on the utility entrypoint.
 const twSrc = path.join(root, "styles/tailwind.css");

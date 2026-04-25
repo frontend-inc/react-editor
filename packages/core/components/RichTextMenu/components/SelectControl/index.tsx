@@ -1,6 +1,11 @@
 import { useControlContext } from "../../lib/use-control-context";
 import { JSXElementConstructor, useMemo } from "react";
-import { Select } from "../../../Select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "../../../ui/select";
 
 export type Option<T = string> = { label: string; value: T; icon?: React.FC };
 export type Options<T = string> = Option<T>[];
@@ -18,7 +23,7 @@ export function SelectControl<ValueType extends string = string>({
   value: ValueType;
   defaultValue: ValueType;
 }) {
-  const { inline, readOnly } = useControlContext();
+  const { readOnly } = useControlContext();
 
   type OptionsByValue = Record<ValueType, Option>;
 
@@ -31,18 +36,40 @@ export function SelectControl<ValueType extends string = string>({
     [options]
   );
 
-  const Node = (value && optionsByValue[value]?.icon) ?? renderDefaultIcon;
+  const TriggerIcon = (value && optionsByValue[value]?.icon) ?? renderDefaultIcon;
+  const hasOptions = options.length > 0;
+  const isDefault = value === defaultValue;
 
   return (
     <Select
-      options={options}
-      onChange={onChange}
       value={value}
-      defaultValue={defaultValue}
-      mode={inline ? "actionBar" : "standalone"}
-      disabled={readOnly}
+      onValueChange={(v) => onChange(v as ValueType)}
+      disabled={readOnly || !hasOptions}
     >
-      <Node />
+      <SelectTrigger
+        size="sm"
+        className={
+          isDefault ? "text-muted-foreground" : "text-foreground"
+        }
+        aria-label="Select"
+      >
+        <TriggerIcon />
+      </SelectTrigger>
+      <SelectContent>
+        {options.map((option) => {
+          const Icon = option.icon;
+          return (
+            <SelectItem key={option.value} value={option.value}>
+              {Icon ? (
+                <span className="inline-flex size-4 items-center justify-center">
+                  <Icon />
+                </span>
+              ) : null}
+              {option.label}
+            </SelectItem>
+          );
+        })}
+      </SelectContent>
     </Select>
   );
 }

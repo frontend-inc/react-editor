@@ -9,7 +9,7 @@ export * from "../types/Fields";
 export * from "../components/ActionBar";
 export { AutoField, FieldLabel } from "../components/AutoField";
 
-export * from "../components/Button";
+export { Button, buttonVariants } from "../components/ui/button";
 export { ComponentList } from "../components/ComponentList";
 export { Drawer } from "../components/Drawer";
 

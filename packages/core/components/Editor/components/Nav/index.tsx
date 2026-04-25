@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { cn } from "../../../../lib/cn";
+import { Button } from "../../../ui/button";
 
 export type MenuItem = {
   label: string;
@@ -18,32 +19,30 @@ export const MenuItem = ({
   mobileOnly,
   desktopOnly,
 }: MenuItem) => {
+  if (!onClick) return null;
   return (
     <li
       className={cn(
-        "first:pl-2 last:pr-2 sm:first:pl-0 sm:last:pr-0",
+        "flex justify-center first:pl-2 last:pr-2 sm:first:pl-0 sm:last:pr-0",
         mobileOnly && "sm:hidden",
-        desktopOnly && "hidden sm:block"
+        desktopOnly && "hidden sm:flex"
       )}
     >
-      {onClick && (
-        <div
-          onClick={onClick}
-          className={cn(
-            "relative mx-auto box-border flex h-8 w-8 cursor-pointer items-center justify-center rounded-md border-0 p-1 text-muted-foreground transition-colors",
-            isActive
-              ? "bg-accent/10 text-accent"
-              : "hover:bg-accent/5 hover:text-accent"
-          )}
-        >
-          {icon && (
-            <span className="flex h-[18px] w-[18px] items-center justify-center [&_svg]:h-[18px] [&_svg]:w-[18px]">
-              {icon}
-            </span>
-          )}
-          <span className="sr-only">{label}</span>
-        </div>
-      )}
+      <Button
+        type="button"
+        variant="ghost"
+        size="icon-sm"
+        title={label}
+        data-active={isActive ? true : undefined}
+        onClick={onClick}
+      >
+        {icon ? (
+          <span className="flex size-[18px] items-center justify-center [&_svg]:size-[18px]">
+            {icon}
+          </span>
+        ) : null}
+        <span className="sr-only">{label}</span>
+      </Button>
     </li>
   );
 };

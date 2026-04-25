@@ -1,9 +1,6 @@
-import getClassNameFactory from "../../../../lib/get-class-name-factory";
-import styles from "../../styles.module.css";
 import { FieldPropsInternal } from "../..";
+import { Textarea } from "../../../ui/textarea";
 import { useLocalValue } from "../../lib/use-local-value";
-
-const getClassName = getClassNameFactory("Input", styles);
 
 export const TextareaField = ({
   field,
@@ -18,16 +15,11 @@ export const TextareaField = ({
   const [localValue, onChangeLocal] = useLocalValue(name, onChange);
 
   return (
-    <Label
-      label={label || name}
-      icon={labelIcon}
-      readOnly={readOnly}
-    >
-      <textarea
+    <Label label={label || name} icon={labelIcon} readOnly={readOnly}>
+      <Textarea
         id={id}
-        className={getClassName("input")}
-        autoComplete="off"
         name={name}
+        autoComplete="off"
         value={typeof localValue === "undefined" ? "" : localValue}
         onChange={(e) => onChangeLocal(e.currentTarget.value)}
         readOnly={readOnly}

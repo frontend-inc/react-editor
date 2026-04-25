@@ -1,9 +1,6 @@
-import getClassNameFactory from "../../../../lib/get-class-name-factory";
-import styles from "../../styles.module.css";
 import { FieldPropsInternal } from "../..";
 import { useDeepField } from "../../lib/use-deep-field";
-
-const getClassName = getClassNameFactory("Input", styles);
+import { Tabs, TabsList, TabsTrigger } from "../../../ui/tabs";
 
 export const RadioField = ({
   field,
@@ -21,36 +18,29 @@ export const RadioField = ({
     return null;
   }
 
+  const serialize = (v: unknown) => JSON.stringify({ value: v });
+
   return (
-    <Label
-      icon={labelIcon}
-      label={label || name}
-      readOnly={readOnly}
-      el="div"
-    >
-      <div className={getClassName("radioGroupItems")} id={id}>
-        {field.options.map((option) => (
-          <label
-            key={option.label + option.value}
-            className={getClassName("radio")}
-          >
-            <input
-              type="radio"
-              className={getClassName("radioInput")}
-              value={JSON.stringify({ value: option.value })}
-              name={name}
-              onChange={(e) => {
-                onChange(JSON.parse(e.target.value).value);
-              }}
+    <Label icon={labelIcon} label={label || name} readOnly={readOnly} el="div">
+      <Tabs
+        value={serialize(value)}
+        onValueChange={(v) => {
+          if (readOnly) return;
+          onChange(JSON.parse(v).value);
+        }}
+      >
+        <TabsList className="w-full" id={id}>
+          {field.options.map((option) => (
+            <TabsTrigger
+              key={option.label + JSON.stringify(option.value)}
+              value={serialize(option.value)}
               disabled={readOnly}
-              checked={value === option.value}
-            />
-            <div className={getClassName("radioInner")}>
+            >
               {option.label || option.value?.toString()}
-            </div>
-          </label>
-        ))}
-      </div>
+            </TabsTrigger>
+          ))}
+        </TabsList>
+      </Tabs>
     </Label>
   );
 };

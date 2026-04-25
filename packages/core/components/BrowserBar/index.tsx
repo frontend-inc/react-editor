@@ -8,13 +8,13 @@ import {
 import { useMemo } from "react";
 import { useAppStore } from "../../store";
 import { usePropsContext } from "../Editor";
-import { IconButton } from "../IconButton";
+import { Button } from "../ui/button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-} from "../ui/Select";
+} from "../ui/select";
 import { Viewport } from "../../types";
 import { cn } from "../../lib/cn";
 
@@ -66,10 +66,10 @@ export const BrowserBar = ({
   const selectedTitle = routes?.find((r) => r.path === currentPath)?.title;
 
   const urlTriggerClass = cn(
-    "flex flex-1 min-w-0 items-center gap-2 overflow-hidden rounded-full border border-border bg-muted px-3 py-2 text-xs text-foreground",
+    "flex flex-1 min-w-0 items-center gap-2 overflow-hidden rounded-full border border-border bg-muted px-3 py-2 text-xs text-foreground transition-[color,box-shadow]",
     "hover:bg-accent/10 hover:border-border/80",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-    "data-[state=open]:border-border data-[state=open]:ring-2 data-[state=open]:ring-ring",
+    "focus-visible:outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50",
+    "data-[state=open]:border-ring data-[state=open]:ring-[3px] data-[state=open]:ring-ring/50",
     "[&>svg:last-child]:hidden"
   );
 
@@ -113,8 +113,10 @@ export const BrowserBar = ({
         </div>
       )}
       <div className="flex shrink-0 items-center gap-0.5">
-        <IconButton
+        <Button
           type="button"
+          variant="ghost"
+          size="icon-sm"
           title={
             activeDevice === "desktop"
               ? "Switch to mobile viewport"
@@ -124,23 +126,21 @@ export const BrowserBar = ({
             setDevice(activeDevice === "desktop" ? "mobile" : "desktop")
           }
         >
-          <span className="inline-flex text-foreground">
-            {activeDevice === "desktop" ? (
-              <Monitor size={16} />
-            ) : (
-              <Smartphone size={16} />
-            )}
-          </span>
-        </IconButton>
-        <IconButton
+          {activeDevice === "desktop" ? (
+            <Monitor size={16} />
+          ) : (
+            <Smartphone size={16} />
+          )}
+        </Button>
+        <Button
           type="button"
+          variant="ghost"
+          size="icon-sm"
           title={isFullScreen ? "Exit full screen" : "Enter full screen"}
           onClick={toggleFullScreen}
         >
-          <span className="inline-flex text-foreground">
-            {isFullScreen ? <Minimize size={16} /> : <Maximize size={16} />}
-          </span>
-        </IconButton>
+          {isFullScreen ? <Minimize size={16} /> : <Maximize size={16} />}
+        </Button>
       </div>
     </div>
   );

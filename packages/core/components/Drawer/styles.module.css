@@ -78,7 +78,6 @@
     background-color: color-mix(in oklch, var(--color-accent) 10%, transparent);
     border-color: var(--color-border);
     color: var(--color-accent);
-    box-shadow: var(--shadow-sm);
     transition: none;
   }
   .Drawer:not(.Drawer--isDraggingFrom)

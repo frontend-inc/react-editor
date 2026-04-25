@@ -5,6 +5,11 @@
  * Non-color tokens (spacing, radius, font, shadow) inherit from the host
  * via Tailwind's native unprefixed vars.
  *
+ * Colors use the oklch() color space — the lightness (L), chroma (C), and
+ * hue (H) components are independent, so nudging a token (e.g. lightening
+ * a shade, desaturating a brand color) is a single-axis edit. Reserve
+ * hex only for literals that must match an external reference.
+ *
  * Host override paths (any of these wins):
  *   1. <ReactEditor theme={{ primary: "#f60" }} />   inline style on root
  *   2. <ReactEditor className="brand" />             host CSS targeting .brand
@@ -13,61 +18,61 @@
 
 :root {
   /* Surfaces */
-  --editor-background: #fafafb;
-  --editor-foreground: #1b1d22;
-  --editor-card: #ffffff;
-  --editor-card-foreground: #1b1d22;
-  --editor-popover: #ffffff;
-  --editor-popover-foreground: #1b1d22;
-  --editor-muted: #f4f5f7;
-  --editor-muted-foreground: #555863;
+  --editor-background: oklch(0.985 0.001 264);
+  --editor-foreground: oklch(0.220 0.008 264);
+  --editor-card: oklch(1 0 0);
+  --editor-card-foreground: oklch(0.220 0.008 264);
+  --editor-popover: oklch(1 0 0);
+  --editor-popover-foreground: oklch(0.220 0.008 264);
+  --editor-muted: oklch(0.968 0.003 264);
+  --editor-muted-foreground: oklch(0.438 0.014 264);
 
   /* Brand */
-  --editor-primary: #1b1d22;
-  --editor-primary-foreground: #ffffff;
-  --editor-secondary: #f4f5f7;
-  --editor-secondary-foreground: #1b1d22;
-  --editor-accent: #0158ad;
-  --editor-accent-foreground: #ffffff;
+  --editor-primary: oklch(0.220 0.008 264);
+  --editor-primary-foreground: oklch(1 0 0);
+  --editor-secondary: oklch(0.968 0.003 264);
+  --editor-secondary-foreground: oklch(0.220 0.008 264);
+  --editor-accent: oklch(0.623 0.214 259.815);
+  --editor-accent-foreground: oklch(1 0 0);
 
   /* UI chrome */
-  --editor-border: #ececf0;
-  --editor-input: #e2e3e8;
-  --editor-ring: #3479be;
+  --editor-border: oklch(0.929 0.004 264);
+  --editor-input: oklch(0.898 0.006 264);
+  --editor-ring: oklch(0.565 0.130 248);
 
   /* Semantic */
-  --editor-destructive: #ac1f35;
-  --editor-destructive-foreground: #ffffff;
+  --editor-destructive: oklch(0.455 0.175 23);
+  --editor-destructive-foreground: oklch(1 0 0);
 
   /* Chrome — outline color used for component hover/select overlays
      and drop-zone targeting. Independent of brand `accent` so it stays
      a clear editor signal regardless of theme. */
-  --editor-highlight: #3b82f6;
+  --editor-highlight: oklch(0.626 0.188 260);
 }
 
 .dark {
-  --editor-background: #0f1115;
-  --editor-foreground: #e7e9ee;
-  --editor-card: #161a20;
-  --editor-card-foreground: #e7e9ee;
-  --editor-popover: #1c2028;
-  --editor-popover-foreground: #e7e9ee;
-  --editor-muted: #0b0d11;
-  --editor-muted-foreground: #a7abb5;
+  --editor-background: oklch(0.178 0.008 270);
+  --editor-foreground: oklch(0.919 0.005 264);
+  --editor-card: oklch(0.213 0.008 264);
+  --editor-card-foreground: oklch(0.919 0.005 264);
+  --editor-popover: oklch(0.240 0.009 264);
+  --editor-popover-foreground: oklch(0.919 0.005 264);
+  --editor-muted: oklch(0.155 0.008 270);
+  --editor-muted-foreground: oklch(0.720 0.008 264);
 
-  --editor-primary: #f4f5f7;
-  --editor-primary-foreground: #0f1115;
-  --editor-secondary: #1f232b;
-  --editor-secondary-foreground: #e7e9ee;
-  --editor-accent: #8ab3ee;
-  --editor-accent-foreground: #0f1115;
+  --editor-primary: oklch(0.968 0.003 264);
+  --editor-primary-foreground: oklch(0.178 0.008 270);
+  --editor-secondary: oklch(0.255 0.009 264);
+  --editor-secondary-foreground: oklch(0.919 0.005 264);
+  --editor-accent: oklch(0.750 0.100 250);
+  --editor-accent-foreground: oklch(0.178 0.008 270);
 
-  --editor-border: #1f232b;
-  --editor-input: #262c35;
-  --editor-ring: #8ab3ee;
+  --editor-border: oklch(0.255 0.009 264);
+  --editor-input: oklch(0.285 0.010 264);
+  --editor-ring: oklch(0.750 0.100 250);
 
-  --editor-destructive: #f87171;
-  --editor-destructive-foreground: #0f1115;
+  --editor-destructive: oklch(0.705 0.190 22);
+  --editor-destructive-foreground: oklch(0.178 0.008 270);
 
-  --editor-highlight: #60a5fa;
+  --editor-highlight: oklch(0.713 0.152 256);
 }

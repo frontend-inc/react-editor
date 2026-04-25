@@ -12,7 +12,8 @@ import { Search, SlidersHorizontal, X } from "lucide-react";
 import { Modal } from "../Modal";
 import { Heading } from "../Heading";
 import { Loader } from "../Loader";
-import { Button } from "../Button";
+import { Button } from "../ui/button";
+import { Loader2 } from "lucide-react";
 import { AutoField, AutoFieldPrivate, FieldLabel } from "../AutoField";
 import { IconButton } from "../IconButton";
 
@@ -195,7 +196,14 @@ export const ExternalInput = ({
                   ></input>
                 </label>
                 <div className={getClassNameModal("searchActions")}>
-                  <Button type="submit" loading={isLoading} fullWidth>
+                  <Button
+                    type="submit"
+                    disabled={isLoading}
+                    className="w-full"
+                  >
+                    {isLoading ? (
+                      <Loader2 className="size-4 animate-spin" />
+                    ) : null}
                     Search
                   </Button>
                   {hasFilterFields && (
