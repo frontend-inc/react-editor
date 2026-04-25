@@ -151,7 +151,7 @@ const FieldsChildInner = ({ fieldName }: { fieldName: string }) => {
   if (field.type === "slot") return null;
 
   return (
-    <div key={id} className={getClassName("field")}>
+    <div key={id} className={cn(getClassName("field"), "px-4 py-1.5 text-muted-foreground")}>
       <AutoFieldPrivate
         field={field}
         name={fieldName}

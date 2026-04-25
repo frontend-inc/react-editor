@@ -5,6 +5,7 @@ import styles from "./styles.module.css";
 import { ReactNode, useMemo } from "react";
 import { Lock } from "lucide-react";
 import { useAppStore } from "../../store";
+import { cn } from "../../lib/cn";
 
 const getClassName = getClassNameFactory("Input", styles);
 
@@ -26,7 +27,12 @@ export const FieldLabel = ({
   const El = el;
   return (
     <El className={className}>
-      <div className={getClassName("label")}>
+      <div
+        className={cn(
+          getClassName("label"),
+          "font-mono text-xs font-medium tracking-wide"
+        )}
+      >
         {label}
 
         {readOnly && (

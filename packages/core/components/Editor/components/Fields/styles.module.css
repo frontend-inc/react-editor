@@ -34,12 +34,7 @@
 }
 
 .EditorFields--wrapFields .EditorFields-field {
-  color: var(--color-muted-foreground);
-  padding: 14px 16px;
   display: block;
 }
 
-.EditorFields--wrapFields .EditorFields-field + .EditorFields-field {
-  border-top: 1px solid var(--color-border);
-}
 

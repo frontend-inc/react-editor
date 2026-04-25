@@ -75,6 +75,20 @@
   border-top: 1px solid var(--color-border);
 }
 
+/* Round the outside corners of the first/last item so they follow the
+   parent's rounded border instead of clipping into it. */
+.ArrayFieldItem:first-child,
+.ArrayFieldItem:first-child::after {
+  border-top-left-radius: calc(var(--radius) - 1px);
+  border-top-right-radius: calc(var(--radius) - 1px);
+}
+
+.ArrayField:not(.ArrayField--hasItems) .ArrayFieldItem:last-child,
+.ArrayField:not(.ArrayField--hasItems) .ArrayFieldItem:last-child::after {
+  border-bottom-left-radius: calc(var(--radius) - 1px);
+  border-bottom-right-radius: calc(var(--radius) - 1px);
+}
+
 .ArrayFieldItem--isDragging {
   border-top: transparent;
 }
