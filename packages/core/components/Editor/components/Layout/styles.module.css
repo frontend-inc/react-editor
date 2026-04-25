@@ -52,9 +52,9 @@
   );
   background-color: var(--re-surface-app);
   display: grid;
-  grid-template-areas: "editor" "left" "right" "sidenav";
+  grid-template-areas: "editor" "mobilepanel" "left" "right" "sidenav";
   grid-template-columns: var(--re-frame-width);
-  grid-template-rows: auto 0 0 var(--re-side-nav-width);
+  grid-template-rows: auto 0 0 0 var(--re-side-nav-width);
   height: 100%;
   position: relative;
   transition: grid-template-rows 150ms ease-in;
@@ -81,12 +81,13 @@
 
 .EditorLayout--mobilePanelHeightToggle.EditorLayout--leftSideBarVisible
   .EditorLayout-inner {
-  grid-template-rows: auto 30% 0 var(--re-side-nav-width);
+  grid-template-rows: auto 30% 0 0 var(--re-side-nav-width);
 }
 
-.EditorLayout--mobilePanelHeightToggle.EditorLayout--leftSideBarVisible.EditorLayout--isExpanded
+.EditorLayout--mobilePanelCustomHeight.EditorLayout--leftSideBarVisible
   .EditorLayout-inner {
-  grid-template-rows: auto 55% 0 var(--re-side-nav-width);
+  grid-template-rows: auto var(--re-mobile-panel-height, 30%) 0 0
+    var(--re-side-nav-width);
 }
 
 @media (min-width: 638px) {
@@ -102,20 +103,16 @@
 }
 
 .EditorLayout--mobilePanelHeightMinContent.EditorLayout--leftSideBarVisible
-  .EditorLayout-inner,
-.EditorLayout--mobilePanelHeightMinContent.EditorLayout--leftSideBarVisible.EditorLayout--isExpanded
   .EditorLayout-inner {
-  grid-template-rows: auto min-content 0 var(--re-side-nav-width);
+  grid-template-rows: auto min-content 0 0 var(--re-side-nav-width);
 }
 
 @media (min-width: 638px) {
   .EditorLayout--mobilePanelHeightToggle.EditorLayout--leftSideBarVisible
     .EditorLayout-inner,
-  .EditorLayout--mobilePanelHeightToggle.EditorLayout--leftSideBarVisible.EditorLayout--isExpanded
+  .EditorLayout--mobilePanelCustomHeight.EditorLayout--leftSideBarVisible
     .EditorLayout-inner,
   .EditorLayout--mobilePanelHeightMinContent.EditorLayout--leftSideBarVisible
-    .EditorLayout-inner,
-  .EditorLayout--mobilePanelHeightMinContent.EditorLayout--leftSideBarVisible.EditorLayout--isExpanded
     .EditorLayout-inner {
     grid-template-columns:
       var(--re-side-nav-width) var(--re-left-side-bar-width) var(
@@ -223,6 +220,58 @@
   align-items: center;
   display: flex;
   gap: 8px;
+}
+
+.EditorLayout-mobilePanel {
+  grid-area: mobilepanel;
+  background: var(--re-surface-panel);
+  border-block-start: 1px solid var(--re-border-subtle);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.EditorLayout--leftSideBarVisible .EditorLayout-mobilePanel {
+  display: flex;
+}
+
+@media (min-width: 638px) {
+  .EditorLayout-mobilePanel,
+  .EditorLayout--leftSideBarVisible .EditorLayout-mobilePanel {
+    display: none;
+  }
+}
+
+.EditorLayout-mobilePanelContent {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.EditorLayout-mobileDragHandle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 0 4px;
+  cursor: grab;
+  touch-action: none;
+  flex-shrink: 0;
+}
+
+.EditorLayout-mobileDragHandle:active {
+  cursor: grabbing;
+}
+
+.EditorLayout--mobileDragging .EditorLayout-inner {
+  transition: none;
+}
+
+.EditorLayout-mobileDragHandlePill {
+  width: 36px;
+  height: 4px;
+  border-radius: 2px;
+  background-color: var(--re-border-subtle);
 }
 
 .EditorPluginTab {

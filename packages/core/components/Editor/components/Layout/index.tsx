@@ -1,4 +1,12 @@
-import { ReactElement, ReactNode, useEffect, useMemo, useState } from "react";
+import {
+  ReactElement,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { getClassNameFactory } from "../../../../lib";
 import { IframeConfig, UiState } from "../../../../types";
 import { usePropsContext } from "../..";
@@ -20,8 +28,6 @@ import { useDeleteHotkeys } from "../../../../lib/use-delete-hotkeys";
 import { MenuItem, Nav } from "../Nav";
 import { IconButton } from "../../../IconButton";
 import {
-  Maximize2,
-  Minimize2,
   Moon,
   Redo2Icon,
   Sun,
@@ -241,6 +247,76 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
     "toggle" | "min-content"
   >("toggle");
 
+  const [mobilePanelHeight, setMobilePanelHeight] = useState<number | null>(
+    null
+  );
+  const [mobileDragging, setMobileDragging] = useState(false);
+  const mobilePanelRef = useRef<HTMLDivElement>(null);
+  const isDraggingMobile = useRef(false);
+  const dragStartY = useRef(0);
+  const dragStartHeight = useRef(0);
+
+  const handleMobileDragStart = useCallback(
+    (clientY: number) => {
+      isDraggingMobile.current = true;
+      setMobileDragging(true);
+      dragStartY.current = clientY;
+      const panel = mobilePanelRef.current;
+      dragStartHeight.current = panel
+        ? panel.getBoundingClientRect().height
+        : 0;
+      document.body.style.userSelect = "none";
+      document.body.style.touchAction = "none";
+    },
+    []
+  );
+
+  const handleMobileDragMove = useCallback((clientY: number) => {
+    if (!isDraggingMobile.current) return;
+    const delta = dragStartY.current - clientY;
+    const viewportHeight = window.innerHeight;
+    const minH = viewportHeight * 0.15;
+    const maxH = viewportHeight * 0.75;
+    const newH = Math.min(maxH, Math.max(minH, dragStartHeight.current + delta));
+    setMobilePanelHeight(newH);
+  }, []);
+
+  const handleMobileDragEnd = useCallback(() => {
+    if (!isDraggingMobile.current) return;
+    isDraggingMobile.current = false;
+    setMobileDragging(false);
+    document.body.style.userSelect = "";
+    document.body.style.touchAction = "";
+  }, []);
+
+  useEffect(() => {
+    const onTouchMove = (e: TouchEvent) => {
+      if (isDraggingMobile.current) {
+        e.preventDefault();
+        handleMobileDragMove(e.touches[0].clientY);
+      }
+    };
+    const onTouchEnd = () => handleMobileDragEnd();
+    const onMouseMove = (e: MouseEvent) => {
+      if (isDraggingMobile.current) {
+        e.preventDefault();
+        handleMobileDragMove(e.clientY);
+      }
+    };
+    const onMouseUp = () => handleMobileDragEnd();
+
+    document.addEventListener("touchmove", onTouchMove, { passive: false });
+    document.addEventListener("touchend", onTouchEnd);
+    document.addEventListener("mousemove", onMouseMove);
+    document.addEventListener("mouseup", onMouseUp);
+    return () => {
+      document.removeEventListener("touchmove", onTouchMove);
+      document.removeEventListener("touchend", onTouchEnd);
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", onMouseUp);
+    };
+  }, [handleMobileDragMove, handleMobileDragEnd]);
+
   const [theme, setTheme] = useState<"light" | "dark">(() => {
     if (typeof window === "undefined") return "light";
     const stored = window.localStorage.getItem("editor-theme");
@@ -340,9 +416,10 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
   const hasDesktopFieldsPlugin =
     pluginItems["fields"] && pluginItems["fields"].mobileOnly === false;
 
-  const mobilePanelExpanded = useAppStore(
-    (s) => s.state.ui.mobilePanelExpanded ?? false
-  );
+  const mobilePanelStyle: Record<string, string> = {};
+  if (mobilePanelHeight && leftSideBarVisible) {
+    mobilePanelStyle["--re-mobile-panel-height"] = `${mobilePanelHeight}px`;
+  }
 
   return (
     <div
@@ -363,40 +440,22 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
                   mounted,
                   rightSideBarVisible:
                     !hasDesktopFieldsPlugin && rightSideBarVisible,
-                  isExpanded: mobilePanelExpanded,
                   mobilePanelHeightToggle: mobilePanelHeightMode === "toggle",
                   mobilePanelHeightMinContent:
                     mobilePanelHeightMode === "min-content",
+                  mobilePanelCustomHeight:
+                    mobilePanelHeight !== null && leftSideBarVisible,
+                  mobileDragging,
                 })}
                 style={{ height }}
               >
                 <div
                   className={getLayoutClassName("inner")}
-                  style={layoutOptions}
+                  style={{ ...layoutOptions, ...mobilePanelStyle }}
                 >
                   <div className={getLayoutClassName("nav")}>
                     <Nav
                       items={pluginItems}
-                      mobileActions={
-                        leftSideBarVisible &&
-                        mobilePanelHeightMode === "toggle" && (
-                          <IconButton
-                            type="button"
-                            title="maximize"
-                            onClick={() => {
-                              setUi({
-                                mobilePanelExpanded: !mobilePanelExpanded,
-                              });
-                            }}
-                          >
-                            {mobilePanelExpanded ? (
-                              <Minimize2 size={21} />
-                            ) : (
-                              <Maximize2 size={21} />
-                            )}
-                          </IconButton>
-                        )
-                      }
                       footer={
                         <IconButton
                           type="button"
@@ -407,6 +466,37 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
                         </IconButton>
                       }
                     />
+                  </div>
+                  <div
+                    ref={mobilePanelRef}
+                    className={getLayoutClassName("mobilePanel")}
+                  >
+                    <div
+                      className={getLayoutClassName("mobileDragHandle")}
+                      onTouchStart={(e) =>
+                        handleMobileDragStart(e.touches[0].clientY)
+                      }
+                      onMouseDown={(e) => handleMobileDragStart(e.clientY)}
+                    >
+                      <div
+                        className={getLayoutClassName("mobileDragHandlePill")}
+                      />
+                    </div>
+                    <div
+                      className={getLayoutClassName("mobilePanelContent")}
+                    >
+                      {Object.entries(pluginItems).map(
+                        ([id, { mobileOnly, render: Render }]) => (
+                          <PluginTab
+                            key={id}
+                            visible={currentPlugin === id}
+                            mobileOnly={mobileOnly}
+                          >
+                            <Render />
+                          </PluginTab>
+                        )
+                      )}
+                    </div>
                   </div>
                   <Sidebar
                     position="left"

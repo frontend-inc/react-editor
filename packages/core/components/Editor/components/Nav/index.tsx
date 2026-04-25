@@ -42,11 +42,9 @@ export const MenuItem = ({
 
 export const Nav = ({
   items,
-  mobileActions,
   footer,
 }: {
   items: Record<string, MenuItem>;
-  mobileActions?: ReactNode;
   footer?: ReactNode;
 }) => {
   return (
@@ -56,9 +54,6 @@ export const Nav = ({
           <MenuItem key={key} {...item} />
         ))}
       </ul>
-      {mobileActions && (
-        <div className={getClassName("mobileActions")}>{mobileActions}</div>
-      )}
       {footer && <div className={getClassName("footer")}>{footer}</div>}
     </nav>
   );
