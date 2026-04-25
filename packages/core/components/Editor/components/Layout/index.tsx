@@ -250,7 +250,6 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
   const [mobilePanelHeight, setMobilePanelHeight] = useState<number | null>(
     null
   );
-  const [mobileDragging, setMobileDragging] = useState(false);
   const mobilePanelRef = useRef<HTMLDivElement>(null);
   const isDraggingMobile = useRef(false);
   const dragStartY = useRef(0);
@@ -259,7 +258,6 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
   const handleMobileDragStart = useCallback(
     (clientY: number) => {
       isDraggingMobile.current = true;
-      setMobileDragging(true);
       dragStartY.current = clientY;
       const panel = mobilePanelRef.current;
       dragStartHeight.current = panel
@@ -284,7 +282,6 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
   const handleMobileDragEnd = useCallback(() => {
     if (!isDraggingMobile.current) return;
     isDraggingMobile.current = false;
-    setMobileDragging(false);
     document.body.style.userSelect = "";
     document.body.style.touchAction = "";
   }, []);
@@ -445,7 +442,6 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
                     mobilePanelHeightMode === "min-content",
                   mobilePanelCustomHeight:
                     mobilePanelHeight !== null && leftSideBarVisible,
-                  mobileDragging,
                 })}
                 style={{ height }}
               >
