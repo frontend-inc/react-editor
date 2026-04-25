@@ -2,7 +2,7 @@
 
 React Editor is an open-source, visual editor for your react components. You can use React Editor to build custom drag-and-drop experiences for your application.
 
-React Editor is a fork from [Puck](https://github.com/puckeditor), which is the foundation and inspiration for this project.
+React Editor is a fork from [Puck](https://github.com/puckeditor), which is the foundation for this project. 
 
 React Editor is [licensed under MIT](https://github.com/frontend-inc/react-editor?tab=MIT-1-ov-file#readme).
 
