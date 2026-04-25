@@ -28,7 +28,7 @@
     "puppeteer": "^24.8.2",
     "rimraf": "^6.1.2",
     "standard-changelog": "^2.0.21",
-    "turbo": "^2.5.8"
+    "turbo": "^2.9.6"
   },
   "name": "react-editor",
   "packageManager": "yarn@1.22.19",

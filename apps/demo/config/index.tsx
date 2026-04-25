@@ -1,27 +1,27 @@
-import { Typography } from "./components/typography";
-import { Image } from "./components/image";
-import { Button } from "./components/button";
-import { Section } from "./components/section";
-import { Container } from "./components/container";
-import { Grid } from "./components/grid";
-import { Stack } from "./components/stack";
-import { Row } from "./components/row";
-import { Columns } from "./components/columns";
-import { Accordion } from "./components/accordion";
-import { FeatureCard } from "./components/feature-card";
-import { TestimonialCard } from "./components/testimonial-card";
-import { PriceCard } from "./components/price-card";
-import { TeamCard } from "./components/team-card";
-import { Hero } from "./components/hero";
-import { Logos } from "./components/logos";
-import { Features } from "./components/features";
-import { Testimonials } from "./components/testimonials";
-import { Pricing } from "./components/pricing";
-import { Team } from "./components/team";
-import { CTA } from "./components/cta";
-import { FAQ } from "./components/faq";
-import { Navigation } from "./components/navigation";
-import { Footer } from "./components/footer";
+import { typographyEditor } from "@/components/typography/typography.editor";
+import { imageEditor } from "@/components/image/image.editor";
+import { buttonEditor } from "@/components/button/button.editor";
+import { sectionEditor } from "@/components/section/section.editor";
+import { containerEditor } from "@/components/container/container.editor";
+import { gridEditor } from "@/components/grid/grid.editor";
+import { stackEditor } from "@/components/stack/stack.editor";
+import { rowEditor } from "@/components/row/row.editor";
+import { columnsEditor } from "@/components/columns/columns.editor";
+import { accordionEditor } from "@/components/accordion/accordion.editor";
+import { featureCardEditor } from "@/components/feature-card/feature-card.editor";
+import { testimonialCardEditor } from "@/components/testimonial-card/testimonial-card.editor";
+import { priceCardEditor } from "@/components/price-card/price-card.editor";
+import { teamCardEditor } from "@/components/team-card/team-card.editor";
+import { heroEditor } from "@/components/hero/hero.editor";
+import { logosEditor } from "@/components/logos/logos.editor";
+import { featuresEditor } from "@/components/features/features.editor";
+import { testimonialsEditor } from "@/components/testimonials/testimonials.editor";
+import { pricingEditor } from "@/components/pricing/pricing.editor";
+import { teamEditor } from "@/components/team/team.editor";
+import { ctaEditor } from "@/components/cta/cta.editor";
+import { faqEditor } from "@/components/faq/faq.editor";
+import { navigationEditor } from "@/components/navigation/navigation.editor";
+import { footerEditor } from "@/components/footer/footer.editor";
 
 import Root from "./root";
 import { UserConfig } from "./types";
@@ -37,30 +37,30 @@ export const conf: UserConfig = {
     elements: { title: "Elements" },
   },
   components: {
-    "typography": Typography,
-    "image": Image,
-    "button": Button,
-    "section": Section,
-    "container": Container,
-    "grid": Grid,
-    "stack": Stack,
-    "row": Row,
-    "columns": Columns,
-    "accordion": Accordion,
-    "feature-card": FeatureCard,
-    "testimonial-card": TestimonialCard,
-    "price-card": PriceCard,
-    "team-card": TeamCard,
-    "hero": Hero,
-    "logos": Logos,
-    "features": Features,
-    "testimonials": Testimonials,
-    "pricing": Pricing,
-    "team": Team,
-    "cta": CTA,
-    "faq": FAQ,
-    "navigation": Navigation,
-    "footer": Footer,
+    "typography": typographyEditor,
+    "image": imageEditor,
+    "button": buttonEditor,
+    "section": sectionEditor,
+    "container": containerEditor,
+    "grid": gridEditor,
+    "stack": stackEditor,
+    "row": rowEditor,
+    "columns": columnsEditor,
+    "accordion": accordionEditor,
+    "feature-card": featureCardEditor,
+    "testimonial-card": testimonialCardEditor,
+    "price-card": priceCardEditor,
+    "team-card": teamCardEditor,
+    "hero": heroEditor,
+    "logos": logosEditor,
+    "features": featuresEditor,
+    "testimonials": testimonialsEditor,
+    "pricing": pricingEditor,
+    "team": teamEditor,
+    "cta": ctaEditor,
+    "faq": faqEditor,
+    "navigation": navigationEditor,
+    "footer": footerEditor,
   },
 };
 

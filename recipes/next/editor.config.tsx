@@ -1,5 +1,5 @@
 import type { Config } from "@reacteditor/core";
-import { Hero, type HeroProps } from "@/config/components/hero";
+import { heroEditor, type HeroProps } from "@/components/hero/hero.editor";
 
 type Props = {
   "hero": HeroProps;
@@ -7,7 +7,7 @@ type Props = {
 
 export const config: Config<Props> = {
   components: {
-    "hero": Hero,
+    "hero": heroEditor,
   },
 };
 
