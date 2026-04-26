@@ -99,6 +99,7 @@ type EditorProps<
   metadata?: Metadata;
   height?: CSSProperties["height"];
   fullScreenCanvas?: boolean;
+  disableZoomControls?: boolean;
   _experimentalVirtualization?: boolean;
 };
 

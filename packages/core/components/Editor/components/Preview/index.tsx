@@ -38,18 +38,14 @@ const useBubbleIframeEvents = (ref: RefObject<HTMLIFrameElement | null>) => {
       const register = () => {
         unregister();
 
-        // Add event listeners
         iframe.contentDocument?.addEventListener(
           "pointermove",
           handlePointerMove,
-          {
-            capture: true,
-          }
+          { capture: true }
         );
       };
 
       const unregister = () => {
-        // Clean up event listeners
         iframe.contentDocument?.removeEventListener(
           "pointermove",
           handlePointerMove

@@ -7,12 +7,14 @@ import {
   useRef,
   useState,
 } from "react";
+import { Minus, Plus, RotateCcw } from "lucide-react";
 import { useAppStore, useAppStoreApi } from "../../../../store";
 import { BrowserBar } from "../../../BrowserBar";
 import styles from "./styles.module.css";
 import { getClassNameFactory } from "../../../../lib";
 import { Preview } from "../Preview";
 import { Loader } from "../../../Loader";
+import { IconButton } from "../../../IconButton";
 import { useShallow } from "zustand/react/shallow";
 import { useCanvasFrame } from "../../../../lib/frame-context";
 import { usePropsContext } from "../..";
@@ -20,13 +22,20 @@ import { defaultViewports } from "../../../ViewportControls/default-viewports";
 
 const getClassName = getClassNameFactory("EditorCanvas", styles);
 
+const ZOOM_STEP = 0.15;
+const MIN_ZOOM = 0.25;
+const MAX_ZOOM = 3;
+
 const TRANSITION_DURATION = 150;
 
 export const Canvas = () => {
   const { frameRef } = useCanvasFrame();
 
-  const { viewports: viewportOptions = defaultViewports, ui: uiProp } =
-    usePropsContext();
+  const {
+    viewports: viewportOptions = defaultViewports,
+    ui: uiProp,
+    disableZoomControls,
+  } = usePropsContext();
 
   const {
     dispatch,
@@ -50,6 +59,13 @@ export const Canvas = () => {
     }))
   );
   const viewports = useAppStore((s) => s.state.ui.viewports);
+
+  const [canvasZoom, setCanvasZoom] = useState(1);
+
+  const zoomIn = () => setCanvasZoom((z) => Math.min(z + ZOOM_STEP, MAX_ZOOM));
+  const zoomOut = () =>
+    setCanvasZoom((z) => Math.max(z - ZOOM_STEP, MIN_ZOOM));
+  const resetZoom = () => setCanvasZoom(1);
 
   const [showTransition, setShowTransition] = useState(false);
   const isResizingRef = useRef(false);
@@ -202,13 +218,30 @@ export const Canvas = () => {
       }}
     >
       <div className={getClassName("inner")} ref={frameRef}>
+        {!disableZoomControls && (
+          <div className={getClassName("zoomControls")}>
+            <IconButton type="button" title="Zoom out" onClick={zoomOut}>
+              <Minus size={14} />
+            </IconButton>
+            <IconButton type="button" title="Reset zoom" onClick={resetZoom}>
+              <RotateCcw size={14} />
+            </IconButton>
+            <IconButton type="button" title="Zoom in" onClick={zoomIn}>
+              <Plus size={14} />
+            </IconButton>
+          </div>
+        )}
         <div
           className={getClassName("rootColumn")}
           style={{
             width: iframe.enabled ? viewports.current.width : "100%",
+            transform: disableZoomControls ? undefined : `scale(${canvasZoom})`,
+            transformOrigin: disableZoomControls ? undefined : "center center",
             transition: showTransition
-              ? `width ${TRANSITION_DURATION}ms ease-out`
-              : "",
+              ? `width ${TRANSITION_DURATION}ms ease-out, transform ${TRANSITION_DURATION}ms ease-out`
+              : disableZoomControls
+                ? undefined
+                : "transform 150ms ease-out",
           }}
         >
           {iframe.enabled && (
@@ -233,17 +266,7 @@ export const Canvas = () => {
           )}
           <div
             className={getClassName("root")}
-            style={{
-              height: zoomConfig.rootHeight,
-              transform: iframe.enabled
-                ? `scale(${zoomConfig.zoom})`
-                : undefined,
-              transition: showTransition
-                ? `height ${TRANSITION_DURATION}ms ease-out, transform ${TRANSITION_DURATION}ms ease-out`
-                : "",
-              overflow: iframe.enabled ? undefined : "auto",
-            }}
-            suppressHydrationWarning // Suppress hydration warning as frame is not visible until after load
+            suppressHydrationWarning
             id="editor-canvas-root"
             onTransitionEnd={() => {
               setShowTransition(false);
