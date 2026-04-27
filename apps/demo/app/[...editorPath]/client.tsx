@@ -62,6 +62,7 @@ function ClientInner({ path, isEdit }: { path: string; isEdit: boolean }) {
       <div>
         <Editor
           config={config}
+          plugins={editorPlugins}
           data={data}
           globalData={globalData}
           onGlobalsChange={(next) => {
