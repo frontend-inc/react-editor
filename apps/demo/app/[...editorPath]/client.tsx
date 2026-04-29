@@ -1,6 +1,16 @@
 "use client";
 
-import { AutoField, Button, FieldLabel, Editor, Render, Route } from "@/core";
+import {
+  AutoField,
+  Button,
+  FieldLabel,
+  Editor,
+  Render,
+  Route,
+  blocksPlugin,
+  outlinePlugin,
+} from "@/core";
+import { aiPlugin } from "@reacteditor/plugin-ai";
 import config from "../../config";
 import { initialData } from "../../config/initial-data";
 import { useDemoData } from "../../lib/use-demo-data";
@@ -49,6 +59,15 @@ function ClientInner({ path, isEdit }: { path: string; isEdit: boolean }) {
     setIsClient(true);
   }, []);
 
+  const plugins = useMemo(
+    () => [
+      aiPlugin({ api: "/api/chat", attachments: true }),
+      blocksPlugin(),
+      outlinePlugin(),
+    ],
+    []
+  );
+
   if (!isClient) return null;
 
   if (isEdit) {
@@ -57,6 +76,7 @@ function ClientInner({ path, isEdit }: { path: string; isEdit: boolean }) {
         <Editor
           config={config}
           data={data}
+          plugins={plugins}
           onPublish={async (data) => {
             localStorage.setItem(key, JSON.stringify(data));
           }}

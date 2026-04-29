@@ -1,0 +1,487 @@
+.AiPanel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.AiPanel-messages {
+  position: relative;
+  flex: 1 1 0;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.AiPanel-messages::-webkit-scrollbar {
+  display: none;
+}
+
+.AiPanel-messagesContent {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+  min-height: 100%;
+  box-sizing: border-box;
+}
+
+.AiPanel-scrollDown {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid var(--editor-border-default, #e0e0e2);
+  background: var(--editor-color-white, #fff);
+  color: var(--editor-text-primary, #111);
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: background-color var(--editor-motion-fast) var(--editor-ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .AiPanel-scrollDown:hover {
+    background: var(--editor-surface-hover, #f4f4f5);
+  }
+}
+
+.AiPanel-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: var(--editor-text-tertiary, #888);
+  font-size: 13px;
+  text-align: center;
+  margin: auto;
+}
+
+.AiPanel-empty-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--editor-text-secondary, #555);
+}
+
+.AiPanel-empty-text {
+  font-weight: 500;
+}
+
+.AiPanel-message {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.AiPanel-message--user {
+  align-items: flex-end;
+}
+
+.AiPanel-message-bubble {
+  background: var(--editor-color-grey-12, #f4f4f5);
+  border-radius: 8px;
+  padding: 8px 10px;
+  max-width: 90%;
+  word-wrap: break-word;
+}
+
+.AiPanel-message--user .AiPanel-message-bubble {
+  background: var(--editor-accent-soft);
+  color: var(--editor-text-accent);
+}
+
+/* Markdown rendering inside chat bubbles (react-markdown + remark-gfm). */
+.AiPanel-message-bubble p,
+.AiPanel-message-bubble ul,
+.AiPanel-message-bubble ol,
+.AiPanel-message-bubble li {
+  margin: 0;
+  padding: 0;
+}
+
+/* Spacing between adjacent block elements — restores prose rhythm now
+   that pre-wrap isn't preserving \n as visible breaks. */
+.AiPanel-message-bubble p + p,
+.AiPanel-message-bubble p + ul,
+.AiPanel-message-bubble p + ol,
+.AiPanel-message-bubble p + pre,
+.AiPanel-message-bubble p + blockquote,
+.AiPanel-message-bubble p + table,
+.AiPanel-message-bubble ul + p,
+.AiPanel-message-bubble ol + p,
+.AiPanel-message-bubble pre + p,
+.AiPanel-message-bubble blockquote + p,
+.AiPanel-message-bubble table + p {
+  margin-top: 6px;
+}
+
+.AiPanel-message-bubble ul,
+.AiPanel-message-bubble ol {
+  padding-left: 18px;
+}
+
+.AiPanel-message-bubble li + li,
+.AiPanel-message-bubble li > ul,
+.AiPanel-message-bubble li > ol {
+  margin-top: 0.375em;
+}
+
+.AiPanel-message-bubble h1,
+.AiPanel-message-bubble h2,
+.AiPanel-message-bubble h3,
+.AiPanel-message-bubble h4 {
+  margin: 8px 0 4px;
+  font-weight: 600;
+}
+
+.AiPanel-message-bubble h1 { font-size: 15px; }
+.AiPanel-message-bubble h2 { font-size: 14px; }
+.AiPanel-message-bubble h3,
+.AiPanel-message-bubble h4 { font-size: 13px; }
+
+.AiPanel-message-bubble blockquote {
+  margin: 6px 0;
+  padding: 0 8px;
+  border-left: 2px solid var(--editor-border-default, #e0e0e2);
+  color: var(--editor-text-secondary, #555);
+}
+
+.AiPanel-message-bubble pre {
+  margin: 6px 0;
+  padding: 8px 10px;
+  background: var(--editor-color-grey-12, #f4f4f5);
+  border-radius: 6px;
+  overflow-x: auto;
+}
+
+.AiPanel-message-bubble pre code {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.AiPanel-message-bubble code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  background: var(--editor-color-grey-12, #f4f4f5);
+  padding: 0 4px;
+  border-radius: 4px;
+}
+
+.AiPanel-message-bubble table {
+  margin: 6px 0;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.AiPanel-message-bubble th,
+.AiPanel-message-bubble td {
+  border: 1px solid var(--editor-border-default, #e0e0e2);
+  padding: 4px 8px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.AiPanel-message-bubble th {
+  background: var(--editor-color-grey-12, #f4f4f5);
+  font-weight: 600;
+}
+
+.AiPanel-message-bubble hr {
+  border: 0;
+  border-top: 1px solid var(--editor-border-default, #e0e0e2);
+  margin: 8px 0;
+}
+
+.AiPanel-message-bubble a {
+  color: var(--editor-text-accent);
+  text-decoration: underline;
+}
+
+.AiPanel-message-bubble strong { font-weight: 600; }
+.AiPanel-message-bubble em { font-style: italic; }
+
+.AiPanel-message-bubble input[type="checkbox"] {
+  margin-right: 4px;
+}
+
+.AiPanel-toolCall {
+  --shiny-width: 80px;
+  display: inline-block;
+  width: fit-content;
+  font-size: 12px;
+  color: var(--editor-text-tertiary, #888);
+  background: linear-gradient(
+      90deg,
+      transparent,
+      var(--editor-text-primary, #111) 50%,
+      transparent
+    )
+    no-repeat;
+  background-size: var(--shiny-width) 100%;
+  background-position: calc(-100% - var(--shiny-width)) 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: AiPanel-shine 2.4s ease-in-out infinite;
+}
+
+@keyframes AiPanel-shine {
+  0%, 90%, 100% {
+    background-position: calc(-100% - var(--shiny-width)) 0;
+  }
+  30%, 60% {
+    background-position: calc(100% + var(--shiny-width)) 0;
+  }
+}
+
+.AiPanel-toolCall-done {
+  display: inline-block;
+  width: fit-content;
+  font-size: 12px;
+  color: var(--editor-text-tertiary, #888);
+}
+
+.AiPanel-form {
+  padding: 10px;
+  background: var(--editor-color-white, #fff);
+}
+
+.AiPanel-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px 0;
+}
+
+.AiPanel-dots-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--editor-text-accent);
+  animation: AiPanel-dots-pulse 1.2s infinite ease-in-out;
+}
+
+@keyframes AiPanel-dots-pulse {
+  0%, 80%, 100% {
+    opacity: 0.2;
+    transform: scale(0.8);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.AiPanel-inputGroup {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--editor-border-default, #e0e0e2);
+  border-radius: var(--editor-radius-md, 8px);
+  background: var(--editor-color-white, #fff);
+  overflow: hidden;
+  transition: border-color var(--editor-motion-fast) var(--editor-ease),
+    box-shadow var(--editor-motion-fast) var(--editor-ease);
+}
+
+.AiPanel-inputGroup:focus-within {
+  border-color: var(--editor-primary, #111);
+  box-shadow: var(--editor-ring);
+}
+
+.AiPanel-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 13px;
+  line-height: 1.45;
+  padding: 10px 12px 6px;
+  min-height: 56px;
+  max-height: 200px;
+  field-sizing: content;
+}
+
+.AiPanel-inputGroup-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 6px;
+}
+
+.AiPanel-inputGroup-actions-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.AiPanel-send {
+  appearance: none;
+  border: 1px solid transparent;
+  background: var(--editor-primary);
+  color: var(--editor-primary-foreground);
+  border-radius: var(--editor-radius-md, 6px);
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color var(--editor-motion-fast) var(--editor-ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .AiPanel-send:hover {
+    background: var(--editor-primary-hover);
+  }
+}
+
+.AiPanel-send:active {
+  background: var(--editor-primary-hover);
+  transform: translateY(1px);
+}
+
+.AiPanel-send:disabled {
+  background: var(--editor-border-subtle);
+  color: var(--editor-text-tertiary);
+  cursor: not-allowed;
+}
+
+.AiPanel-send svg {
+  width: 16px;
+  height: 16px;
+}
+
+.AiPanel-attach {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--editor-text-secondary, #555);
+  border-radius: var(--editor-radius-md, 6px);
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color var(--editor-motion-fast) var(--editor-ease),
+    color var(--editor-motion-fast) var(--editor-ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .AiPanel-attach:hover {
+    background: var(--editor-surface-hover, #f4f4f5);
+    color: var(--editor-text-primary, #111);
+  }
+}
+
+.AiPanel-attach:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.AiPanel-fileInput {
+  display: none;
+}
+
+.AiPanel-attachments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 8px 0;
+}
+
+.AiPanel-attachment {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--editor-color-grey-12, #f4f4f5);
+  flex-shrink: 0;
+}
+
+.AiPanel-attachment-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.AiPanel-attachment-remove {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+}
+
+.AiPanel-attachment-remove:hover {
+  background: rgba(0, 0, 0, 0.75);
+}
+
+/* Inline image preview for assistant-generated images (generateImage tool).
+   Larger square that fills the bubble width up to a sensible max. */
+.AiPanel-imagePreview {
+  display: block;
+  width: 100%;
+  max-width: 240px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 10px;
+  background: var(--editor-color-grey-12, #f4f4f5);
+}
+
+/* User-attached image: smaller, sits below the text bubble. */
+.AiPanel-userImage {
+  display: block;
+  width: 128px;
+  height: 128px;
+  object-fit: cover;
+  border-radius: 10px;
+  background: var(--editor-color-grey-12, #f4f4f5);
+}
+
+.AiPanel-loader {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  animation: AiPanel-loader-spin 1s linear infinite;
+}
+
+@keyframes AiPanel-loader-spin {
+  to { transform: rotate(360deg); }
+}
+
+.AiPanel-error {
+  color: var(--editor-color-red-05, #d44);
+  font-size: 12px;
+  padding: 4px 12px;
+}
