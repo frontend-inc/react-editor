@@ -60,7 +60,11 @@ function ClientInner({ path, isEdit }: { path: string; isEdit: boolean }) {
   }, []);
 
   const plugins = useMemo(
-    () => [aiPlugin({ api: "/api/chat" }), blocksPlugin(), outlinePlugin()],
+    () => [
+      aiPlugin({ api: "/api/chat", attachments: true }),
+      blocksPlugin(),
+      outlinePlugin(),
+    ],
     []
   );
 

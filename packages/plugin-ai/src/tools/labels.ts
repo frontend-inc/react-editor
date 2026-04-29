@@ -13,6 +13,7 @@ export const DEFAULT_LABELS: Record<string, string> = {
   addComponent: "Add component",
   removeComponent: "Remove component",
   moveComponent: "Move component",
+  generateImage: "Generate image",
 };
 
 export const humanize = (name: string) =>

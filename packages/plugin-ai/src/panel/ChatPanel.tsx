@@ -1,7 +1,10 @@
 import {
   useCallback,
+  useEffect,
   useMemo,
+  useRef,
   useState,
+  type ChangeEvent,
   type FormEvent,
   type KeyboardEvent,
 } from "react";
@@ -11,7 +14,7 @@ import {
   lastAssistantMessageIsCompleteWithToolCalls,
   type UIMessage,
 } from "ai";
-import { ArrowDown, CornerDownLeft } from "lucide-react";
+import { ArrowDown, CornerDownLeft, Plus, X } from "lucide-react";
 import { StickToBottom, useStickToBottomContext } from "use-stick-to-bottom";
 import { useGetEditor, usePropsContext } from "@reacteditor/core";
 import type { AiPluginOptions, EditorContextPayload } from "../types";
@@ -127,15 +130,71 @@ export const ChatPanel = ({ options }: { options: AiPluginOptions }) => {
 
   const [input, setInput] = useState("");
 
+  // Local image attachments. Each gets a blob URL for preview; revoked on
+  // remove and on unmount to avoid leaks.
+  const [attached, setAttached] = useState<
+    { id: string; file: File; url: string }[]
+  >([]);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(
+    () => () => {
+      attached.forEach((a) => URL.revokeObjectURL(a.url));
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
+
+  const addFiles = useCallback((files: FileList | File[]) => {
+    const incoming = Array.from(files).filter((f) =>
+      f.type.startsWith("image/")
+    );
+    if (!incoming.length) return;
+    setAttached((prev) => [
+      ...prev,
+      ...incoming.map((file) => ({
+        id: `${file.name}-${Math.random().toString(36).slice(2, 8)}`,
+        file,
+        url: URL.createObjectURL(file),
+      })),
+    ]);
+  }, []);
+
+  const removeFile = useCallback((id: string) => {
+    setAttached((prev) => {
+      const found = prev.find((f) => f.id === id);
+      if (found) URL.revokeObjectURL(found.url);
+      return prev.filter((f) => f.id !== id);
+    });
+  }, []);
+
   const onSubmit = useCallback(
     (e: FormEvent) => {
       e.preventDefault();
       const trimmed = input.trim();
       if (!trimmed || status === "streaming") return;
-      sendMessage({ text: trimmed });
+      // sendMessage expects a FileList; build one from our File[] via
+      // DataTransfer so the AI SDK can base64-encode them for transit.
+      let files: FileList | undefined;
+      if (attached.length) {
+        const dt = new DataTransfer();
+        attached.forEach((a) => dt.items.add(a.file));
+        files = dt.files;
+      }
+      sendMessage({ text: trimmed, files });
       setInput("");
+      attached.forEach((a) => URL.revokeObjectURL(a.url));
+      setAttached([]);
     },
-    [sendMessage, status, input]
+    [sendMessage, status, input, attached]
+  );
+
+  const onFilesPicked = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      if (e.currentTarget.files?.length) addFiles(e.currentTarget.files);
+      e.currentTarget.value = "";
+    },
+    [addFiles]
   );
 
   const onKeyDown = useCallback(
@@ -191,6 +250,27 @@ export const ChatPanel = ({ options }: { options: AiPluginOptions }) => {
 
       <form className={styles["AiPanel-form"]} onSubmit={onSubmit}>
         <div className={styles["AiPanel-inputGroup"]}>
+          {attached.length > 0 && (
+            <div className={styles["AiPanel-attachments"]}>
+              {attached.map((a) => (
+                <div key={a.id} className={styles["AiPanel-attachment"]}>
+                  <img
+                    src={a.url}
+                    alt={a.file.name}
+                    className={styles["AiPanel-attachment-img"]}
+                  />
+                  <button
+                    type="button"
+                    aria-label={`Remove ${a.file.name}`}
+                    className={styles["AiPanel-attachment-remove"]}
+                    onClick={() => removeFile(a.id)}
+                  >
+                    <X size={12} />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
           <textarea
             className={styles["AiPanel-input"]}
             value={input}
@@ -201,12 +281,35 @@ export const ChatPanel = ({ options }: { options: AiPluginOptions }) => {
             disabled={isLoading}
           />
           <div className={styles["AiPanel-inputGroup-actions"]}>
+            <div className={styles["AiPanel-inputGroup-actions-left"]}>
+              {options.attachments && (
+                <>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    className={styles["AiPanel-fileInput"]}
+                    onChange={onFilesPicked}
+                  />
+                  <button
+                    type="button"
+                    aria-label="Attach images"
+                    className={styles["AiPanel-attach"]}
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={isLoading}
+                  >
+                    <Plus size={16} />
+                  </button>
+                </>
+              )}
+            </div>
             <button
               className={styles["AiPanel-send"]}
               type={isLoading ? "button" : "submit"}
               aria-label={isLoading ? "Stop" : "Send"}
               onClick={isLoading ? () => stop() : undefined}
-              disabled={!isLoading && !input.trim()}
+              disabled={!isLoading && !input.trim() && attached.length === 0}
             >
               {isLoading ? <Loader size={14} /> : <CornerDownLeft />}
             </button>
@@ -225,6 +328,7 @@ const Message = ({ message }: { message: UIMessage }) => {
         isUser ? styles["AiPanel-message--user"] : ""
       }`}
     >
+      {/* Text + tool parts first... */}
       {message.parts.map((part, i) => {
         if (part.type === "text") {
           return (
@@ -235,11 +339,34 @@ const Message = ({ message }: { message: UIMessage }) => {
         }
         if (part.type.startsWith("tool-")) {
           const toolName = part.type.slice("tool-".length);
-          const partAny = part as { input?: unknown; state?: string };
+          const partAny = part as {
+            input?: unknown;
+            state?: string;
+            output?: { url?: string } | unknown;
+          };
           const args = partAny.input;
-          // Shimmer only while the tool is in flight; once a result lands
-          // (state === "output-available"), settle into a static muted line.
           const isActive = partAny.state !== "output-available";
+
+          // Special case: generateImage renders the resulting image inline
+          // once the tool result lands.
+          if (toolName === "generateImage" && !isActive) {
+            const url = (partAny.output as { url?: string } | undefined)?.url;
+            if (url) {
+              return (
+                <img
+                  key={i}
+                  src={url}
+                  alt={
+                    (args as { prompt?: string } | undefined)?.prompt ??
+                    "Generated image"
+                  }
+                  className={styles["AiPanel-imagePreview"]}
+                />
+              );
+            }
+          }
+
+          // Default: shimmer while in flight, static muted line once done.
           return (
             <div
               key={i}
@@ -254,6 +381,26 @@ const Message = ({ message }: { message: UIMessage }) => {
           );
         }
         return null;
+      })}
+
+      {/* ...then file parts: image attachments render below the bubble. */}
+      {message.parts.map((part, i) => {
+        const p = part as {
+          type: string;
+          mediaType?: string;
+          url?: string;
+          filename?: string;
+        };
+        if (p.type !== "file") return null;
+        if (!p.mediaType?.startsWith("image/") || !p.url) return null;
+        return (
+          <img
+            key={`file-${i}`}
+            src={p.url}
+            alt={p.filename ?? "Attachment"}
+            className={styles["AiPanel-userImage"]}
+          />
+        );
       })}
     </div>
   );

@@ -15,6 +15,14 @@ export type AiPluginOptions = {
   onError?: (error: Error) => void;
   onToolCall?: (event: OnToolCallEvent) => unknown | Promise<unknown> | undefined;
   messages?: UIMessage[];
+
+  /**
+   * Enable file attachments on the chat input. When `true`, a paperclip
+   * button is shown next to the textarea that opens an image-only file
+   * picker. Selected files are sent with the next message via the AI SDK's
+   * sendMessage({ files }) API. Default: `false`.
+   */
+  attachments?: boolean;
 };
 
 export type EditorContextPayload = {

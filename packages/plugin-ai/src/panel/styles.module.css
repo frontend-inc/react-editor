@@ -320,9 +320,15 @@
 .AiPanel-inputGroup-actions {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 6px;
-  padding: 6px 6px 6px 10px;
+  padding: 6px;
+}
+
+.AiPanel-inputGroup-actions-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .AiPanel-send {
@@ -361,6 +367,106 @@
 .AiPanel-send svg {
   width: 16px;
   height: 16px;
+}
+
+.AiPanel-attach {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--editor-text-secondary, #555);
+  border-radius: var(--editor-radius-md, 6px);
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color var(--editor-motion-fast) var(--editor-ease),
+    color var(--editor-motion-fast) var(--editor-ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .AiPanel-attach:hover {
+    background: var(--editor-surface-hover, #f4f4f5);
+    color: var(--editor-text-primary, #111);
+  }
+}
+
+.AiPanel-attach:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.AiPanel-fileInput {
+  display: none;
+}
+
+.AiPanel-attachments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 8px 0;
+}
+
+.AiPanel-attachment {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--editor-color-grey-12, #f4f4f5);
+  flex-shrink: 0;
+}
+
+.AiPanel-attachment-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.AiPanel-attachment-remove {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+}
+
+.AiPanel-attachment-remove:hover {
+  background: rgba(0, 0, 0, 0.75);
+}
+
+/* Inline image preview for assistant-generated images (generateImage tool).
+   Larger square that fills the bubble width up to a sensible max. */
+.AiPanel-imagePreview {
+  display: block;
+  width: 100%;
+  max-width: 240px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 10px;
+  background: var(--editor-color-grey-12, #f4f4f5);
+}
+
+/* User-attached image: smaller, sits below the text bubble. */
+.AiPanel-userImage {
+  display: block;
+  width: 128px;
+  height: 128px;
+  object-fit: cover;
+  border-radius: 10px;
+  background: var(--editor-color-grey-12, #f4f4f5);
 }
 
 .AiPanel-loader {
