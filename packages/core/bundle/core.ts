@@ -15,7 +15,7 @@ export { Drawer } from "../components/Drawer";
 
 export { DropZone } from "../components/DropZone";
 export * from "../components/IconButton";
-export { Editor } from "../components/Editor";
+export { Editor, usePropsContext } from "../components/Editor";
 export * from "../components/Render";
 export { RichTextMenu } from "../components/RichTextMenu/inner";
 

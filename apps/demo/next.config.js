@@ -1,4 +1,8 @@
 module.exports = {
   reactStrictMode: true,
-  transpilePackages: ["@reacteditor/core", "lucide-react"],
+  transpilePackages: [
+    "@reacteditor/core",
+    "@reacteditor/plugin-ai",
+    "lucide-react",
+  ],
 };
