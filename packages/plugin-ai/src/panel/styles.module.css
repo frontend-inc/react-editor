@@ -7,24 +7,22 @@
 
 .AiPanel-messages {
   position: relative;
-  flex: 1;
+  flex: 1 1 0;
   min-height: 0;
-  overflow: hidden;
-}
-
-.AiPanel-messagesContent {
-  height: 100%;
   overflow-y: auto;
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
 
-.AiPanel-messagesContent::-webkit-scrollbar {
+.AiPanel-messages::-webkit-scrollbar {
   display: none;
+}
+
+.AiPanel-messagesContent {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
 }
 
 .AiPanel-scrollDown {

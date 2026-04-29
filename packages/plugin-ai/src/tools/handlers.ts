@@ -21,6 +21,30 @@ const resolveZone = (
   return `${parentId}:${slot ?? "default-zone"}`;
 };
 
+// Mirrors core's lib/get-frame.ts. The plugin can't import it (not on the
+// public surface) so the lookup is reproduced here.
+const getEditorFrameDoc = (): Document | null => {
+  if (typeof window === "undefined") return null;
+  const frameEl = document.querySelector("#preview-frame");
+  if (frameEl?.tagName === "IFRAME") {
+    return (frameEl as HTMLIFrameElement).contentDocument ?? document;
+  }
+  return frameEl?.ownerDocument ?? document;
+};
+
+// Wait one frame after a state mutation so the iframe re-renders the newly
+// inserted node, then scroll it into view.
+const scrollComponentIntoView = (id: string) => {
+  if (typeof window === "undefined") return;
+  requestAnimationFrame(() => {
+    const doc = getEditorFrameDoc();
+    const el = doc?.querySelector(
+      `[data-editor-component="${id}"]`
+    ) as HTMLElement | null;
+    el?.scrollIntoView({ behavior: "smooth", block: "center" });
+  });
+};
+
 const summarizeComponent = (data: ComponentData) => ({
   id: data.props?.id,
   type: data.type,
@@ -135,16 +159,28 @@ export const handlers: { [K in BuiltinName]: Handler<K> } = {
         },
       } as ComponentData;
 
+      const content = editor.appState.data.content ?? [];
+      const insertIndex = args.index ?? content.length;
+
       dispatch({
         type: "setData",
         data: (prev) => {
-          const content = [...(prev.content ?? [])];
-          const index = args.index ?? content.length;
-          content.splice(index, 0, newItem);
-          return { ...prev, content };
+          const next = [...(prev.content ?? [])];
+          next.splice(insertIndex, 0, newItem);
+          return { ...prev, content: next };
         },
         recordHistory: true,
       });
+
+      // Select the new node + scroll the canvas to it (mirrors what
+      // clicking in the Outline does).
+      dispatch({
+        type: "setUi",
+        ui: {
+          itemSelector: { index: insertIndex, zone: ROOT_DROPPABLE_ID },
+        },
+      });
+      scrollComponentIntoView(id);
 
       return { ok: true, id };
     }
@@ -153,14 +189,21 @@ export const handlers: { [K in BuiltinName]: Handler<K> } = {
     // through nested zones). Props can't be merged in the same dispatch, so
     // the model should follow up with updateComponent if needed.
     const zone = resolveZone(getEditor, args.parentId, args.slot);
+    const slotIndex = args.index ?? 0;
     dispatch({
       type: "insert",
       componentType: args.type,
-      destinationIndex: args.index ?? 0,
+      destinationIndex: slotIndex,
       destinationZone: zone,
       id,
       recordHistory: true,
     } as EditorAction);
+
+    dispatch({
+      type: "setUi",
+      ui: { itemSelector: { index: slotIndex, zone } },
+    });
+    scrollComponentIntoView(id);
 
     return {
       ok: true,
