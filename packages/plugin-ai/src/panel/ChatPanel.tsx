@@ -20,6 +20,7 @@ import { labelFor } from "../tools/labels";
 import { ChatAiIcon } from "./ChatAiIcon";
 import { Loader } from "./Loader";
 import { LoadingDots } from "./LoadingDots";
+import { Markdown } from "./Markdown";
 import styles from "./styles.module.css";
 
 const collectEditorContext = (
@@ -228,7 +229,7 @@ const Message = ({ message }: { message: UIMessage }) => {
         if (part.type === "text") {
           return (
             <div key={i} className={styles["AiPanel-message-bubble"]}>
-              {part.text}
+              <Markdown text={part.text} />
             </div>
           );
         }

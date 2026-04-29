@@ -91,13 +91,130 @@
   border-radius: 8px;
   padding: 8px 10px;
   max-width: 90%;
-  white-space: pre-wrap;
   word-wrap: break-word;
 }
 
 .AiPanel-message--user .AiPanel-message-bubble {
   background: var(--editor-accent-soft);
   color: var(--editor-text-accent);
+}
+
+/* Markdown rendering inside chat bubbles (react-markdown + remark-gfm). */
+.AiPanel-message-bubble p,
+.AiPanel-message-bubble ul,
+.AiPanel-message-bubble ol,
+.AiPanel-message-bubble li {
+  margin: 0;
+  padding: 0;
+}
+
+/* Spacing between adjacent block elements — restores prose rhythm now
+   that pre-wrap isn't preserving \n as visible breaks. */
+.AiPanel-message-bubble p + p,
+.AiPanel-message-bubble p + ul,
+.AiPanel-message-bubble p + ol,
+.AiPanel-message-bubble p + pre,
+.AiPanel-message-bubble p + blockquote,
+.AiPanel-message-bubble p + table,
+.AiPanel-message-bubble ul + p,
+.AiPanel-message-bubble ol + p,
+.AiPanel-message-bubble pre + p,
+.AiPanel-message-bubble blockquote + p,
+.AiPanel-message-bubble table + p {
+  margin-top: 6px;
+}
+
+.AiPanel-message-bubble ul,
+.AiPanel-message-bubble ol {
+  padding-left: 18px;
+}
+
+.AiPanel-message-bubble li + li,
+.AiPanel-message-bubble li > ul,
+.AiPanel-message-bubble li > ol {
+  margin-top: 0.375em;
+}
+
+.AiPanel-message-bubble h1,
+.AiPanel-message-bubble h2,
+.AiPanel-message-bubble h3,
+.AiPanel-message-bubble h4 {
+  margin: 8px 0 4px;
+  font-weight: 600;
+}
+
+.AiPanel-message-bubble h1 { font-size: 15px; }
+.AiPanel-message-bubble h2 { font-size: 14px; }
+.AiPanel-message-bubble h3,
+.AiPanel-message-bubble h4 { font-size: 13px; }
+
+.AiPanel-message-bubble blockquote {
+  margin: 6px 0;
+  padding: 0 8px;
+  border-left: 2px solid var(--editor-border-default, #e0e0e2);
+  color: var(--editor-text-secondary, #555);
+}
+
+.AiPanel-message-bubble pre {
+  margin: 6px 0;
+  padding: 8px 10px;
+  background: var(--editor-color-grey-12, #f4f4f5);
+  border-radius: 6px;
+  overflow-x: auto;
+}
+
+.AiPanel-message-bubble pre code {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.AiPanel-message-bubble code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  background: var(--editor-color-grey-12, #f4f4f5);
+  padding: 0 4px;
+  border-radius: 4px;
+}
+
+.AiPanel-message-bubble table {
+  margin: 6px 0;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.AiPanel-message-bubble th,
+.AiPanel-message-bubble td {
+  border: 1px solid var(--editor-border-default, #e0e0e2);
+  padding: 4px 8px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.AiPanel-message-bubble th {
+  background: var(--editor-color-grey-12, #f4f4f5);
+  font-weight: 600;
+}
+
+.AiPanel-message-bubble hr {
+  border: 0;
+  border-top: 1px solid var(--editor-border-default, #e0e0e2);
+  margin: 8px 0;
+}
+
+.AiPanel-message-bubble a {
+  color: var(--editor-text-accent);
+  text-decoration: underline;
+}
+
+.AiPanel-message-bubble strong { font-weight: 600; }
+.AiPanel-message-bubble em { font-style: italic; }
+
+.AiPanel-message-bubble input[type="checkbox"] {
+  margin-right: 4px;
 }
 
 .AiPanel-toolCall {

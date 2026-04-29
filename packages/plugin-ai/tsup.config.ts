@@ -7,6 +7,8 @@ export default defineConfig({
     ...(tsupconfig.external as string[]),
     "ai",
     "@ai-sdk/react",
+    "react-markdown",
+    "remark-gfm",
     "use-stick-to-bottom",
     "zod",
     "lucide-react",
