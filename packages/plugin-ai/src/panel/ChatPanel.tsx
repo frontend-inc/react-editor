@@ -1,10 +1,9 @@
 import {
   useCallback,
-  useEffect,
   useMemo,
-  useRef,
   useState,
   type FormEvent,
+  type KeyboardEvent,
 } from "react";
 import { useChat } from "@ai-sdk/react";
 import {
@@ -12,10 +11,15 @@ import {
   lastAssistantMessageIsCompleteWithToolCalls,
   type UIMessage,
 } from "ai";
+import { ArrowDown, CornerDownLeft } from "lucide-react";
+import { StickToBottom, useStickToBottomContext } from "use-stick-to-bottom";
 import { useGetEditor, usePropsContext } from "@reacteditor/core";
 import type { AiPluginOptions, EditorContextPayload } from "../types";
 import { callBuiltin } from "../tools/handlers";
 import { labelFor } from "../tools/labels";
+import { ChatAiIcon } from "./ChatAiIcon";
+import { Loader } from "./Loader";
+import { LoadingDots } from "./LoadingDots";
 import styles from "./styles.module.css";
 
 const collectEditorContext = (
@@ -76,6 +80,7 @@ export const ChatPanel = ({ options }: { options: AiPluginOptions }) => {
     addToolOutput,
     status,
     error,
+    stop,
   } = useChat({
     transport,
     messages: options.messages,
@@ -120,11 +125,6 @@ export const ChatPanel = ({ options }: { options: AiPluginOptions }) => {
   });
 
   const [input, setInput] = useState("");
-  const messagesRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const el = messagesRef.current;
-    if (el) el.scrollTop = el.scrollHeight;
-  }, [messages, status]);
 
   const onSubmit = useCallback(
     (e: FormEvent) => {
@@ -137,19 +137,48 @@ export const ChatPanel = ({ options }: { options: AiPluginOptions }) => {
     [sendMessage, status, input]
   );
 
+  const onKeyDown = useCallback(
+    (e: KeyboardEvent<HTMLTextAreaElement>) => {
+      // Enter submits, Shift+Enter inserts a newline.
+      if (e.key === "Enter" && !e.shiftKey && !e.nativeEvent.isComposing) {
+        e.preventDefault();
+        e.currentTarget.form?.requestSubmit();
+      }
+    },
+    []
+  );
+
+  const isLoading = status === "submitted" || status === "streaming";
+
   return (
     <div className={styles.AiPanel}>
-      <div ref={messagesRef} className={styles["AiPanel-messages"]}>
-        {messages.length === 0 ? (
-          <div className={styles["AiPanel-empty"]}>
-            Ask the assistant to edit your page.
-          </div>
-        ) : (
-          messages.map((m) => <Message key={m.id} message={m} />)
-        )}
+      <StickToBottom
+        className={styles["AiPanel-messages"]}
+        initial="smooth"
+        resize="smooth"
+        role="log"
+      >
+        <StickToBottom.Content className={styles["AiPanel-messagesContent"]}>
+          {messages.length === 0 ? (
+            <div className={styles["AiPanel-empty"]}>
+              <div className={styles["AiPanel-empty-icon"]}>
+                <ChatAiIcon size={28} />
+              </div>
+              <div className={styles["AiPanel-empty-text"]}>
+                Ask AI to update your site
+              </div>
+            </div>
+          ) : (
+            messages.map((m) => <Message key={m.id} message={m} />)
+          )}
 
-        {status === "streaming" && <ActivePill messages={messages} />}
-      </div>
+          {isLoading && needsThinkingHint(messages) && (
+            <div className={styles["AiPanel-toolCall"]}>Thinking...</div>
+          )}
+        </StickToBottom.Content>
+
+        <ScrollToBottomButton />
+      </StickToBottom>
 
       {error && (
         <div className={styles["AiPanel-error"]}>
@@ -157,21 +186,31 @@ export const ChatPanel = ({ options }: { options: AiPluginOptions }) => {
         </div>
       )}
 
+      {isLoading && <LoadingDots />}
+
       <form className={styles["AiPanel-form"]} onSubmit={onSubmit}>
-        <input
-          className={styles["AiPanel-input"]}
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Message…"
-          disabled={status === "streaming"}
-        />
-        <button
-          className={styles["AiPanel-send"]}
-          type="submit"
-          disabled={status === "streaming" || !input.trim()}
-        >
-          Send
-        </button>
+        <div className={styles["AiPanel-inputGroup"]}>
+          <textarea
+            className={styles["AiPanel-input"]}
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={onKeyDown}
+            placeholder="Message…"
+            rows={2}
+            disabled={isLoading}
+          />
+          <div className={styles["AiPanel-inputGroup-actions"]}>
+            <button
+              className={styles["AiPanel-send"]}
+              type={isLoading ? "button" : "submit"}
+              aria-label={isLoading ? "Stop" : "Send"}
+              onClick={isLoading ? () => stop() : undefined}
+              disabled={!isLoading && !input.trim()}
+            >
+              {isLoading ? <Loader size={14} /> : <CornerDownLeft />}
+            </button>
+          </div>
+        </div>
       </form>
     </div>
   );
@@ -185,9 +224,6 @@ const Message = ({ message }: { message: UIMessage }) => {
         isUser ? styles["AiPanel-message--user"] : ""
       }`}
     >
-      <span className={styles["AiPanel-message-author"]}>
-        {isUser ? "You" : "Assistant"}
-      </span>
       {message.parts.map((part, i) => {
         if (part.type === "text") {
           return (
@@ -198,10 +234,21 @@ const Message = ({ message }: { message: UIMessage }) => {
         }
         if (part.type.startsWith("tool-")) {
           const toolName = part.type.slice("tool-".length);
-          const args = (part as { input?: unknown }).input;
+          const partAny = part as { input?: unknown; state?: string };
+          const args = partAny.input;
+          // Shimmer only while the tool is in flight; once a result lands
+          // (state === "output-available"), settle into a static muted line.
+          const isActive = partAny.state !== "output-available";
           return (
-            <div key={i} className={styles["AiPanel-pill"]}>
-              {labelFor(toolName, args)}
+            <div
+              key={i}
+              className={
+                isActive
+                  ? styles["AiPanel-toolCall"]
+                  : styles["AiPanel-toolCall-done"]
+              }
+            >
+              {labelFor(toolName, args, !isActive)}
             </div>
           );
         }
@@ -211,22 +258,29 @@ const Message = ({ message }: { message: UIMessage }) => {
   );
 };
 
-const ActivePill = ({ messages }: { messages: UIMessage[] }) => {
-  // Show a pill for the most recent in-flight tool call, if any.
+const ScrollToBottomButton = () => {
+  const { isAtBottom, scrollToBottom } = useStickToBottomContext();
+  if (isAtBottom) return null;
+  return (
+    <button
+      type="button"
+      aria-label="Scroll to bottom"
+      className={styles["AiPanel-scrollDown"]}
+      onClick={() => scrollToBottom()}
+    >
+      <ArrowDown size={14} />
+    </button>
+  );
+};
+
+// True when no tool/text parts are present yet on the latest assistant
+// message — i.e. the brief gap between submit and the first stream chunk.
+// Once any part lands (a text token or a tool call), the inline shimmer
+// already conveys activity and a separate "Thinking..." line would dupe it.
+const needsThinkingHint = (messages: UIMessage[]) => {
   const last = messages[messages.length - 1];
-  if (!last) return null;
-  const toolPart = [...last.parts]
-    .reverse()
-    .find((p) => p.type.startsWith("tool-")) as
-    | { type: string; input?: unknown; state?: string }
-    | undefined;
-  if (toolPart && toolPart.state !== "output-available") {
-    const toolName = toolPart.type.slice("tool-".length);
-    return (
-      <div className={styles["AiPanel-pill"]}>
-        {labelFor(toolName, toolPart.input)}
-      </div>
-    );
-  }
-  return <div className={styles["AiPanel-pill"]}>Thinking…</div>;
+  if (!last || last.role !== "assistant") return true;
+  return (last.parts ?? []).every(
+    (p) => p.type !== "text" && !p.type.startsWith("tool-")
+  );
 };

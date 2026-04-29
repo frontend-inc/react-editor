@@ -113,40 +113,62 @@ export const handlers: { [K in BuiltinName]: Handler<K> } = {
 
   addComponent: (args, { getEditor, dispatch }) => {
     const editor = getEditor();
-    const zone = resolveZone(getEditor, args.parentId, args.slot);
     const id = `${args.type}-${Math.random().toString(36).slice(2, 10)}`;
 
-    // Determine the index — default to appending to the destination.
-    const data = editor.appState.data;
-    const targetList =
-      args.parentId == null
-        ? (data.content as ComponentData[])
-        : ((data.zones?.[zone] as ComponentData[] | undefined) ?? []);
-    const index = args.index ?? targetList.length;
+    const componentConfig = (editor.config.components as Record<string, unknown>)[
+      args.type
+    ] as { defaultProps?: Record<string, unknown> } | undefined;
+    if (!componentConfig) {
+      return { error: "unknown_type", type: args.type };
+    }
 
+    // Root-content insert: write the fully-formed item (defaults + supplied
+    // props + id) in one setData. Avoids reading a node back from the store
+    // before its insert has settled in our captured editor snapshot.
+    if (args.parentId == null) {
+      const newItem = {
+        type: args.type,
+        props: {
+          ...(componentConfig.defaultProps ?? {}),
+          ...(args.props ?? {}),
+          id,
+        },
+      } as ComponentData;
+
+      dispatch({
+        type: "setData",
+        data: (prev) => {
+          const content = [...(prev.content ?? [])];
+          const index = args.index ?? content.length;
+          content.splice(index, 0, newItem);
+          return { ...prev, content };
+        },
+        recordHistory: true,
+      });
+
+      return { ok: true, id };
+    }
+
+    // Slot insert: use the reducer's insert action (it knows how to thread
+    // through nested zones). Props can't be merged in the same dispatch, so
+    // the model should follow up with updateComponent if needed.
+    const zone = resolveZone(getEditor, args.parentId, args.slot);
     dispatch({
       type: "insert",
       componentType: args.type,
-      destinationIndex: index,
+      destinationIndex: args.index ?? 0,
       destinationZone: zone,
       id,
       recordHistory: true,
     } as EditorAction);
 
-    if (args.props) {
-      const item = editor.getItemById(id);
-      if (item) {
-        dispatch({
-          type: "replace",
-          destinationIndex: index,
-          destinationZone: zone,
-          data: { ...item, props: { ...item.props, ...args.props, id } },
-          recordHistory: false,
-        } as EditorAction);
-      }
-    }
-
-    return { ok: true, id };
+    return {
+      ok: true,
+      id,
+      note: args.props
+        ? "Inserted into slot with default props; call updateComponent to apply custom props."
+        : undefined,
+    };
   },
 
   removeComponent: (args, { getEditor, dispatch }) => {
