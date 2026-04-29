@@ -1,6 +1,15 @@
 "use client";
 
-import { AutoField, Button, FieldLabel, Editor, Render, Route } from "@/core";
+import {
+  AutoField,
+  Button,
+  FieldLabel,
+  Editor,
+  Render,
+  Route,
+  blocksPlugin,
+  outlinePlugin,
+} from "@/core";
 import { aiPlugin } from "@reacteditor/plugin-ai";
 import config from "../../config";
 import { initialData } from "../../config/initial-data";
@@ -51,7 +60,7 @@ function ClientInner({ path, isEdit }: { path: string; isEdit: boolean }) {
   }, []);
 
   const plugins = useMemo(
-    () => [aiPlugin({ api: "/api/chat" })],
+    () => [aiPlugin({ api: "/api/chat" }), blocksPlugin(), outlinePlugin()],
     []
   );
 
