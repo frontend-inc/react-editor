@@ -13,7 +13,6 @@ export * from "../components/Button";
 export { ComponentList } from "../components/ComponentList";
 export { Drawer } from "../components/Drawer";
 
-export { DropZone } from "../components/DropZone";
 export * from "../components/IconButton";
 export { Editor, usePropsContext } from "../components/Editor";
 export * from "../components/Render";
@@ -36,7 +35,8 @@ export {
 export type {
   EditorCommands,
   InsertComponentArgs,
-  ItemTarget,
+  MoveDestination,
+  Parent,
 } from "../lib/editor-commands";
 
 export * from "../plugins/blocks";
