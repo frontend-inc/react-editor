@@ -1,7 +1,10 @@
 import type { ReactNode } from "react";
+import type { EditorApi } from "@reacteditor/core";
 import type { UIMessage, ChatTransport, ChatOnToolCallCallback } from "ai";
 
 type OnToolCallEvent = Parameters<ChatOnToolCallCallback<UIMessage>>[0];
+
+export type GetEditor = () => EditorApi;
 
 export type ToolRenderState =
   | "input-streaming"
@@ -17,18 +20,28 @@ export type RenderToolParams = {
 };
 
 export type AiPluginOptions = {
-  api: string;
-  headers?:
-    | Record<string, string>
-    | (() => Record<string, string> | Promise<Record<string, string>>);
-  body?:
-    | Record<string, unknown>
-    | ((messages: UIMessage[]) => Record<string, unknown>);
+  /**
+   * Mirrors `useChat`'s `DefaultChatTransport` config. Set `transport` to
+   * replace the whole transport and ignore these.
+   */
+  api?: string;
+  credentials?: RequestCredentials;
+  headers?: Record<string, string> | Headers;
+  body?: object;
   transport?: ChatTransport<UIMessage>;
   onFinish?: (event: { message: UIMessage }) => void;
   onError?: (error: Error) => void;
+  /**
+   * Called for every model-emitted tool call before the built-in handlers
+   * run. Return a defined value (sync or async) to short-circuit and use
+   * that as the tool output; return `undefined` to fall through to the
+   * built-ins.
+   *
+   * `getEditor()` returns the live editor on each call, so reads after
+   * `await` always see current state.
+   */
   onToolCall?: (
-    event: OnToolCallEvent
+    event: OnToolCallEvent & { getEditor: GetEditor }
   ) => unknown | Promise<unknown> | undefined;
   messages?: UIMessage[];
 

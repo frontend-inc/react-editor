@@ -47,26 +47,18 @@ const collectEditorContext = (
 export const ChatPanel = ({ options }: { options: AiPluginOptions }) => {
   const getEditor = useGetEditor();
 
-  // Dynamic header/body resolution lets the user merge or replace headers
-  // and body without re-creating the transport on every render.
   const transport = useMemo(() => {
     if (options.transport) return options.transport;
     return new DefaultChatTransport({
-      api: options.api,
-      headers: async () => {
-        if (typeof options.headers === "function") return await options.headers();
-        return options.headers ?? {};
-      },
+      api: options.api ?? "/api/chat",
+      credentials: options.credentials,
+      headers: options.headers,
       // body is a function of the message list — re-evaluated each request,
       // so editorContext always reflects the current editor state.
       body: () => {
         const route = options.getCurrentRoute?.() ?? null;
         const editorContext = collectEditorContext(getEditor, route);
-        const userBody =
-          typeof options.body === "function"
-            ? options.body([])
-            : options.body ?? {};
-        return { editorContext, ...userBody };
+        return { editorContext, ...(options.body ?? {}) };
       },
     });
   }, [options, getEditor]);
@@ -91,7 +83,7 @@ export const ChatPanel = ({ options }: { options: AiPluginOptions }) => {
     onToolCall: async ({ toolCall }) => {
       // Stage 1: user-supplied interceptor wins if it returns a defined value.
       if (options.onToolCall) {
-        const result = await options.onToolCall({ toolCall });
+        const result = await options.onToolCall({ toolCall, getEditor });
         if (result !== undefined) {
           // The AI SDK explicitly recommends calling addToolOutput without
           // await here to avoid a deadlock with the streaming loop.
