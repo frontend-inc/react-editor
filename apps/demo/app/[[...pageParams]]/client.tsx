@@ -40,7 +40,7 @@ const plugins = [
   outlinePlugin(),
 ];
 
-export function Client({ currentRoute }: { currentRoute: string }) {
+export function Client({ currentPath }: { currentPath: string }) {
   // Wait for localStorage before mounting <App>: <Editor> snapshots its `data`
   // prop on mount and ignores subsequent prop changes. If we mount with seed
   // data and then setPages(stored), the editor still shows the seed.
@@ -72,7 +72,7 @@ export function Client({ currentRoute }: { currentRoute: string }) {
     <App
       config={config}
       pages={pages}
-      currentRoute={currentRoute}
+      currentPath={currentPath}
       onPublish={handlePublish}
       plugins={plugins}
       metadata={metadata}

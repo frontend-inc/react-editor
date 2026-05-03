@@ -39,7 +39,7 @@ export type AppProviderProps<
    * Required during SSR so the first paint matches the requested URL.
    * Ignored for BrowserRouter and HashRouter on the client (they read window).
    */
-  currentRoute?: string;
+  currentPath?: string;
   children?: ReactNode;
 };
 
@@ -51,7 +51,7 @@ export function AppProvider<
   pages,
   editorPath = EDITOR_PATH,
   router = "browser",
-  currentRoute,
+  currentPath,
   children,
 }: AppProviderProps<UserConfig, G>) {
   // Structurally stabilize so inline pages={{ ... }} doesn't churn matchers.
@@ -76,7 +76,7 @@ export function AppProvider<
   );
 
   if (isServer) {
-    return <StaticRouter location={currentRoute ?? "/"}>{inner}</StaticRouter>;
+    return <StaticRouter location={currentPath ?? "/"}>{inner}</StaticRouter>;
   }
 
   if (router === "hash") {
@@ -84,7 +84,7 @@ export function AppProvider<
   }
   if (router === "memory") {
     return (
-      <MemoryRouter initialEntries={[currentRoute ?? "/"]}>
+      <MemoryRouter initialEntries={[currentPath ?? "/"]}>
         {inner}
       </MemoryRouter>
     );

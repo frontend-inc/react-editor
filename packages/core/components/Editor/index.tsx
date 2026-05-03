@@ -85,7 +85,7 @@ type EditorProps<
   headerPath?: string;
   title?: ReactNode;
   routes?: Route[];
-  currentPath?: string;
+  currentRoute?: string;
   onRouteChange?: (path: string) => void | Promise<void>;
   viewports?: Viewports;
   iframe?: IframeConfig;

@@ -67,7 +67,7 @@ type LayoutProps<
   AppProps<UserConfig, G>,
   | "config"
   | "pages"
-  | "currentRoute"
+  | "currentPath"
   | "editorPath"
   | "router"
   | "children"
@@ -145,7 +145,7 @@ function EditorRouteRender<
       onChange={onChange}
       onPublish={onPublish}
       routes={routes}
-      currentPath={routeKey}
+      currentRoute={routeKey}
       onRouteChange={(next) => navigate(next)}
     />
   );
@@ -211,7 +211,7 @@ export function App<
   const {
     config,
     pages,
-    currentRoute,
+    currentPath,
     editorPath,
     router,
     children,
@@ -222,7 +222,7 @@ export function App<
     <AppProvider<UserConfig, G>
       config={config}
       pages={pages}
-      currentRoute={currentRoute}
+      currentPath={currentPath}
       editorPath={editorPath}
       router={router}
     >

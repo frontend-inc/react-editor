@@ -36,7 +36,7 @@ export const BrowserBar = ({
 }: {
   onViewportChange?: (viewport: Viewport) => void;
 }) => {
-  const { routes, currentPath, onRouteChange } = usePropsContext();
+  const { routes, currentRoute, onRouteChange } = usePropsContext();
   const viewports = useAppStore((s) => s.state.ui.viewports);
   const dispatch = useAppStore((s) => s.dispatch);
   const leftSideBarVisible = useAppStore((s) => s.state.ui.leftSideBarVisible);
@@ -68,20 +68,20 @@ export const BrowserBar = ({
   };
 
   const showRoutePicker =
-    !!routes && currentPath !== undefined && !!onRouteChange;
+    !!routes && currentRoute !== undefined && !!onRouteChange;
 
-  const [inputValue, setInputValue] = useState(currentPath ?? "");
+  const [inputValue, setInputValue] = useState(currentRoute ?? "");
 
   // Re-sync the input when the parent navigates externally.
-  const lastSyncedPath = useRef(currentPath);
-  if (lastSyncedPath.current !== currentPath) {
-    lastSyncedPath.current = currentPath;
-    setInputValue(currentPath ?? "");
+  const lastSyncedPath = useRef(currentRoute);
+  if (lastSyncedPath.current !== currentRoute) {
+    lastSyncedPath.current = currentRoute;
+    setInputValue(currentRoute ?? "");
   }
 
   const submit = (raw: string) => {
     const next = normalizeRoute(raw);
-    if (!next || next === currentPath) return;
+    if (!next || next === currentRoute) return;
     void onRouteChange?.(next);
   };
 
@@ -90,7 +90,7 @@ export const BrowserBar = ({
       {showRoutePicker ? (
         <Combobox<string>
           items={routes!}
-          value={currentPath}
+          value={currentRoute}
           onValueChange={(next) => {
             if (typeof next === "string") submit(next);
           }}

@@ -25,7 +25,7 @@ export default async function Page({
 }) {
   const resolved = await params;
   const { route } = nextjsResolveRoute(resolved);
-  return <Client currentRoute={route} />;
+  return <Client currentPath={route} />;
 }
 
 export const dynamic = "force-dynamic";

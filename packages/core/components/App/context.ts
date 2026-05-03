@@ -51,8 +51,8 @@ export type AppContextValue<
   /** All page route keys, in declaration order. */
   routes: RouteKey[];
   /** Resolved current pathname from React Router. */
-  currentRoute: string;
-  /** True when currentRoute starts with editorPath. */
+  currentPath: string;
+  /** True when currentPath starts with editorPath. */
   isEditing: boolean;
   /** The URL relative to editorPath when isEditing — what pages are matched against. */
   matchRoute: string;
@@ -74,16 +74,16 @@ export const useApp = <
   const location = useLocation();
   const rrNavigate = useNavigate();
 
-  const currentRoute = location.pathname || "/";
+  const currentPath = location.pathname || "/";
 
   const isEditing =
     cfg.editorPath !== null &&
-    (currentRoute === cfg.editorPath ||
-      currentRoute.startsWith(`${cfg.editorPath}/`));
+    (currentPath === cfg.editorPath ||
+      currentPath.startsWith(`${cfg.editorPath}/`));
 
   const matchRoute = isEditing
-    ? stripPrefix(currentRoute, cfg.editorPath as string)
-    : currentRoute;
+    ? stripPrefix(currentPath, cfg.editorPath as string)
+    : currentPath;
 
   const matched = useMemo<AppMatched<Partial<G["UserData"] | Data>> | null>(() => {
     const routeKeys = Object.keys(cfg.pages);
@@ -115,7 +115,7 @@ export const useApp = <
   return {
     ...cfg,
     routes,
-    currentRoute,
+    currentPath,
     isEditing,
     matchRoute,
     matched,
